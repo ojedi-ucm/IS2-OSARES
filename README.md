@@ -29,7 +29,7 @@ Conceptos que escucharás cuando hablemos en contexto GitHub:
 
 - **Repositorio:** donde se aloja nuestro proyecto en GitHub. En este caso el repositorio es IS2-OSARES
 - **Rama (Branch):** versión aislada del proyecto con cambios en algunas partes del mismo.
-- *Pull:* obtener de GitHub la última versión de una rama para trabajar en local sobre ella.
+- **Pull:** obtener de GitHub la última versión de una rama para trabajar en local sobre ella.
 - **Commit:** subir los cambios locales a una rama de GitHub para y así crear una nueva versión de dicha rama.
 - **Pull Request:** solicitar unir dos ramas.
 
