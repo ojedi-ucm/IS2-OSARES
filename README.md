@@ -12,7 +12,7 @@ Para conseguir esto, GitHub se basa en el uso de ramas donde los miembros del eq
 
 **Ojo piojo:** Las ramas no son "trozos" aislados del proyecto. Son versiones del proyecto en su totalidad con cambios en algunas partes.
 
-La pieza que falta para conectar nuestro proyecto en local con GitHub es GitHub Desktop. Tienes el enlace más abajo.
+La pieza que falta para conectar nuestro proyecto en local con GitHub es GitHub Desktop. Cada miembro deberá tenerlo instalado en su ordenador. Tienes el enlace más abajo.
 
 ## Ejemplo
 Pongamos una situación real y cotidiana de nuestro proyecto de IS con GitHub:
