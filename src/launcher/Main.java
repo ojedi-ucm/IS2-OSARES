@@ -1,10 +1,13 @@
 package launcher;
 
 public class Main {
-
+//Atributos
+	
+//Metodos auxiliares
+	
+//Main
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
-
 }
