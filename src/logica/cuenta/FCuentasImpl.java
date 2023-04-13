@@ -17,7 +17,7 @@ public class FCuentasImpl implements FCuentas {
 	@Override
 	public boolean create(ArrayList<Cuenta> titulares) {
 		// TODO Auto-generated method stub
-		return false;
+		return sa.create(titulares);
 	}
 	@Override
 	public List<Cuenta> read() {
