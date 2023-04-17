@@ -19,7 +19,7 @@ public class Cliente {
 	private List<String> listaCuentas;
 	private List<String> listaCitas;
 	//temporal
-	private String roles;
+	private String rol;
 
 //Constructores
 	public Cliente(String DNI, String contrasena, String nombre, int telefono, String rol) {
@@ -27,11 +27,19 @@ public class Cliente {
 		password = contrasena;
 		name = nombre;
 		tlf = telefono;
-		roles = rol;
+		this.rol = rol;
 	}
 	
-	public Cliente() {
+	public Cliente(JSONObject informacion) {
 		
+		id = informacion.getInt("id");
+		dni = informacion.getString("dni");
+		password = informacion.getString("password");
+		name = informacion.getString("name");
+		tlf = informacion.getInt("tlf");
+		listaCuentas = (List<String>) informacion.get("listaCuentas");
+		listaCitas = (List<String>) informacion.get("listaCitas");
+		rol = informacion.getString("rol");
 	}
 //Getters
 	public int getIdCont() {
@@ -67,7 +75,7 @@ public class Cliente {
 	}
 	
 	public String getRol() {
-		return roles;
+		return rol;
 	}
 	
 //Setters
@@ -110,11 +118,13 @@ public class Cliente {
 	}
 	
 	public void removeCita(String cita) {
-		//TODO
+		if(listaCitas.contains(cita))
+			listaCitas.remove(cita);
 	}
 	
 	public void removeCuenta(String cuenta) {
-		//TODO
+		if(listaCuentas.contains(cuenta))
+			listaCuentas.remove(cuenta);
 	}
 	
 //Utiles
@@ -124,6 +134,17 @@ public class Cliente {
 	}
 	//toJSON
 	public JSONObject toJSONObect() {
-		return new JSONObject();
+		
+		JSONObject info = new JSONObject();
+		info.put("id", id);
+		info.put("dni", dni);
+		info.put("password", password);
+		info.put("name", name);
+		info.put("tlf", tlf);
+		info.put("listaCuentas", listaCuentas);
+		info.put("listaCitas", listaCitas);
+		info.put("rol", rol);
+		
+		return info;
 	}
 }
