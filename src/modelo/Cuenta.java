@@ -1,24 +1,60 @@
 package modelo;
 
+import org.json.JSONObject;
+
 public class Cuenta {
-//Constantes
+	//Constantes
 	
-//Atributos
+	//Atributos
+	private String _ss = "ES";
+	private long _iban;
+	private float _dinero;
+	private Cliente _titular;
 	
-//Constructores
-	public Cuenta() {
+	//Constructores
+	public Cuenta(long iban, float dineroIni, Cliente titular) {
+		_iban = iban;
+		_dinero = dineroIni;
+		_titular = titular;
+	}
+	
+	public Cuenta(JSONObject cuenta) {
 		
 	}
-//Getters
 	
-//Setters
+	//Getters
+	public long getIBAN() {
+		return _iban;
+	}
 	
-//Verificadores
+	public float getDinero() {
+		return _dinero;
+	}
 	
-//Actualizadores
+	public Cliente getTitular() {
+		return _titular;
+	}
 	
-//Utiles
+	//Setters
+	public void sumDinero(float ingreso) {
+		_dinero += ingreso;
+	}
+	
+	public void restDinero(float gasto) {
+		_dinero += gasto;
+	}
+	
+	//Verificadores
+	
+	//Actualizadores
+	public void changeTitular(Cliente nuevoTitular) {
+		_titular = nuevoTitular;
+	}
+	
+	
+	//Utiles
 	//toString
 	
 	//toJSON
+	
 }
