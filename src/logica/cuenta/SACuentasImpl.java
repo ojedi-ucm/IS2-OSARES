@@ -19,7 +19,8 @@ public class SACuentasImpl implements SACuentas {
 	@Override
 	public boolean create(ArrayList<Cuenta> titulares) {
 		// TODO Auto-generated method stub
-		return dao.create(titulares);
+		//return dao.create(titulares);
+		return false;
 	}
 	@Override
 	public List<Cuenta> read() {

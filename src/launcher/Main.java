@@ -1,5 +1,9 @@
 package launcher;
 
+import javax.swing.SwingUtilities;
+
+import vista.MainWindow;
+
 public class Main {
 //Atributos
 	
@@ -7,7 +11,10 @@ public class Main {
 	
 //Main
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		try {
+			SwingUtilities.invokeAndWait(() -> new MainWindow());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
