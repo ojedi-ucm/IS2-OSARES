@@ -7,13 +7,22 @@ import modelo.Cliente;
 import modelo.Cuenta;
 
 public class FIntCuentasImpl implements FIntCuentas {
-//Constantes
+	//Constantes
 	
-//Atributos
+	//Atributos
 	private DAOCuentas dao;
-//Constructor
-	public FIntCuentasImpl() { dao = new DAOCuentasImpl(); }
-//CRUDS
+	
+	//Constructor
+	public FIntCuentasImpl() { 
+		try {
+			dao = new DAOCuentasImpl();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+	//CRUDS
 	@Override
 	public boolean create(ArrayList<Cliente> titulares) {
 		// TODO Auto-generated method stub
