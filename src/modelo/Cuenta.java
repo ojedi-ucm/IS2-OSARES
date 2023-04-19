@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
 public class Cuenta {
@@ -9,13 +11,13 @@ public class Cuenta {
 	private String _ss = "ES";
 	private long _iban;
 	private float _dinero;
-	private Cliente _titular;
+	private List<Cliente> _titulares;
 	
 	//Constructores
-	public Cuenta(long iban, float dineroIni, Cliente titular) {
-		_iban = iban;
+	public Cuenta(float dineroIni, List<Cliente> titulares) {
+		//_iban = iban; falta
 		_dinero = dineroIni;
-		_titular = titular;
+		_titulares = titulares;
 	}
 	
 	public Cuenta(JSONObject cuenta) {
@@ -31,8 +33,8 @@ public class Cuenta {
 		return _dinero;
 	}
 	
-	public Cliente getTitular() {
-		return _titular;
+	public List<Cliente> getTitulares() {
+		return _titulares;
 	}
 	
 	//Setters
@@ -47,8 +49,12 @@ public class Cuenta {
 	//Verificadores
 	
 	//Actualizadores
-	public void changeTitular(Cliente nuevoTitular) {
-		_titular = nuevoTitular;
+	public boolean addTitular(Cliente nuevoTitular) {
+		return _titulares.add(nuevoTitular);
+	}
+	
+	public boolean removeTitular(Cliente titular) {
+		return _titulares.remove(titular);
 	}
 	
 	

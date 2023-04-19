@@ -3,6 +3,8 @@ package datos.cuenta;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 import modelo.Cuenta;
 
@@ -10,7 +12,7 @@ public class DAOCuentasImpl implements DAOCuentas {
 //Constantes
 	
 //Atributos
-	//BD
+	
 //Constructor
 	DAOCuentasImpl() {
 		//bd = new()
@@ -18,7 +20,13 @@ public class DAOCuentasImpl implements DAOCuentas {
 //CRUDS	
 	@Override
 	public boolean create(ArrayList<Cliente> titulares) {
-		// TODO Auto-generated method stub
+		JSONObject o = new JSONObject();
+		Cuenta nuevaCuenta = new Cuenta(0, titulares);
+		
+		o.append("titulares", titulares);
+		o.put("IBAN", nuevaCuenta.getIBAN());
+		o.put("dinero", nuevaCuenta.getDinero());
+		
 		return false;
 	}
 	
