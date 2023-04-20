@@ -14,27 +14,22 @@ public class FIntClientesImpl implements FIntClientes {
 //CRUDS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.create(cliente);
 	}
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.read();
 	}
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.update(usuario);
 	}
 	@Override
 	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.delete(borrado);
 	}
 	@Override
 	public Cliente search(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.search(id);
 	}		
 }

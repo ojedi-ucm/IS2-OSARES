@@ -16,38 +16,39 @@ public class SAClientesImpl implements SAClientes {
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return fdao.create(cliente);
 	}
 
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return fdao.read();
 	}
 
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		return fdao.update(usuario);
 	}
 
 	@Override
 	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
-		return false;
+		return fdao.delete(borrado);
 	}
 
 	@Override
-	public Cliente online(String dni, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente online(int id, String password) {
+		Cliente aux = fdao.search(id);
+		if(aux != null)
+			if(aux.getPassword().equals(password))
+				return aux;
+			else
+				return null;
+		else
+			return null;
 	}
 
 	@Override
-	public Cliente consulta(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente search(int id) {
+		return fdao.search(id);
 	}
 
 }

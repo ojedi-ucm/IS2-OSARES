@@ -8,6 +8,6 @@ public interface SAClientes {
 	List<Cliente>	read();
 	boolean			update(Cliente usuario);
 	boolean			delete(Cliente borrado);
-	Cliente			online(String dni, String password);
-	Cliente			consulta(int id);
+	Cliente			online(int id, String password);
+	Cliente			search(int id);
 }

@@ -2,16 +2,19 @@ package datos.cliente;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 
 public class DAOClientesImpl implements DAOClientes {
 //Constantes
 
 //Atributos
-	//bd
+	JSONObject bd;
 //Constructor
 	public DAOClientesImpl() {
 		//new bd 
+		
 	}
 //CRUDS
 	@Override

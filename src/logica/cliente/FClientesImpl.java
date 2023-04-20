@@ -14,38 +14,32 @@ public class FClientesImpl implements FClientes {
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.create(cliente);
 	}
 
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.read();
 	}
 
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.update(usuario);
 	}
 
 	@Override
 	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.delete(borrado);
 	}
 
 	@Override
-	public Cliente online(String dni, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente online(int id, String password) {
+		return sa.online(id, password);
 	}
 
 	@Override
-	public Cliente consulta(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente search(int id) {
+		return sa.search(id);
 	}
 
 }
