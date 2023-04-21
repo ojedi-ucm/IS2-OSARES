@@ -61,12 +61,17 @@ public class DAOCuentasImpl implements DAOCuentas {
 	}
 	
 	@Override
-	public List<Cuenta> read(Cliente titular) {
+	public List<Cuenta> read(Cliente titular) throws Exception {
 		List<Cuenta> res = new ArrayList<>();
 		
-		for(String iban: titular.getCuentas()) {
-			JSONObject o = (JSONObject) _bdCuentas.get(iban);
-			res.add(new Cuenta(iban, o));
+		try {
+			for(String iban: titular.getCuentas()) {
+				JSONObject o = (JSONObject) _bdCuentas.get(iban);
+				res.add(new Cuenta(iban, o)); 	
+			}
+		}
+		catch (Exception e) {
+			throw new Exception(e);
 		}
 		
 		return res;
@@ -74,8 +79,21 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 	@Override
 	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
-		// TODO Auto-generated method stub
-		return false;
+		emisor.restDinero(cantidad);
+		receptor.sumDinero(cantidad);
+		
+		JSONObject em = (JSONObject) _bdCuentas.get(emisor.getIBAN());
+		JSONObject re = (JSONObject) _bdCuentas.get(receptor.getIBAN());
+		
+		em.put("dinero", emisor.getDinero());
+		re.put("dinero", receptor.getDinero());
+		
+		_bdCuentas.put(emisor.getIBAN(), em);
+		_bdCuentas.put(receptor.getIBAN(), re);
+		
+		saveChanges();
+		
+		return true;
 	}
 	
 	@Override 
@@ -84,10 +102,16 @@ public class DAOCuentasImpl implements DAOCuentas {
 	}
 	
 	@Override
-	public Cuenta search(String iban) {
-		JSONObject search = (JSONObject) _bdCuentas.get(iban);
+	public Cuenta search(String iban) throws Exception {
+		Cuenta res = null;
 		
-		Cuenta res = new Cuenta(iban, search);
+		try {
+			JSONObject search = (JSONObject) _bdCuentas.get(iban);
+			
+			res = new Cuenta(iban, search);
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
 		
 		return res;
 	}

@@ -19,7 +19,7 @@ public class FCuentasImpl implements FCuentas {
 		return sa.create(titular);
 	}
 	@Override
-	public List<Cuenta> read(Cliente titular) {
+	public List<Cuenta> read(Cliente titular) throws Exception {
 		return sa.read(titular);
 	}
 	@Override
@@ -31,7 +31,7 @@ public class FCuentasImpl implements FCuentas {
 		return sa.delete(iban);
 	}
 	@Override
-	public Cuenta consultar(String iban) {
+	public Cuenta consultar(String iban) throws Exception {
 		return sa.consultar(iban);
 	}
 }

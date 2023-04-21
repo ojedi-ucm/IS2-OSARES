@@ -24,12 +24,17 @@ public class Cuenta {
 		_titularID = titular.getID();
 	}
 	
-	public Cuenta(String iban, JSONObject cuenta) {
-		_ss = cuenta.getString("ss");
-		_numCuenta = cuenta.getBigInteger("numCuenta");
-		_iban = iban;
-		_dinero = cuenta.getFloat("dinero");
-		_titularID = cuenta.getString("titular");
+	public Cuenta(String iban, JSONObject cuenta) throws Exception {
+		try {
+			_ss = cuenta.getString("ss");
+			_numCuenta = cuenta.getBigInteger("numCuenta");
+			_iban = iban;
+			_dinero = cuenta.getFloat("dinero");
+			_titularID = cuenta.getString("titular");
+		} catch(Exception e) {
+			throw new Exception(e);
+		}
+		
 	}
 	
 	//Getters

@@ -27,7 +27,7 @@ public class FIntCuentasImpl implements FIntCuentas {
 		return dao.create(titular);
 	}
 	@Override
-	public List<Cuenta> read(Cliente titular) {
+	public List<Cuenta> read(Cliente titular) throws Exception {
 		return dao.read(titular);
 	}
 	@Override
@@ -35,7 +35,7 @@ public class FIntCuentasImpl implements FIntCuentas {
 		return dao.update(emisor, receptor, cantidad);
 	}
 	@Override
-	public Cuenta search(String iban) {
+	public Cuenta search(String iban) throws Exception {
 		return dao.search(iban);
 	}
 

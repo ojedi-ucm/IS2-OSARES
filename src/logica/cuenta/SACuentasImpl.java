@@ -21,7 +21,7 @@ public class SACuentasImpl implements SACuentas {
 		return dao.create(titular);
 	}
 	@Override
-	public List<Cuenta> read(Cliente titular) {
+	public List<Cuenta> read(Cliente titular) throws Exception {
 		return dao.read(titular);
 	}
 	@Override
@@ -33,7 +33,7 @@ public class SACuentasImpl implements SACuentas {
 		return dao.delete(iban);
 	}
 	@Override
-	public Cuenta consultar(String iban) {
+	public Cuenta consultar(String iban) throws Exception {
 		return dao.search(iban);
 	}
 }

@@ -8,8 +8,8 @@ import modelo.Cuenta;
 
 public interface FCuentas {
 	public boolean create(Cliente cuenta);
-	public List<Cuenta> read(Cliente titular);
+	public List<Cuenta> read(Cliente titular) throws Exception;
 	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad);
 	public boolean delete(String iban);
-	public Cuenta consultar(String iban);	
+	public Cuenta consultar(String iban) throws Exception;	
 }
