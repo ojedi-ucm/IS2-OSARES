@@ -1,5 +1,14 @@
 {
-    "clientes": {},
-    "cuentas": {},
-    "citas": {}
+    "clientes": {
+        "cliente1@gmail.com": { 
+            "cuentas": ["iban1", "iban2", "iban3"]
+        }
+    },
+    "cuentas": {
+        "iban1": {
+            "titular": "cliente1@gmail.com"
+        }
+    },
+    
+    "citas": {  }
 }

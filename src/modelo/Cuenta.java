@@ -1,6 +1,7 @@
 package modelo;
 
-import java.util.List;
+import java.util.Random;
+import java.math.BigInteger;
 
 import org.json.JSONObject;
 
@@ -8,24 +9,31 @@ public class Cuenta {
 	//Constantes
 	
 	//Atributos
-	private String _ss = "ES";
-	private long _iban;
+	private String _ss = "ES21";
+	private BigInteger _numCuenta;
+	private String _iban;
 	private float _dinero;
-	private List<Cliente> _titulares;
+	private String _titularID;
 	
 	//Constructores
-	public Cuenta(float dineroIni, List<Cliente> titulares) {
-		//_iban = iban; falta
-		_dinero = dineroIni;
-		_titulares = titulares;
+	public Cuenta(float dinero, Cliente titular) {
+		Random rand = new Random();
+		_numCuenta = new BigInteger(20 * 5, rand);
+		_iban = _ss + _numCuenta;
+		_dinero = dinero;
+		_titularID = titular.getID();
 	}
 	
-	public Cuenta(JSONObject cuenta) {
-		
+	public Cuenta(String iban, JSONObject cuenta) {
+		_ss = cuenta.getString("ss");
+		_numCuenta = cuenta.getBigInteger("numCuenta");
+		_iban = iban;
+		_dinero = cuenta.getFloat("dinero");
+		_titularID = cuenta.getString("titular");
 	}
 	
 	//Getters
-	public long getIBAN() {
+	public String getIBAN() {
 		return _iban;
 	}
 	
@@ -33,10 +41,17 @@ public class Cuenta {
 		return _dinero;
 	}
 	
-	public List<Cliente> getTitulares() {
-		return _titulares;
+	public String getTitularID() {
+		return _titularID;
 	}
 	
+	public String getSS() {
+		return _ss;
+	}
+	
+	public BigInteger getNumCuenta() {
+		return _numCuenta;
+	}
 	//Setters
 	public void sumDinero(float ingreso) {
 		_dinero += ingreso;
@@ -49,13 +64,6 @@ public class Cuenta {
 	//Verificadores
 	
 	//Actualizadores
-	public boolean addTitular(Cliente nuevoTitular) {
-		return _titulares.add(nuevoTitular);
-	}
-	
-	public boolean removeTitular(Cliente titular) {
-		return _titulares.remove(titular);
-	}
 	
 	
 	//Utiles

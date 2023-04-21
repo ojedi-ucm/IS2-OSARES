@@ -7,12 +7,9 @@ import modelo.Cliente;
 import modelo.Cuenta;
 
 public interface FCuentas {
-	public boolean		create(ArrayList<Cuenta> titulares);
-	public List<Cuenta> read();
-	public List<Cuenta> readCuentasCliente(Cliente titular);
-	public boolean		update(Cuenta emisor,
-							   Cuenta receptor,
-							   float cantidad);
-	public boolean		delete(long IBAN, Cuenta receptor);
-	public Cuenta		consultar(long IBAN);	
+	public boolean create(Cliente cuenta);
+	public List<Cuenta> read(Cliente titular);
+	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad);
+	public boolean delete(String iban);
+	public Cuenta consultar(String iban);	
 }

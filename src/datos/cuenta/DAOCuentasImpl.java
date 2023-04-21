@@ -16,21 +16,25 @@ import modelo.Cuenta;
 public class DAOCuentasImpl implements DAOCuentas {
 //Constantes
 	private final String ID_DAO = "cuentas";
+	private final String PATH = "resources/bd.json";
 //Atributos
 	private JSONObject _bdCuentas;
 	
 //Constructor
 	DAOCuentasImpl() throws Exception {
+		loadCuentas();
+	}
+	
+	private void loadCuentas() throws Exception {
 		try {
-			_bdCuentas = (JSONObject) new JSONObject(new FileReader("resources/bd.json")).get(ID_DAO);
+			_bdCuentas = (JSONObject) new JSONObject(new FileReader(PATH)).get(ID_DAO);
 		} catch(Exception e ) {
 			throw new Exception(e);
 		}
-		
 	}
 	
 	private boolean saveChanges() {
-		try (FileWriter file = new FileWriter("resources/bd.json")) {
+		try (FileWriter file = new FileWriter(PATH)) {
 		    file.write(_bdCuentas.toString());
 		    file.flush();
 		    return true;
@@ -42,43 +46,48 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 //CRUDS	
 	@Override
-	public boolean create(ArrayList<Cliente> titulares) {
+	public boolean create(Cliente titular) {
 		JSONObject o = new JSONObject();
-		Cuenta nuevaCuenta = new Cuenta(0, titulares);
+		Cuenta nuevaCuenta = new Cuenta(0, titular);
 		
-		o.append("titulares", titulares);
-		o.put("IBAN", nuevaCuenta.getIBAN());
+		o.put("ss", nuevaCuenta.getSS());
+		o.put("numCuenta", nuevaCuenta.getNumCuenta());
 		o.put("dinero", nuevaCuenta.getDinero());
-		
-		_bdCuentas.put(Long.toString(nuevaCuenta.getIBAN()), o);
+		o.put("titular", nuevaCuenta.getTitularID());
+			
+		_bdCuentas.put(nuevaCuenta.getIBAN(), o);
 		
 		return saveChanges();
 	}
 	
 	@Override
-	public List<Cuenta> read(ArrayList<Cliente> titulares) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cuenta> read(Cliente titular) {
+		List<Cuenta> res = new ArrayList<>();
+		
+		for(String iban: titular.getCuentas()) {
+			JSONObject o = (JSONObject) _bdCuentas.get(iban);
+			res.add(new Cuenta(iban, o));
+		}
+		
+		return res;
 	}
 	
 	@Override
-	public boolean update(Cliente emisor, Cliente receptor, float cantidad) {
+	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
+	@Override 
+	public boolean delete(String iban) {
+		return _bdCuentas.remove(iban) != null;
+	}
+	
 	@Override
-	public Cuenta search(long IBAN) {
-		JSONObject search = (JSONObject) _bdCuentas.get(Long.toString(IBAN));
-		JSONArray jsonTitulares = search.getJSONArray("titulares");
+	public Cuenta search(String iban) {
+		JSONObject search = (JSONObject) _bdCuentas.get(iban);
 		
-		List<Cliente> titulares = new ArrayList<>();
-		
-		for(Object c: jsonTitulares)
-			titulares.add((Cliente) c);
-			
-		
-		Cuenta res = new Cuenta(search.getFloat("dinero"), titulares);
+		Cuenta res = new Cuenta(iban, search);
 		
 		return res;
 	}

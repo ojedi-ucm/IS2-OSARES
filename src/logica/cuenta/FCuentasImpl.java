@@ -15,33 +15,23 @@ public class FCuentasImpl implements FCuentas {
 	public FCuentasImpl() { sa = new SACuentasImpl(); }
 //CRRUDS
 	@Override
-	public boolean create(ArrayList<Cuenta> titulares) {
-		// TODO Auto-generated method stub
-		return sa.create(titulares);
+	public boolean create(Cliente titular) {
+		return sa.create(titular);
 	}
 	@Override
-	public List<Cuenta> read() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<Cuenta> readCuentasCliente(Cliente titular) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cuenta> read(Cliente titular) {
+		return sa.read(titular);
 	}
 	@Override
 	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.update(emisor, receptor, cantidad);
 	}
 	@Override
-	public boolean delete(long IBAN, Cuenta receptor) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String iban) {
+		return sa.delete(iban);
 	}
 	@Override
-	public Cuenta consultar(long IBAN) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cuenta consultar(String iban) {
+		return sa.consultar(iban);
 	}
 }

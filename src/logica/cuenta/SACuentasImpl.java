@@ -17,34 +17,23 @@ public class SACuentasImpl implements SACuentas {
 	SACuentasImpl() { dao = new FIntCuentasImpl(); }
 //CRRUDS
 	@Override
-	public boolean create(ArrayList<Cuenta> titulares) {
-		// TODO Auto-generated method stub
-		//return dao.create(titulares);
-		return false;
+	public boolean create(Cliente titular) {
+		return dao.create(titular);
 	}
 	@Override
-	public List<Cuenta> read() {
-		// TODO Auto-generated method stub
-		return null;
-	}	
-	@Override
-	public List<Cuenta> readCuentasCliente(Cliente titular) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cuenta> read(Cliente titular) {
+		return dao.read(titular);
 	}
 	@Override
 	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.update(emisor, receptor, cantidad);
 	}
 	@Override
-	public boolean delete(long IBAN, Cuenta receptor) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String iban) {
+		return dao.delete(iban);
 	}
 	@Override
-	public Cuenta consultar(long IBAN) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cuenta consultar(String iban) {
+		return dao.search(iban);
 	}
 }

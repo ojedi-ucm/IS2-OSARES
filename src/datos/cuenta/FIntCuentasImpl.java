@@ -17,30 +17,30 @@ public class FIntCuentasImpl implements FIntCuentas {
 		try {
 			dao = new DAOCuentasImpl();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}
 	
 	//CRUDS
 	@Override
-	public boolean create(ArrayList<Cliente> titulares) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(Cliente titular) {
+		return dao.create(titular);
 	}
 	@Override
-	public List<Cuenta> read(ArrayList<Cliente> titulares) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cuenta> read(Cliente titular) {
+		return dao.read(titular);
 	}
 	@Override
-	public boolean update(Cliente emisor, Cliente receptor, float cantidad) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
+		return dao.update(emisor, receptor, cantidad);
 	}
 	@Override
-	public Cuenta search(long IBAN) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cuenta search(String iban) {
+		return dao.search(iban);
+	}
+
+	@Override
+	public boolean delete(String iban) {
+		return dao.delete(iban);
 	}
 }
