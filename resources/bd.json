@@ -1,14 +1,17 @@
 {
-    "clientes": {
-        "cliente1@gmail.com": { 
-            "cuentas": ["iban1", "iban2", "iban3"]
-        }
-    },
+    "citas": {},
     "cuentas": {
-        "iban1": {
+        "ES211037195156466404157513655163524": {
+            "ss": "ES21",
+            "numCuenta": 1037195156466404157513655163524,
+            "dinero": 0,
+            "nombre": "Hola",
             "titular": "cliente1@gmail.com"
         }
     },
-    
-    "citas": {  }
+    "clientes": {
+        "cliente1@gmail.com": {
+            "cuentas": []
+        }
+    }
 }

@@ -26,11 +26,11 @@ public class Cuenta {
 		_nombre = nombre;
 	}
 	
-	public Cuenta(String iban, JSONObject cuenta) throws Exception {
+	public Cuenta(JSONObject cuenta) throws Exception {
 		try {
 			_ss = cuenta.getString("ss");
 			_numCuenta = cuenta.getBigInteger("numCuenta");
-			_iban = iban;
+			_iban = _ss + _numCuenta;
 			_dinero = cuenta.getFloat("dinero");
 			_titularID = cuenta.getString("titular");
 			_nombre = cuenta.getString("nombre");
@@ -64,13 +64,22 @@ public class Cuenta {
 	public String getNombre() {
 		return _nombre;
 	}
-	//Setters
-	public void sumDinero(float ingreso) {
-		_dinero += ingreso;
+	
+	public JSONObject getJSON() {
+		JSONObject o = new JSONObject();
+		
+		o.put("ss", _ss);
+		o.put("numCuenta", _numCuenta);
+		o.put("dinero", _dinero);
+		o.put("titular", _titularID);
+		o.put("nombre", _nombre);
+		
+		return o;
 	}
 	
-	public void restDinero(float gasto) {
-		_dinero += gasto;
+	//Setters
+	public void modificarDinero(float movimiento) {
+		_dinero += movimiento;
 	}
 	
 	//Verificadores

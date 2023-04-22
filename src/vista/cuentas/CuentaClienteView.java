@@ -25,9 +25,8 @@ public class CuentaClienteView extends JPanel {
 		ControlPanelView controlPanel = new ControlPanelView(_ctrl);
 		add(controlPanel, BorderLayout.PAGE_START);
 		
-		InfoTableView cuentasTable = new InfoTableView("Mis Cuentas", new CuentasTableModel());
+		InfoTableView cuentasTable = new InfoTableView("Mis Cuentas", new CuentasTableModel(_ctrl));
 		cuentasTable.setPreferredSize(new Dimension(500,250));
 		add(cuentasTable, BorderLayout.CENTER);
-		
 	}
 }

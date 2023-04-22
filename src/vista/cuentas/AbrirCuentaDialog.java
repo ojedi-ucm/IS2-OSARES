@@ -23,21 +23,20 @@ import vista.observers.CuentasObserver;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-public class RetirarDineroDialog extends JDialog implements CuentasObserver {
+public class AbrirCuentaDialog extends JDialog {
 	
 	private ControlCuenta _ctrl;
-	private List<Cuenta> _cuentas;
-	private DefaultComboBoxModel<String> _cuentasModel;
+	private JTextField _nombreTF;
 	
 	
-	public RetirarDineroDialog(JFrame parent, ControlCuenta ctrl) {
+	public AbrirCuentaDialog(JFrame parent, ControlCuenta ctrl) {
 		super(parent, true);
 		_ctrl = ctrl;
 		initGUI();
 	}
 	
 	private void initGUI() {
-		setTitle("Retirar Dinero");
+		setTitle("Abrir Nueva Cuenta");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		setContentPane(mainPanel);
@@ -49,37 +48,16 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		
-		// Seleccionar Cuenta
-		JLabel cuentaLabel = new JLabel("Cuenta de Retirada");
-		cuentaLabel.setAlignmentX(LEFT_ALIGNMENT);
-		
-		_cuentas = _ctrl.getCuentas();
-		_cuentasModel = new DefaultComboBoxModel<>();
-		
-		for(Cuenta c: _cuentas)
-			_cuentasModel.addElement(c.getNombre());
-		
-		JComboBox<String> cuentas = new JComboBox<String>();
-		cuentas.setModel(_cuentasModel);
-		cuentas.setAlignmentX(LEFT_ALIGNMENT);
-		cuentas.setPreferredSize(new Dimension(300, 30));
-		
-		formPanel.add(cuentaLabel);
-		formPanel.add(cuentas);
-		
-		formPanel.add(Box.createVerticalStrut(20));
-		
-		
 		// Especificar Cantidad
-		JLabel cantidadLabel = new JLabel("Cantidad (€)");
-		cantidadLabel.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel nombreLabel = new JLabel("Nombre de la Cuenta");
+		nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JTextField cantidad = new JTextField();
-		cantidad.setAlignmentX(LEFT_ALIGNMENT);
-		cantidad.setPreferredSize(new Dimension(300, 30));
+		_nombreTF = new JTextField();
+		_nombreTF.setAlignmentX(LEFT_ALIGNMENT);
+		_nombreTF.setPreferredSize(new Dimension(300, 30));
 		
-		formPanel.add(cantidadLabel);
-		formPanel.add(cantidad);
+		formPanel.add(nombreLabel);
+		formPanel.add(_nombreTF);
 		
 		formPanel.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(formPanel);
@@ -89,7 +67,8 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			
+			_ctrl.abrirCuenta(_nombreTF.getText());
+			setVisible(false);
 		});
 		btnPanel.add(confirmBtn);
 		
@@ -112,13 +91,5 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		
 		pack();
 		setVisible(true);
-	}
-	
-	@Override
-	public void updateCuentas(Map<String, Cuenta> cuentas) {
-		_cuentas.clear();
-		
-		for(Cuenta c: cuentas.values())
-			_cuentas.add(c);
 	}
 }

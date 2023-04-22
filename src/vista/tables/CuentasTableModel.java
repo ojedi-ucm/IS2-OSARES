@@ -2,18 +2,22 @@ package vista.tables;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
+import control.ControlCuenta;
 import modelo.Cuenta;
+import vista.observers.CuentasObserver;
 
 
-public class CuentasTableModel extends AbstractTableModel {
+public class CuentasTableModel extends AbstractTableModel implements CuentasObserver {
 	
 	String[] _header = { "Nombre", "Cantidad Total", "IBAN" };
 	List<Cuenta> _cuentas;
 	
-	public CuentasTableModel() {
+	public CuentasTableModel(ControlCuenta ctrl) {
+		ctrl.addObserver(this);
 		_cuentas = new ArrayList<>();
 	}
 
@@ -44,5 +48,13 @@ public class CuentasTableModel extends AbstractTableModel {
 		}
 		
 		return 0;
+	}
+	
+	@Override
+	public void updateCuentas(Map<String, Cuenta> cuentas) {
+		_cuentas.clear();
+		
+		for(Cuenta c: cuentas.values())
+			_cuentas.add(c);
 	}
 }

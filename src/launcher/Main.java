@@ -5,6 +5,8 @@ import javax.swing.SwingUtilities;
 import vista.MainWindow;
 import control.ControlCuenta;
 
+import modelo.Cliente;
+
 public class Main {
 //Atributos
 	
@@ -12,7 +14,8 @@ public class Main {
 	
 //Main
 	public static void main(String[] args) {
-		ControlCuenta ctrl = new ControlCuenta();
+		Cliente tit = new Cliente();
+		ControlCuenta ctrl = new ControlCuenta(tit);
 		
 		try {
 			SwingUtilities.invokeAndWait(() -> new MainWindow(ctrl));

@@ -3,12 +3,12 @@ package datos.cuenta;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 import modelo.Cuenta;
 
 public class FIntCuentasImpl implements FIntCuentas {
-	//Constantes
-	
 	//Atributos
 	private DAOCuentas dao;
 	
@@ -22,25 +22,31 @@ public class FIntCuentasImpl implements FIntCuentas {
 	}
 	
 	//CRUDS
+	
 	@Override
-	public boolean create(Cliente titular) {
-		return dao.create(titular);
-	}
-	@Override
-	public List<Cuenta> read(Cliente titular) throws Exception {
-		return dao.read(titular);
-	}
-	@Override
-	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
-		return dao.update(emisor, receptor, cantidad);
-	}
-	@Override
-	public Cuenta search(String iban) throws Exception {
-		return dao.search(iban);
+	public boolean create(String id, JSONObject cuenta) {
+		return dao.create(id, cuenta);
 	}
 
 	@Override
-	public boolean delete(String iban) {
-		return dao.delete(iban);
+	public List<JSONObject> read(List<String> titularIDs) {
+		return dao.read(titularIDs);
 	}
+
+	@Override
+	public boolean update(String idEmisor, JSONObject emisor, String idReceptor, JSONObject receptor) {
+		return dao.update(idEmisor, emisor, idReceptor, receptor);
+	}
+	
+	@Override
+	public boolean update(String id, JSONObject cuenta) {
+		return dao.update(id, cuenta);
+	}
+
+	@Override
+	public boolean delete(String id) {
+		return dao.delete(id);
+	}
+
+	
 }

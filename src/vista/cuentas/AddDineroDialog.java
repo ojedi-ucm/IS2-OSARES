@@ -2,6 +2,7 @@ package vista.cuentas;
 
 import java.awt.Dimension;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -16,14 +17,16 @@ import javax.swing.JTextField;
 import org.json.JSONObject;
 
 import control.ControlCuenta;
+import modelo.Cuenta;
+import vista.observers.CuentasObserver;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-public class AddDineroDialog extends JDialog {
+public class AddDineroDialog extends JDialog implements CuentasObserver {
 	
 	private ControlCuenta _ctrl;
-	private List<JSONObject> _cuentas;
+	private List<Cuenta> _cuentas;
 	private DefaultComboBoxModel<String> _cuentasModel;
 	
 	
@@ -53,8 +56,8 @@ public class AddDineroDialog extends JDialog {
 		_cuentas = _ctrl.getCuentas();
 		_cuentasModel = new DefaultComboBoxModel<>();
 		
-		for(JSONObject s: _cuentas)
-			_cuentasModel.addElement(s.getString("nombre"));
+		for(Cuenta c: _cuentas)
+			_cuentasModel.addElement(c.getNombre());
 		
 		JComboBox<String> cuentas = new JComboBox<String>();
 		cuentas.setModel(_cuentasModel);
@@ -109,5 +112,13 @@ public class AddDineroDialog extends JDialog {
 		
 		pack();
 		setVisible(true);
+	}
+	
+	@Override
+	public void updateCuentas(Map<String, Cuenta> cuentas) {
+		_cuentas.clear();
+		
+		for(Cuenta c: cuentas.values())
+			_cuentas.add(c);
 	}
 }
