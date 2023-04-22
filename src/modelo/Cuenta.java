@@ -14,14 +14,16 @@ public class Cuenta {
 	private String _iban;
 	private float _dinero;
 	private String _titularID;
+	private String _nombre;
 	
 	//Constructores
-	public Cuenta(float dinero, Cliente titular) {
+	public Cuenta(float dinero, String nombre, Cliente titular) {
 		Random rand = new Random();
 		_numCuenta = new BigInteger(20 * 5, rand);
 		_iban = _ss + _numCuenta;
 		_dinero = dinero;
 		_titularID = titular.getID();
+		_nombre = nombre;
 	}
 	
 	public Cuenta(String iban, JSONObject cuenta) throws Exception {
@@ -31,6 +33,7 @@ public class Cuenta {
 			_iban = iban;
 			_dinero = cuenta.getFloat("dinero");
 			_titularID = cuenta.getString("titular");
+			_nombre = cuenta.getString("nombre");
 		} catch(Exception e) {
 			throw new Exception(e);
 		}
@@ -56,6 +59,10 @@ public class Cuenta {
 	
 	public BigInteger getNumCuenta() {
 		return _numCuenta;
+	}
+	
+	public String getNombre() {
+		return _nombre;
 	}
 	//Setters
 	public void sumDinero(float ingreso) {

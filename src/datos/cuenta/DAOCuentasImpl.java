@@ -48,7 +48,7 @@ public class DAOCuentasImpl implements DAOCuentas {
 	@Override
 	public boolean create(Cliente titular) {
 		JSONObject o = new JSONObject();
-		Cuenta nuevaCuenta = new Cuenta(0, titular);
+		Cuenta nuevaCuenta = new Cuenta(0, "un nombre", titular);
 		
 		o.put("ss", nuevaCuenta.getSS());
 		o.put("numCuenta", nuevaCuenta.getNumCuenta());
