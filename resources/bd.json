@@ -1,17 +1,1 @@
-{
-    "citas": {},
-    "cuentas": {
-        "ES211037195156466404157513655163524": {
-            "ss": "ES21",
-            "numCuenta": 1037195156466404157513655163524,
-            "dinero": 0,
-            "nombre": "Hola",
-            "titular": "cliente1@gmail.com"
-        }
-    },
-    "clientes": {
-        "cliente1@gmail.com": {
-            "cuentas": []
-        }
-    }
-}
+{"citas":{},"cuentas":{"ES21491757892508466542021878128889":{"ss":"ES21","numCuenta":491757892508466542021878128889,"dinero":4000,"nombre":"Nómina","titular":"cliente1@gmail.com"},"ES21289188444485942389843509397432":{"ss":"ES21","numCuenta":289188444485942389843509397432,"dinero":10005,"nombre":"Otra cuenta","titular":"cliente2@gmail.com"}},"clientes":{"cliente1@gmail.com":{"cuentas":[]}}}

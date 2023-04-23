@@ -37,8 +37,20 @@ public class SACuentasImpl implements SACuentas {
 		return res;
 	}
 	
+	
+	
 	@Override
 	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
+		emisor.modificarDinero(-cantidad);
+		receptor.modificarDinero(cantidad);
+		
+		return dao.update(emisor.getIBAN(), emisor.getJSON(), receptor.getIBAN(), receptor.getJSON());
+	}
+	
+	@Override
+	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) {
+		Cuenta receptor = new Cuenta(dao.search(ibanReceptor));
+		
 		emisor.modificarDinero(-cantidad);
 		receptor.modificarDinero(cantidad);
 		
@@ -61,6 +73,4 @@ public class SACuentasImpl implements SACuentas {
 	public boolean delete(Cuenta cuenta) {
 		return dao.delete(cuenta.getIBAN());
 	}
-
-	
 }

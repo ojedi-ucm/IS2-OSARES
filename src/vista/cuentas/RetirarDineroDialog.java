@@ -1,7 +1,9 @@
 package vista.cuentas;
 
 import java.awt.Dimension;
+import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -26,14 +28,20 @@ import javax.swing.JComboBox;
 public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 	
 	private ControlCuenta _ctrl;
-	private List<Cuenta> _cuentas;
 	private DefaultComboBoxModel<String> _cuentasModel;
+	private List<String> _ibansList;
+	
+	private JComboBox<String> _cuentasCB;
+	private int _selectedCuentaIndex;
+	
+	private JTextField _cantidadTF;
 	
 	
 	public RetirarDineroDialog(JFrame parent, ControlCuenta ctrl) {
 		super(parent, true);
-		_ctrl = ctrl;
 		initGUI();
+		_ctrl = ctrl;
+		_ctrl.addObserver(this);
 	}
 	
 	private void initGUI() {
@@ -53,19 +61,19 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		JLabel cuentaLabel = new JLabel("Cuenta de Retirada");
 		cuentaLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
-		_cuentas = _ctrl.getCuentas();
 		_cuentasModel = new DefaultComboBoxModel<>();
+		_ibansList = new ArrayList<>();
 		
-		for(Cuenta c: _cuentas)
-			_cuentasModel.addElement(c.getNombre());
-		
-		JComboBox<String> cuentas = new JComboBox<String>();
-		cuentas.setModel(_cuentasModel);
-		cuentas.setAlignmentX(LEFT_ALIGNMENT);
-		cuentas.setPreferredSize(new Dimension(300, 30));
+		_cuentasCB = new JComboBox<String>();
+		_cuentasCB.setModel(_cuentasModel);
+		_cuentasCB.setAlignmentX(LEFT_ALIGNMENT);
+		_cuentasCB.setPreferredSize(new Dimension(300, 30));
+		_cuentasCB.addActionListener((a) -> {
+			_selectedCuentaIndex = _cuentasCB.getSelectedIndex();
+		});
 		
 		formPanel.add(cuentaLabel);
-		formPanel.add(cuentas);
+		formPanel.add(_cuentasCB);
 		
 		formPanel.add(Box.createVerticalStrut(20));
 		
@@ -74,12 +82,12 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		JLabel cantidadLabel = new JLabel("Cantidad (€)");
 		cantidadLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JTextField cantidad = new JTextField();
-		cantidad.setAlignmentX(LEFT_ALIGNMENT);
-		cantidad.setPreferredSize(new Dimension(300, 30));
+		_cantidadTF = new JTextField();
+		_cantidadTF.setAlignmentX(LEFT_ALIGNMENT);
+		_cantidadTF.setPreferredSize(new Dimension(300, 30));
 		
 		formPanel.add(cantidadLabel);
-		formPanel.add(cantidad);
+		formPanel.add(_cantidadTF);
 		
 		formPanel.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(formPanel);
@@ -89,13 +97,16 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			
+			_ctrl.retDinero(_ibansList.get(_selectedCuentaIndex), Float.parseFloat(_cantidadTF.getText()));
+			this.setVisible(false);
+			_cantidadTF.setText("");
 		});
 		btnPanel.add(confirmBtn);
 		
 		JButton cancelBtn = new JButton("Cancelar");
 		cancelBtn.addActionListener((a) -> {
 			this.setVisible(false);
+			_cantidadTF.setText("");
 		});
 		btnPanel.add(cancelBtn);
 		
@@ -107,6 +118,18 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		setVisible(false);
 	}
 	
+	private void updateModel(Collection<Cuenta> col) {
+		try {
+			_ibansList.clear();
+			_cuentasModel.removeAllElements();
+		} catch(Exception e) { }
+		
+		for(Cuenta c: col) {
+			_cuentasModel.addElement(c.getNombre());
+			_ibansList.add(c.getIBAN());
+		}
+	}
+	
 	public void open() {
 		setLocationRelativeTo(null);
 		
@@ -116,9 +139,6 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 	
 	@Override
 	public void updateCuentas(Map<String, Cuenta> cuentas) {
-		_cuentas.clear();
-		
-		for(Cuenta c: cuentas.values())
-			_cuentas.add(c);
+		updateModel(cuentas.values());
 	}
 }

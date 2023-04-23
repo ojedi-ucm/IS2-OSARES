@@ -17,8 +17,8 @@ public class CuentasTableModel extends AbstractTableModel implements CuentasObse
 	List<Cuenta> _cuentas;
 	
 	public CuentasTableModel(ControlCuenta ctrl) {
-		ctrl.addObserver(this);
 		_cuentas = new ArrayList<>();
+		ctrl.addObserver(this);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class CuentasTableModel extends AbstractTableModel implements CuentasObse
 			case 0:
 				return _cuentas.get(rowIndex).getNombre();
 			case 1:
-				return _cuentas.get(rowIndex).getDinero();
+				return _cuentas.get(rowIndex).getDinero() + "€";
 			case 2:
 				return _cuentas.get(rowIndex).getIBAN();
 		}
@@ -56,5 +56,7 @@ public class CuentasTableModel extends AbstractTableModel implements CuentasObse
 		
 		for(Cuenta c: cuentas.values())
 			_cuentas.add(c);
+		
+		fireTableStructureChanged();
 	}
 }

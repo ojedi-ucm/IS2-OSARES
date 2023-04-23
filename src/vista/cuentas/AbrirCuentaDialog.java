@@ -69,12 +69,14 @@ public class AbrirCuentaDialog extends JDialog {
 		confirmBtn.addActionListener((a) -> {
 			_ctrl.abrirCuenta(_nombreTF.getText());
 			setVisible(false);
+			_nombreTF.setText("");
 		});
 		btnPanel.add(confirmBtn);
 		
 		JButton cancelBtn = new JButton("Cancelar");
 		cancelBtn.addActionListener((a) -> {
 			this.setVisible(false);
+			_nombreTF.setText("");
 		});
 		btnPanel.add(cancelBtn);
 		

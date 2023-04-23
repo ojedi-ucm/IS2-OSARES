@@ -54,24 +54,43 @@ public class ControlCuenta {
 		}
 	}
 	
+	private void updateDineroTotal() {
+		_dineroTotal = 0;
+		for(Cuenta c: _cuentas.values()) {
+			_dineroTotal += c.getDinero();
+		}
+	}
+	
 	// ------ Public Methods -------
 	
 	public void addObserver(CuentasObserver obs) {
 		_observers.add(obs);
+		obs.updateCuentas(_cuentas);
+		obs.updateDinero(_dineroTotal);
 	}
 	
 	public void addDinero(String iban, float cantidad) {
+		_dineroTotal += cantidad;
 		_fCuentas.update(_cuentas.get(iban), cantidad);
 		updateObs();
 	}
 	
 	public void retDinero(String iban, float cantidad) {
+		_dineroTotal -= cantidad;
 		_fCuentas.update(_cuentas.get(iban), -cantidad);
 		updateObs();
 	}
 	
 	public void transferirDinero(String emisor, String receptor, float cantidad) {
-		_fCuentas.update(_cuentas.get(emisor), _cuentas.get(receptor), cantidad);
+		Cuenta emi = _cuentas.get(emisor);
+		Cuenta rec = _cuentas.get(receptor);
+		
+		if(rec == null)
+			_fCuentas.update(emi, receptor, cantidad);
+		else
+			_fCuentas.update(emi, rec, cantidad);
+		
+		updateDineroTotal();
 		updateObs();
 	}
 	
@@ -86,11 +105,15 @@ public class ControlCuenta {
 		updateObs();
 	}
 	
-	public void cerrarCuenta(String iban) {
-		Cuenta c = _cuentas.get(iban);
-		_cuentas.remove(iban);
+	public void cerrarCuenta(String ibanCerrar, String ibanTrans) {
+		Cuenta cerrar = _cuentas.get(ibanCerrar);
+		Cuenta trans = _cuentas.get(ibanTrans);
 		
-		_fCuentas.delete(c);
+		_fCuentas.update(cerrar, trans, cerrar.getDinero());
+		
+		_cuentas.remove(ibanCerrar);
+	
+		_fCuentas.delete(cerrar);
 		
 		updateObs();
 	}

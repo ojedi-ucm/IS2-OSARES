@@ -48,5 +48,8 @@ public class FIntCuentasImpl implements FIntCuentas {
 		return dao.delete(id);
 	}
 
-	
+	@Override
+	public JSONObject search(String iban) {
+		return dao.search(iban);
+	}
 }

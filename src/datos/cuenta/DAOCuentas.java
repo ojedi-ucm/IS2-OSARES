@@ -14,4 +14,5 @@ public interface DAOCuentas {
 	public boolean update(String idEmisor, JSONObject emisor, String idReceptor, JSONObject receptor);
 	public boolean update(String id, JSONObject cuenta);
 	public boolean delete(String id);
+	JSONObject search(String iban);
 }

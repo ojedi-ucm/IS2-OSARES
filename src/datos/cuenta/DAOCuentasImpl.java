@@ -90,5 +90,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 		return saveChanges();
 	}
 
-	
+	@Override
+	public JSONObject search(String iban) {
+		return _bdCuentas.getJSONObject(iban);
+	}
 }

@@ -1,7 +1,9 @@
 package vista.cuentas;
 
 import java.awt.Dimension;
+import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -26,12 +28,16 @@ import javax.swing.JComboBox;
 public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 	
 	private ControlCuenta _ctrl;
-	private List<Cuenta> _cuentas;
 	private DefaultComboBoxModel<String> _cuentasModel;
 	private DefaultComboBoxModel<String> _cuentasModifiedModel;
 	
-	private int _selectedIndexCuenta;
+	private List<String> _ibansCerrar;
+	private List<String> _ibansTrans;
 	
+	private int _selectedCuentaCerrarIndex;
+	private int _selectedCuentaTransIndex;
+	
+	private JComboBox<String> _cuentasCB;
 	private JComboBox<String> _transCBox;
 	
 	
@@ -39,6 +45,7 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 		super(parent, true);
 		_ctrl = ctrl;
 		initGUI();
+		_ctrl.addObserver(this);
 	}
 	
 	private void initGUI() {
@@ -48,15 +55,10 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 		setContentPane(mainPanel);
 		
 		// ------ INIT -------
-		_cuentas = _ctrl.getCuentas();
 		_cuentasModel = new DefaultComboBoxModel<>();
 		_cuentasModifiedModel = new DefaultComboBoxModel<>();
-		
-		for(Cuenta c: _cuentas) {
-			_cuentasModel.addElement(c.getNombre());
-			_cuentasModifiedModel.addElement(c.getNombre());
-		}
-
+		_ibansCerrar = new ArrayList<>();
+		_ibansTrans = new ArrayList<>();
 		
 		JPanel formPanel = new JPanel();
 		formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
@@ -67,18 +69,17 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 		JLabel cuentaLabel = new JLabel("Cerrar Cuenta");
 		cuentaLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JComboBox<String> cuentas = new JComboBox<String>();
-		cuentas.setModel(_cuentasModel);
-		cuentas.setSelectedIndex(-1);
-		cuentas.setAlignmentX(LEFT_ALIGNMENT);
-		cuentas.setPreferredSize(new Dimension(300, 30));
-		cuentas.addActionListener((a) -> {
-			_selectedIndexCuenta = cuentas.getSelectedIndex();
+		_cuentasCB = new JComboBox<String>();
+		_cuentasCB.setModel(_cuentasModel);
+		_cuentasCB.setAlignmentX(LEFT_ALIGNMENT);
+		_cuentasCB.setPreferredSize(new Dimension(300, 30));
+		_cuentasCB.addActionListener((a) -> {
+			_selectedCuentaCerrarIndex = _cuentasCB.getSelectedIndex();
 			resetModModel();
 		});
 		
 		formPanel.add(cuentaLabel);
-		formPanel.add(cuentas);
+		formPanel.add(_cuentasCB);
 		
 		formPanel.add(Box.createVerticalStrut(20));
 		
@@ -87,9 +88,11 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 		transLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
 		_transCBox = new JComboBox<String>();
-		_transCBox.setSelectedIndex(-1);
 		_transCBox.setAlignmentX(LEFT_ALIGNMENT);
 		_transCBox.setPreferredSize(new Dimension(300, 30));
+		_transCBox.addActionListener((a) -> {
+			_selectedCuentaTransIndex = _transCBox.getSelectedIndex();
+		});
 		
 		formPanel.add(transLabel);
 		formPanel.add(_transCBox);
@@ -103,7 +106,8 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			
+			_ctrl.cerrarCuenta(_ibansCerrar.get(_selectedCuentaCerrarIndex), _ibansTrans.get(_selectedCuentaTransIndex));
+			this.setVisible(false);
 		});
 		btnPanel.add(confirmBtn);
 		
@@ -124,14 +128,40 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 	}
 	
 	private void resetModModel() {
-		_cuentasModifiedModel.removeAllElements();
+		try {
+			_ibansTrans.clear();
+			_cuentasModifiedModel.removeAllElements();
+			
+			for(int i = 0; i < _cuentasModel.getSize(); ++i) {
+				_cuentasModifiedModel.addElement(_cuentasModel.getElementAt(i));
+				_ibansTrans.add(_ibansCerrar.get(i));
+			}
+			
+			_cuentasModifiedModel.removeElementAt(_selectedCuentaCerrarIndex);
+			_ibansTrans.remove(_selectedCuentaCerrarIndex);
+		} catch(Exception e) {}
+			
+		_transCBox.setModel(_cuentasModifiedModel);
+		_transCBox.setSelectedIndex(-1);
+	}
+	
+	private void updateModels(Collection<Cuenta> col) {
+		try {
+			_ibansCerrar.clear();
+			_ibansTrans.clear();
+			_cuentasModel.removeAllElements();
+			_cuentasModifiedModel.removeAllElements();
+		} catch(Exception e) { }
 		
-		for(Cuenta c: _cuentas) {
+		for(Cuenta c: col) {
+			_cuentasModel.addElement(c.getNombre());
 			_cuentasModifiedModel.addElement(c.getNombre());
+			_ibansCerrar.add(c.getIBAN());
+			_ibansTrans.add(c.getIBAN());
 		}
 		
-		_cuentasModifiedModel.removeElementAt(_selectedIndexCuenta);
-		_transCBox.setModel(_cuentasModifiedModel);
+		_cuentasCB.setSelectedIndex(-1);
+		_transCBox.setSelectedIndex(-1);
 	}
 	
 	public void open() {
@@ -143,9 +173,6 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 	
 	@Override
 	public void updateCuentas(Map<String, Cuenta> cuentas) {
-		_cuentas.clear();
-		
-		for(Cuenta c: cuentas.values())
-			_cuentas.add(c);
+		updateModels(cuentas.values());
 	}
 }

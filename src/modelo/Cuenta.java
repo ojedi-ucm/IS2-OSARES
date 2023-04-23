@@ -26,7 +26,7 @@ public class Cuenta {
 		_nombre = nombre;
 	}
 	
-	public Cuenta(JSONObject cuenta) throws Exception {
+	public Cuenta(JSONObject cuenta) {
 		try {
 			_ss = cuenta.getString("ss");
 			_numCuenta = cuenta.getBigInteger("numCuenta");
@@ -35,9 +35,8 @@ public class Cuenta {
 			_titularID = cuenta.getString("titular");
 			_nombre = cuenta.getString("nombre");
 		} catch(Exception e) {
-			throw new Exception(e);
+			System.out.println(e.toString());
 		}
-		
 	}
 	
 	//Getters

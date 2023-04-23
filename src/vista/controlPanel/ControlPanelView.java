@@ -33,7 +33,6 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 	private ControlCuenta _ctrlCuenta;
 	
 	private float _dineroTotal;
-	private String _dineroTotalStr;
 	
 	private JToolBar _toolBar;
 	
@@ -46,12 +45,14 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 	private JButton _citasBtn;
 	private JButton _cerrarSesBtn;
 	
+	private JLabel _dinTotalLbl;
+	
 	
 	
 	public ControlPanelView(ControlCuenta ctrlCuenta) {
 		_ctrlCuenta = ctrlCuenta;
-		_ctrlCuenta.addObserver(this);
 		initGUI();
+		_ctrlCuenta.addObserver(this);
 	}
 	
 	private void initGUI() {
@@ -61,7 +62,6 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		add(_toolBar, BorderLayout.PAGE_START);
 		
 		// ------ INIT --------
-		updateDineroTotal();
 		
 		AddDineroDialog addDialog = new AddDineroDialog(new JFrame(), _ctrlCuenta);
 		RetirarDineroDialog retirarDialog = new RetirarDineroDialog(new JFrame(), _ctrlCuenta);
@@ -131,16 +131,16 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		JPanel dinBox = new JPanel();
 		dinBox.setLayout(new BoxLayout(dinBox, BoxLayout.Y_AXIS));
 		JLabel dinTotalLabel = new JLabel("Patrimonio Neto");
-		JLabel dinTotal = new JLabel(_dineroTotalStr + " €");
+		_dinTotalLbl = new JLabel("0.0 €");
 		
-		dinTotal.setFont(new Font("Monospaced", Font.PLAIN, 16));
-		dinTotal.setForeground(Color.BLUE);
+		_dinTotalLbl.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		_dinTotalLbl.setForeground(Color.BLUE);
 		
 		dinTotalLabel.setAlignmentX(CENTER_ALIGNMENT);
-		dinTotal.setAlignmentX(CENTER_ALIGNMENT);
+		_dinTotalLbl.setAlignmentX(CENTER_ALIGNMENT);
 		
 		dinBox.add(dinTotalLabel);
-		dinBox.add(dinTotal);
+		dinBox.add(_dinTotalLbl);
 		dinTotalPanel.add(dinBox);
 		_toolBar.add(dinTotalPanel);
 		
@@ -196,18 +196,17 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btn.setBorderPainted(false);
 		btn.setFocusPainted(false);
-		
 	}
 	
-	private void updateDineroTotal() {
-		_dineroTotal = _ctrlCuenta.getDineroTotal();
+	private void updateDineroTotal(float dineroTotal) {
+		_dineroTotal = dineroTotal;
 		
 		DecimalFormat df = new DecimalFormat("#,###.##");
-		_dineroTotalStr = df.format(_dineroTotal);
+		_dinTotalLbl.setText(df.format(_dineroTotal) + " €");
 	}
 
 	@Override
 	public void updateDinero(float dineroTotal) {
-		updateDineroTotal();
+		updateDineroTotal(dineroTotal);
 	}
 }

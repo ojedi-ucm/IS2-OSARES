@@ -28,6 +28,11 @@ public class FCuentasImpl implements FCuentas {
 	}
 	
 	@Override
+	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) {
+		return sa.update(emisor, ibanReceptor, cantidad);
+	}
+	
+	@Override
 	public boolean update(Cuenta cuenta) {
 		return sa.update(cuenta);
 	}
@@ -41,5 +46,4 @@ public class FCuentasImpl implements FCuentas {
 	public boolean delete(Cuenta cuenta) {
 		return sa.delete(cuenta);
 	}
-	
 }
