@@ -1,8 +1,12 @@
 package datos.cliente;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import modelo.Cliente;
 
@@ -11,11 +15,24 @@ public class DAOClientesImpl implements DAOClientes {
 
 //Atributos
 	JSONObject bd;
+	JSONObject datosClientes;
 //Constructor
-	public DAOClientesImpl() {
-		//new bd 
-		
+	public DAOClientesImpl() throws Exception {
+		InputStream in = new FileInputStream("./resources/bd.json");
+		loadClientes(in);
 	}
+
+//Metodos privados
+
+	private void loadClientes(InputStream in) throws Exception {
+		try {
+			bd = new JSONObject(new JSONTokener(in));
+			datosClientes = bd.getJSONObject("clientes");
+		} catch(Exception e ) {
+			throw new Exception(e);
+		}
+	}
+	
 //CRUDS
 	@Override
 	public boolean create(Cliente cliente) {
