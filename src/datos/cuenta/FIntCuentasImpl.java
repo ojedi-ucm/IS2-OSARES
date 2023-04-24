@@ -49,7 +49,7 @@ public class FIntCuentasImpl implements FIntCuentas {
 	}
 
 	@Override
-	public JSONObject search(String iban) {
+	public JSONObject search(String iban) throws Exception {
 		return dao.search(iban);
 	}
 }

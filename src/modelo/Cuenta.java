@@ -77,8 +77,11 @@ public class Cuenta {
 	}
 	
 	//Setters
-	public void modificarDinero(float movimiento) {
-		_dinero += movimiento;
+	public void modificarDinero(float movimiento) throws Exception {
+		if(_dinero + movimiento >= 0)
+			_dinero += movimiento;
+		else
+			throw new Exception("No hay fondos suficientes en la cuenta " + _nombre);
 	}
 	
 	//Verificadores

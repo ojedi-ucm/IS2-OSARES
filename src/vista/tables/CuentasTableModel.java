@@ -1,5 +1,6 @@
 package vista.tables;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,8 @@ public class CuentasTableModel extends AbstractTableModel implements CuentasObse
 			case 0:
 				return _cuentas.get(rowIndex).getNombre();
 			case 1:
-				return _cuentas.get(rowIndex).getDinero() + "€";
+				DecimalFormat df = new DecimalFormat("#,###.##");
+				return df.format(_cuentas.get(rowIndex).getDinero()) + " €";
 			case 2:
 				return _cuentas.get(rowIndex).getIBAN();
 		}

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import control.ControlCuenta;
 import modelo.Cuenta;
+import vista.Utils;
 import vista.observers.CuentasObserver;
 
 import javax.swing.JButton;
@@ -106,8 +107,16 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			_ctrl.cerrarCuenta(_ibansCerrar.get(_selectedCuentaCerrarIndex), _ibansTrans.get(_selectedCuentaTransIndex));
-			this.setVisible(false);
+			try {
+				if(_selectedCuentaCerrarIndex == -1 || _selectedCuentaTransIndex == -1)
+					Utils.showErrorMsg("Existen campos vacíos.");
+				else {
+					_ctrl.cerrarCuenta(_ibansCerrar.get(_selectedCuentaCerrarIndex), _ibansTrans.get(_selectedCuentaTransIndex));
+					this.setVisible(false);
+				}
+			} catch(Exception e) {
+				Utils.showErrorMsg(e.toString());
+			}
 		});
 		btnPanel.add(confirmBtn);
 		

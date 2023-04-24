@@ -150,12 +150,14 @@ public class TransferenciaDialog extends JDialog implements CuentasObserver {
 		JButton confirmBtn = new JButton("Confirmar"); // Confirmar transferencia
 		confirmBtn.addActionListener((a) -> {
 			try {
-				_ctrl.transferirDinero(_ibansDesde.get(_selectedIndexSalida), _ibanTF.getText(), Float.parseFloat(_cantidadTF.getText()));
-				
-				this.setVisible(false);
-				_cantidadTF.setText("");
-				_cuentasSalida.setSelectedIndex(-1);
-				_cuentasLlegada.setSelectedIndex(-1);
+				if(_selectedIndexSalida == -1 || _ibanTF.getText().isBlank() || _cantidadTF.getText().isBlank())
+					Utils.showErrorMsg("Existen campos vacíos.");
+				else {
+					_ctrl.transferirDinero(_ibansDesde.get(_selectedIndexSalida), _ibanTF.getText(), Float.parseFloat(_cantidadTF.getText()));
+					
+					this.setVisible(false);
+					_cantidadTF.setText("");
+				}
 			} catch(Exception e) {
 				Utils.showErrorMsg(e.toString());
 			}
@@ -198,6 +200,7 @@ public class TransferenciaDialog extends JDialog implements CuentasObserver {
 		_cuentasLlegada.setModel(_cuentasYOtrosModel);
 		_cuentasLlegada.setSelectedIndex(-1);
 		_ibanTF.setText("");
+		_ibanTF.setEnabled(false);
 	}
 	
 	private void updateModels(Collection<Cuenta> col) {

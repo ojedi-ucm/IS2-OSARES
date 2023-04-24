@@ -28,5 +28,8 @@ public class CuentaClienteView extends JPanel {
 		InfoTableView cuentasTable = new InfoTableView("Mis Cuentas", new CuentasTableModel(_ctrl));
 		cuentasTable.setPreferredSize(new Dimension(500,250));
 		add(cuentasTable, BorderLayout.CENTER);
+		
+		CuentaStatus status = new CuentaStatus(_ctrl.getTitularID());
+		add(status, BorderLayout.PAGE_END);
 	}
 }

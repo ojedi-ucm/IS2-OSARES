@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import control.ControlCuenta;
 import modelo.Cuenta;
+import vista.Utils;
 import vista.observers.CuentasObserver;
 
 import javax.swing.JButton;
@@ -67,9 +68,13 @@ public class AbrirCuentaDialog extends JDialog {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			_ctrl.abrirCuenta(_nombreTF.getText());
-			setVisible(false);
-			_nombreTF.setText("");
+			try {
+				_ctrl.abrirCuenta(_nombreTF.getText());
+				setVisible(false);
+				_nombreTF.setText("");
+			} catch(Exception e) {
+				Utils.showErrorMsg(e.toString());
+			}
 		});
 		btnPanel.add(confirmBtn);
 		

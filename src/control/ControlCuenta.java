@@ -69,19 +69,19 @@ public class ControlCuenta {
 		obs.updateDinero(_dineroTotal);
 	}
 	
-	public void addDinero(String iban, float cantidad) {
+	public void addDinero(String iban, float cantidad) throws Exception {
 		_dineroTotal += cantidad;
 		_fCuentas.update(_cuentas.get(iban), cantidad);
 		updateObs();
 	}
 	
-	public void retDinero(String iban, float cantidad) {
-		_dineroTotal -= cantidad;
+	public void retDinero(String iban, float cantidad) throws Exception {
 		_fCuentas.update(_cuentas.get(iban), -cantidad);
+		_dineroTotal -= cantidad;
 		updateObs();
 	}
 	
-	public void transferirDinero(String emisor, String receptor, float cantidad) {
+	public void transferirDinero(String emisor, String receptor, float cantidad) throws Exception {
 		Cuenta emi = _cuentas.get(emisor);
 		Cuenta rec = _cuentas.get(receptor);
 		
@@ -94,7 +94,10 @@ public class ControlCuenta {
 		updateObs();
 	}
 	
-	public void abrirCuenta(String nombre) {
+	public void abrirCuenta(String nombre) throws Exception {
+		if(nombre.isBlank())
+			throw new Exception("El nombre de la cuenta no puede ser vacío.");
+		
 		Cuenta nueva = new Cuenta(0, nombre, _titular);
 		_cuentas.put(nueva.getIBAN(), nueva);
 		
@@ -105,7 +108,7 @@ public class ControlCuenta {
 		updateObs();
 	}
 	
-	public void cerrarCuenta(String ibanCerrar, String ibanTrans) {
+	public void cerrarCuenta(String ibanCerrar, String ibanTrans) throws Exception {
 		Cuenta cerrar = _cuentas.get(ibanCerrar);
 		Cuenta trans = _cuentas.get(ibanTrans);
 		
@@ -129,5 +132,9 @@ public class ControlCuenta {
 	
 	public float getDineroTotal() {
 		return _dineroTotal;
+	}
+	
+	public String getTitularID() {
+		return _titular.getID();
 	}
 }

@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
-import java.util.Collection;
 import java.io.File;
 
 import javax.swing.JPanel;
@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
 import control.ControlCuenta;
-import modelo.Cuenta;
 import vista.cuentas.*;
 import vista.observers.CuentasObserver;
 
@@ -46,6 +45,8 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 	private JButton _cerrarSesBtn;
 	
 	private JLabel _dinTotalLbl;
+	
+	private boolean _isDineroHidden = false;
 	
 	
 	
@@ -132,9 +133,14 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		dinBox.setLayout(new BoxLayout(dinBox, BoxLayout.Y_AXIS));
 		JLabel dinTotalLabel = new JLabel("Patrimonio Neto");
 		_dinTotalLbl = new JLabel("0.0 €");
+		_dinTotalLbl.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	_isDineroHidden = !_isDineroHidden;
+            	updateDineroTotal(_dineroTotal);
+            }
+        });
 		
 		_dinTotalLbl.setFont(new Font("Monospaced", Font.PLAIN, 16));
-		_dinTotalLbl.setForeground(Color.BLUE);
 		
 		dinTotalLabel.setAlignmentX(CENTER_ALIGNMENT);
 		_dinTotalLbl.setAlignmentX(CENTER_ALIGNMENT);
@@ -202,7 +208,16 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_dineroTotal = dineroTotal;
 		
 		DecimalFormat df = new DecimalFormat("#,###.##");
-		_dinTotalLbl.setText(df.format(_dineroTotal) + " €");
+		
+		if(_isDineroHidden) {
+			_dinTotalLbl.setText("******");
+            _dinTotalLbl.setForeground(Color.DARK_GRAY);
+		} else {
+			_dinTotalLbl.setText(df.format(_dineroTotal) + " €");
+			_dinTotalLbl.setForeground(Color.BLUE);
+		}
+			
+		
 	}
 
 	@Override

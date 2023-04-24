@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import control.ControlCuenta;
 import modelo.Cuenta;
+import vista.Utils;
 import vista.observers.CuentasObserver;
 
 import javax.swing.JButton;
@@ -95,9 +96,18 @@ public class AddDineroDialog extends JDialog implements CuentasObserver {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			_ctrl.addDinero(_ibansList.get(_selectedCuentaIndex), Float.parseFloat(_cantidadTF.getText()));
-			this.setVisible(false);
-			_cantidadTF.setText("");
+			try {
+				if(_selectedCuentaIndex == -1 || _cantidadTF.getText().isBlank())
+					Utils.showErrorMsg("Existen campos vacíos.");
+				else {
+					_ctrl.addDinero(_ibansList.get(_selectedCuentaIndex), Float.parseFloat(_cantidadTF.getText()));
+					
+					this.setVisible(false);
+					_cantidadTF.setText("");
+				}
+			} catch(Exception e) {
+				Utils.showErrorMsg(e.toString());
+			}
 		});
 		btnPanel.add(confirmBtn);
 		

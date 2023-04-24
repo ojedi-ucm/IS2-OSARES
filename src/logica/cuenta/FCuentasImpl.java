@@ -23,12 +23,12 @@ public class FCuentasImpl implements FCuentas {
 		return sa.read(titular);
 	}
 	@Override
-	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
+	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) throws Exception{
 		return sa.update(emisor, receptor, cantidad);
 	}
 	
 	@Override
-	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) {
+	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) throws Exception{
 		return sa.update(emisor, ibanReceptor, cantidad);
 	}
 	
@@ -38,7 +38,7 @@ public class FCuentasImpl implements FCuentas {
 	}
 	
 	@Override
-	public boolean update(Cuenta cuenta, float cantidad) {
+	public boolean update(Cuenta cuenta, float cantidad) throws Exception{
 		return sa.update(cuenta, cantidad);
 	}
 	

@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.json.JSONObject;
+import vista.Utils;
 
 import control.ControlCuenta;
 import modelo.Cuenta;
@@ -97,9 +97,18 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Confirmar");
 		confirmBtn.addActionListener((a) -> {
-			_ctrl.retDinero(_ibansList.get(_selectedCuentaIndex), Float.parseFloat(_cantidadTF.getText()));
-			this.setVisible(false);
-			_cantidadTF.setText("");
+			try {
+				if(_selectedCuentaIndex == -1 || _cantidadTF.getText().isBlank())
+					Utils.showErrorMsg("Existen campos vacíos.");
+				else {
+					_ctrl.retDinero(_ibansList.get(_selectedCuentaIndex), Float.parseFloat(_cantidadTF.getText()));
+					
+					this.setVisible(false);
+					_cantidadTF.setText("");
+				}
+			} catch(Exception e) {
+				Utils.showErrorMsg(e.toString());
+			}
 		});
 		btnPanel.add(confirmBtn);
 		

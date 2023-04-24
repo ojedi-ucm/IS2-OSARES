@@ -91,7 +91,12 @@ public class DAOCuentasImpl implements DAOCuentas {
 	}
 
 	@Override
-	public JSONObject search(String iban) {
-		return _bdCuentas.getJSONObject(iban);
+	public JSONObject search(String iban) throws Exception {
+		try {
+			return _bdCuentas.getJSONObject(iban);
+		}
+		catch(Exception e) {
+			throw new Exception("La cuenta " + iban + " no existe.");
+		}
 	}
 }
