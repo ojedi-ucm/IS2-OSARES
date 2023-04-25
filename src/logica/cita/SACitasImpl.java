@@ -1,5 +1,6 @@
 package logica.cita;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,7 @@ public class SACitasImpl implements SACitas {
 //CRRUDDS
 	@Override
 	public boolean create(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.create(fecha, cliente);
 	}
 	@Override
 	public List<Cita> readAll() {
@@ -28,18 +28,17 @@ public class SACitasImpl implements SACitas {
 	}
 	@Override
 	public List<Cita> readCitasCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cliente> clientes = new ArrayList<>();
+		clientes.add(cliente);
+		return dao.read(clientes);
 	}
 	@Override
 	public boolean update(Cita actualizada, Cliente cliente, Date nuevaFecha) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.update(cliente, nuevaFecha, false);
 	}
 	@Override
 	public boolean delete(Cita borrada) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.update(borrada.getCliente(), borrada.getFecha(), false);
 	}
 	@Override
 	public boolean completada(Cita completada) {

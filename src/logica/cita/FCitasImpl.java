@@ -16,43 +16,36 @@ public class FCitasImpl implements FCitas {
 //CRRUDDS
 	@Override
 	public boolean create(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.create(fecha, cliente);
 	}
 
 	@Override
 	public List<Cita> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.readAll();
 	}
 
 	@Override
 	public List<Cita> readCitasCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.readCitasCliente(cliente);
 	}
 
 	@Override
 	public boolean update(Cita actualizada, Cliente cliente, Date nuevaFecha) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.update(actualizada, cliente, nuevaFecha);
 	}
 
 	@Override
 	public boolean delete(Cita borrada) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.delete(borrada);
 	}
 
 	@Override
 	public boolean completada(Cita completada) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.completada(completada);
 	}
 
 	@Override
 	public Cita consultar(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.consultar(fecha, cliente);
 	}
 }
