@@ -37,7 +37,14 @@ public class DAOClientesImpl implements DAOClientes {
 	@Override
 	public boolean create(Cliente cliente) {
 		// TODO Auto-generated method stub
-		return false;
+		if(datosClientes.has(cliente.getDni()))
+			return false;
+			
+		else {
+			datosClientes.put(cliente.getDni(), cliente);
+			return true;
+		}
+		
 	}
 	
 	@Override
@@ -49,18 +56,29 @@ public class DAOClientesImpl implements DAOClientes {
 	@Override
 	public boolean update(Cliente usuario) {
 		// TODO Auto-generated method stub
-		return false;
+		if(datosClientes.has(usuario.getDni())) {
+			datosClientes.put(usuario.getDni(), usuario);
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	@Override
 	public boolean delete(Cliente borrado) {
 		// TODO Auto-generated method stub
-		return false;
+		if(!datosClientes.has(borrado.getDni()))
+			return false;
+		else {
+			datosClientes.remove(borrado.getDni());
+			return true;
+		}
 	}
 	
 	@Override
 	public Cliente search(int id) {
 		// TODO Auto-generated method stub
+		if(datosClientes.has(id))
 		return null;
 	}
 }
