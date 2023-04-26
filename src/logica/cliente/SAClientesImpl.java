@@ -12,7 +12,7 @@ public class SAClientesImpl implements SAClientes {
 //Atributos
 	private FIntClientes fdao;
 //Constructor
-	SAClientesImpl() { fdao = new FIntClientesImpl(); }
+	SAClientesImpl() throws Exception { fdao = new FIntClientesImpl(); }
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
@@ -35,7 +35,7 @@ public class SAClientesImpl implements SAClientes {
 	}
 
 	@Override
-	public Cliente online(int id, String password) {
+	public Cliente online(String id, String password) {
 		Cliente aux = fdao.search(id);
 		if(aux != null)
 			if(aux.getPassword().equals(password))
@@ -47,7 +47,7 @@ public class SAClientesImpl implements SAClientes {
 	}
 
 	@Override
-	public Cliente search(int id) {
+	public Cliente search(String id) {
 		return fdao.search(id);
 	}
 

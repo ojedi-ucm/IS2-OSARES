@@ -10,7 +10,7 @@ public class FIntClientesImpl implements FIntClientes {
 //Atributos
 	private DAOClientes dao;
 //Constructor
-	public FIntClientesImpl() { dao = new DAOClientesImpl(); }
+	public FIntClientesImpl() throws Exception { dao = new DAOClientesImpl(); }
 //CRUDS
 	@Override
 	public boolean create(Cliente cliente) {
@@ -29,7 +29,7 @@ public class FIntClientesImpl implements FIntClientes {
 		return dao.delete(borrado);
 	}
 	@Override
-	public Cliente search(int id) {
+	public Cliente search(String id) {
 		return dao.search(id);
 	}		
 }

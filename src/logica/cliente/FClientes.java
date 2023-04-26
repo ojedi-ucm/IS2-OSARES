@@ -8,6 +8,6 @@ public interface FClientes {
 	public	List<Cliente>	read();
 	public	boolean			update(Cliente usuario);
 	public	boolean			delete(Cliente borrado);
-	public	Cliente			online(int id, String password);
-	public 	Cliente			search(int id);
+	public	Cliente			online(String id, String password);
+	public 	Cliente			search(String id);
 }

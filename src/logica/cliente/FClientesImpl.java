@@ -10,7 +10,7 @@ public class FClientesImpl implements FClientes {
 //Atributos
 	private SAClientes sa;
 //Constructor
-	public FClientesImpl() { sa = new SAClientesImpl(); }
+	public FClientesImpl() throws Exception { sa = new SAClientesImpl(); }
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
@@ -33,12 +33,12 @@ public class FClientesImpl implements FClientes {
 	}
 
 	@Override
-	public Cliente online(int id, String password) {
+	public Cliente online(String id, String password) {
 		return sa.online(id, password);
 	}
 
 	@Override
-	public Cliente search(int id) {
+	public Cliente search(String id) {
 		return sa.search(id);
 	}
 

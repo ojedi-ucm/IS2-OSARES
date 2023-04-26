@@ -9,5 +9,5 @@ public interface FIntClientes {
 	public List<Cliente>	read();
 	public boolean			update(Cliente usuario);
 	public boolean			delete(Cliente borrado);
-	public Cliente			search(int id);
+	public Cliente			search(String id);
 }

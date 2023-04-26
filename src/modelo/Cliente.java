@@ -11,8 +11,7 @@ public class Cliente {
 
 //Atributos
 	private static int idCont = 0;
-	private int id;
-	private String dni;
+	private String id;
 	private String password;
 	private String name;
 	private int tlf;
@@ -22,8 +21,8 @@ public class Cliente {
 	private String rol;
 
 //Constructores
-	public Cliente(String DNI, String contrasena, String nombre, int telefono, String rol) {
-		dni = DNI;
+	public Cliente(String ID, String contrasena, String nombre, int telefono, String rol) {
+		id = ID;
 		password = contrasena;
 		name = nombre;
 		tlf = telefono;
@@ -32,8 +31,7 @@ public class Cliente {
 	
 	public Cliente(JSONObject informacion) {
 		
-		id = informacion.getInt("id");
-		dni = informacion.getString("dni");
+		id = informacion.getString("id");
 		password = informacion.getString("password");
 		name = informacion.getString("name");
 		tlf = informacion.getInt("tlf");
@@ -50,11 +48,7 @@ public class Cliente {
 		return name;
 	}
 	
-	public String getDni() {
-		return dni;
-	}
-	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -87,9 +81,9 @@ public class Cliente {
 		name = nombre;
 	}
 	
-	public void setDni(String dni) {
+	/*public void setDni(String dni) {
 		this.dni = dni;
-	}
+	}*/
 	
 	public void setPassword(String contrasena) {
 		password = contrasena;
@@ -137,7 +131,7 @@ public class Cliente {
 		
 		JSONObject info = new JSONObject();
 		info.put("id", id);
-		info.put("dni", dni);
+		//info.put("dni", dni);
 		info.put("password", password);
 		info.put("name", name);
 		info.put("tlf", tlf);
