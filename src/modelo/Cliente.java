@@ -73,9 +73,9 @@ public class Cliente {
 	}
 	
 //Setters
-	public void setIdCont(int num) {
+	/*public void setIdCont(int num) {
 		idCont = num;
-	}
+	}*/
 	
 	public void setName(String nombre) {
 		name = nombre;
@@ -95,20 +95,22 @@ public class Cliente {
 //Verificadores
 	
 //Actualizadores
-	public void inc() {
+	/*public void inc() {
 		//TODO
 	}
 	
 	public void dcr() {
 		//TODO
-	}
+	}*/
 	
 	public void addCita(String cita) {
-		listaCitas.add(cita);
+		if(!listaCitas.contains(cita))
+			listaCitas.add(cita);
 	}
 	
 	public void addCuenta(String cuenta) {
-		listaCuentas.add(cuenta);
+		if(!listaCuentas.contains(cuenta))
+			listaCuentas.add(cuenta);
 	}
 	
 	public void removeCita(String cita) {
