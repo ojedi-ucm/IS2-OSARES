@@ -3,6 +3,8 @@ package datos.cita;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cita;
 import modelo.Cliente;
 
@@ -12,31 +14,26 @@ public class FIntCitasImpl implements FIntCitas {
 //Atributos
 	private DAOCitas dao;
 //Constructor
-	public FIntCitasImpl() { dao = new DAOCitasImpl(); }
+	public FIntCitasImpl() throws Exception{ dao = new DAOCitasImpl(); } //he tenido que añadir el throws
 //CRUDS
 	@Override
-	public boolean create(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(String num_cita, JSONObject cita) {
+		return dao.create(num_cita, cita);
 	}
 	@Override
-	public List<Cita> read(List<Cliente> clientes) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<JSONObject> read(List<String> clientes) {
+		return dao.read(clientes);
 	}
 	@Override
-	public boolean update(Cliente cliente, Date nuevaFecha, boolean isCompletada) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(String num_cita, Date nuevaFecha, Cliente cliente) {
+		return dao.update(num_cita, nuevaFecha, cliente);
 	}
 	@Override
-	public boolean delete(Cita borrada) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String num_cita) {
+		return dao.delete(num_cita);
 	}
 	@Override
-	public Cita search(Date dia) {
-		// TODO Auto-generated method stub
-		return null;
+	public JSONObject search(String num_cita)throws Exception {
+		return dao.search(num_cita);
 	}
 }

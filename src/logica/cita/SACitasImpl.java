@@ -15,7 +15,7 @@ public class SACitasImpl implements SACitas {
 //Atributos
 	private FIntCitas dao;
 //Constructor
-	SACitasImpl() { dao = new FIntCitasImpl(); }
+	SACitasImpl() throws Exception{ dao = new FIntCitasImpl(); }
 //CRRUDDS
 	@Override
 	public boolean create(Date fecha, Cliente cliente) {

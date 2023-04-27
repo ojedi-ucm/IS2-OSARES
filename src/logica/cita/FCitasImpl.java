@@ -12,7 +12,7 @@ public class FCitasImpl implements FCitas {
 //Atributos
 	private SACitas sa;
 //Constructor
-	public FCitasImpl() { sa = new SACitasImpl(); }
+	public FCitasImpl()throws Exception { sa = new SACitasImpl(); }
 //CRRUDDS
 	@Override
 	public boolean create(Date fecha, Cliente cliente) {
