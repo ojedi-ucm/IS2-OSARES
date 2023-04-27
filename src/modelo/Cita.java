@@ -9,8 +9,9 @@ public class Cita {
 	Date fecha;
 	Cliente cliente;
 //Constructores
-	public Cita() {
-		
+	public Cita(Date fecha, Cliente cliente) {
+		this.fecha = fecha;
+		this.cliente = cliente;
 	}
 //Getters
 	
