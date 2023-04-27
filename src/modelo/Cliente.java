@@ -1,48 +1,56 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-
-import netscape.javascript.JSObject;
 
 public class Cliente {
 //Constantes
 
 //Atributos
-	private static int idCont = 0;
+	//private static int idCont = 0;
 	private String id;
 	private String password;
 	private String name;
 	private int tlf;
-	private List<String> listaCuentas;
-	private List<String> listaCitas;
-	//temporal
-	private String rol;
+	private List<String> listaCuentas = new ArrayList<String>();
+	private List<String> listaCitas = new ArrayList<String>();
 
 //Constructores
-	public Cliente(String ID, String contrasena, String nombre, int telefono, String rol) {
+	public Cliente(String ID, String contrasena, String nombre, int telefono) {
 		id = ID;
 		password = contrasena;
 		name = nombre;
 		tlf = telefono;
-		this.rol = rol;
 	}
 	
 	public Cliente(JSONObject informacion) {
+		try {
+			id = informacion.getString("id");
+			password = informacion.getString("password");
+			name = informacion.getString("name");
+			tlf = informacion.getInt("tlf");
+			JSONArray auxCuentas = informacion.getJSONArray("listaCuentas");
+			for (int i = 0; i < auxCuentas.length(); i++) {
+				String IBAN = auxCuentas.getString(i);
+				listaCuentas.add(IBAN);
+			}
+			JSONArray auxCitas = informacion.getJSONArray("listaCitas");
+			for (int i = 0; i < auxCitas.length(); i++) {
+				String num_cita = auxCitas.getString(i);
+				listaCitas.add(num_cita);
+			}
+		}catch(Exception e) {
+			System.out.println(e.toString());
+		}
 		
-		id = informacion.getString("id");
-		password = informacion.getString("password");
-		name = informacion.getString("name");
-		tlf = informacion.getInt("tlf");
-		listaCuentas = (List<String>) informacion.get("listaCuentas");
-		listaCitas = (List<String>) informacion.get("listaCitas");
-		rol = informacion.getString("rol");
 	}
 //Getters
-	public int getIdCont() {
+	/*public int getIdCont() {
 		return idCont;
-	}
+	}*/
 	
 	public String getName() {
 		return name;
@@ -66,10 +74,6 @@ public class Cliente {
 	
 	public String getPassword() {
 		return password;
-	}
-	
-	public String getRol() {
-		return rol;
 	}
 	
 //Setters
@@ -137,9 +141,17 @@ public class Cliente {
 		info.put("password", password);
 		info.put("name", name);
 		info.put("tlf", tlf);
-		info.put("listaCuentas", listaCuentas);
-		info.put("listaCitas", listaCitas);
-		info.put("rol", rol);
+		JSONArray Array_Cuentas = new JSONArray();
+		for(String bi : listaCuentas) {
+			Array_Cuentas.put(bi);
+		}
+		info.put("listaCuentas", Array_Cuentas);
+		JSONArray Array_Citas = new JSONArray();
+		for(String bi : listaCitas) {
+			Array_Citas.put(bi);
+		}
+		info.put("listaCitas", Array_Citas);
+		//info.put("rol", rol);
 		
 		return info;
 	}

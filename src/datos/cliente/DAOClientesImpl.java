@@ -1,7 +1,8 @@
 package datos.cliente;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -12,13 +13,14 @@ import modelo.Cliente;
 
 public class DAOClientesImpl implements DAOClientes {
 //Constantes
-
+	private final String ID_DAO = "clientes";
+	private final String PATH = "./resources/bd.json";
 //Atributos
 	JSONObject bd;
 	JSONObject datosClientes;
 //Constructor
 	public DAOClientesImpl() throws Exception {
-		InputStream in = new FileInputStream("./resources/bd.json");
+		InputStream in = new FileInputStream(PATH);
 		loadClientes(in);
 	}
 
@@ -27,21 +29,33 @@ public class DAOClientesImpl implements DAOClientes {
 	private void loadClientes(InputStream in) throws Exception {
 		try {
 			bd = new JSONObject(new JSONTokener(in));
-			datosClientes = bd.getJSONObject("clientes");
+			datosClientes = bd.getJSONObject(ID_DAO);
 		} catch(Exception e ) {
 			throw new Exception(e);
+		}
+	}
+	
+	private boolean saveChanges() {
+		try (FileWriter file = new FileWriter(PATH)) {
+			bd.put(ID_DAO, datosClientes);
+		    file.write(bd.toString());
+		    file.flush();
+		    return true;
+		} catch (IOException e) {
+		    e.printStackTrace();
+		    return false;
 		}
 	}
 	
 //CRUDS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
 		if(datosClientes.has(cliente.getId()))
 			return false;
 			
 		else {
 			datosClientes.put(cliente.getId(), cliente);
+			saveChanges();
 			return true;
 		}
 		
@@ -49,15 +63,14 @@ public class DAOClientesImpl implements DAOClientes {
 	
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
 		if(datosClientes.has(usuario.getId())) {
 			datosClientes.put(usuario.getId(), usuario);
+			saveChanges();
 			return true;
 		}
 		else
@@ -66,18 +79,17 @@ public class DAOClientesImpl implements DAOClientes {
 	
 	@Override
 	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
 		if(!datosClientes.has(borrado.getId()))
 			return false;
 		else {
 			datosClientes.remove(borrado.getId());
+			saveChanges();
 			return true;
 		}
 	}
 	
 	@Override
 	public Cliente search(String id) {
-		// TODO Auto-generated method stub
 		return new Cliente(datosClientes.getJSONObject(id));
 			
 	}
