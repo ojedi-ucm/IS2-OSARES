@@ -23,12 +23,13 @@ public class InfoTableView extends JPanel {
 		this.setLayout(new BorderLayout());
 		
 		Border border = BorderFactory.createTitledBorder(_title);
-		this.setBorder(border);
+		setBorder(border);
+		
 		
 		JTable table = new JTable(_tableModel);
 		JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 
-		this.add(scrollPane);
+		add(scrollPane);
 	}
 }

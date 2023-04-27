@@ -1,5 +1,6 @@
 package logica.cuenta;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,14 @@ public class SACuentasImpl implements SACuentas {
 	
 	@Override
 	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) throws Exception {
+		long now = Instant.now().getEpochSecond();
+		String id = now + emisor.getIBAN();
+		
 		emisor.modificarDinero(-cantidad);
 		receptor.modificarDinero(cantidad);
+		
+		emisor.nuevaTransaccion(id, emisor.getIBAN(), receptor.getIBAN(), cantidad);
+		receptor.nuevaTransaccion(id, emisor.getIBAN(), receptor.getIBAN(), cantidad);
 		
 		return dao.update(emisor.getIBAN(), emisor.getJSON(), receptor.getIBAN(), receptor.getJSON());
 	}
@@ -49,8 +56,14 @@ public class SACuentasImpl implements SACuentas {
 	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) throws Exception {
 		Cuenta receptor = new Cuenta(dao.search(ibanReceptor));
 		
+		long now = Instant.now().getEpochSecond();
+		String id = now + emisor.getIBAN();
+		
 		emisor.modificarDinero(-cantidad);
 		receptor.modificarDinero(cantidad);
+		
+		emisor.nuevaTransaccion(id, emisor.getIBAN(), receptor.getIBAN(), cantidad);
+		receptor.nuevaTransaccion(id, emisor.getIBAN(), receptor.getIBAN(), cantidad);
 		
 		return dao.update(emisor.getIBAN(), emisor.getJSON(), receptor.getIBAN(), receptor.getJSON());
 	}

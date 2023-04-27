@@ -1,7 +1,13 @@
 package modelo;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Random;
 import java.math.BigInteger;
+
+import java.time.LocalDate;
 
 import org.json.JSONObject;
 
@@ -15,6 +21,7 @@ public class Cuenta {
 	private float _dinero;
 	private String _titularID;
 	private String _nombre;
+	private Map<String, Object> _transacciones;
 	
 	//Constructores
 	public Cuenta(float dinero, String nombre, Cliente titular) {
@@ -24,6 +31,7 @@ public class Cuenta {
 		_dinero = dinero;
 		_titularID = titular.getID();
 		_nombre = nombre;
+		_transacciones = new HashMap<>();
 	}
 	
 	public Cuenta(JSONObject cuenta) {
@@ -34,6 +42,21 @@ public class Cuenta {
 			_dinero = cuenta.getFloat("dinero");
 			_titularID = cuenta.getString("titular");
 			_nombre = cuenta.getString("nombre");
+			_transacciones = new HashMap<>();
+			
+			JSONObject transacciones = cuenta.getJSONObject("transacciones");
+			
+			if(transacciones != null) {
+				for(String id: transacciones.keySet()) {
+					Map<String, Object> datos = new HashMap<>();
+					
+					datos.put("desde", transacciones.getJSONObject("id").getString("desde"));
+					datos.put("hasta", transacciones.getJSONObject("id").getString("hasta"));
+					datos.put("cantidad", transacciones.getJSONObject("id").getFloat("cantidad"));
+					
+					_transacciones.put(id, datos);
+				}
+			}
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -72,8 +95,20 @@ public class Cuenta {
 		o.put("dinero", _dinero);
 		o.put("titular", _titularID);
 		o.put("nombre", _nombre);
+		o.put("transacciones", new JSONObject(_transacciones));
 		
 		return o;
+	}
+	
+	public List<Map<String, Object>> getTransacciones() {
+		List<Map<String, Object>> res = new ArrayList<>();
+		
+		for(Object o: _transacciones.values()) {
+			Map<String, Object> map = (Map<String, Object>) o;
+			res.add(map);
+		}
+		
+		return res;
 	}
 	
 	//Setters
@@ -84,12 +119,23 @@ public class Cuenta {
 			throw new Exception("No hay fondos suficientes en la cuenta " + _nombre);
 	}
 	
+	public void nuevaTransaccion(String id, String desde, String hasta, float cantidad) {
+		Map<String, Object> transaccion = new HashMap<>();
+		
+		transaccion.put("desde", desde);
+		transaccion.put("hasta", hasta);
+		transaccion.put("cantidad", cantidad);
+		
+		_transacciones.put(id, transaccion);
+	}
+	
 	//Verificadores
 	
 	//Actualizadores
 	
 	
-	//Utiles
+	//Utilesx
+	
 	//toString
 	
 	//toJSON

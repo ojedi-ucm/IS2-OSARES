@@ -28,6 +28,8 @@ import javax.swing.JComboBox;
 
 public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 	
+	private final String RETIRAR = "Retirar Dinero";
+	
 	private ControlCuenta _ctrl;
 	private DefaultComboBoxModel<String> _cuentasModel;
 	private DefaultComboBoxModel<String> _cuentasModifiedModel;
@@ -111,7 +113,10 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 				if(_selectedCuentaCerrarIndex == -1 || _selectedCuentaTransIndex == -1)
 					Utils.showErrorMsg("Existen campos vacíos.");
 				else {
-					_ctrl.cerrarCuenta(_ibansCerrar.get(_selectedCuentaCerrarIndex), _ibansTrans.get(_selectedCuentaTransIndex));
+					if(_transCBox.getSelectedItem().equals(RETIRAR))
+						_ctrl.cerrarCuenta(_ibansCerrar.get(_selectedCuentaCerrarIndex));
+					else
+						_ctrl.cerrarCuenta(_ibansCerrar.get(_selectedCuentaCerrarIndex), _ibansTrans.get(_selectedCuentaTransIndex));
 					this.setVisible(false);
 				}
 			} catch(Exception e) {
@@ -150,6 +155,7 @@ public class CerrarCuentaDialog extends JDialog implements CuentasObserver {
 			_ibansTrans.remove(_selectedCuentaCerrarIndex);
 		} catch(Exception e) {}
 			
+		_cuentasModifiedModel.addElement(RETIRAR);
 		_transCBox.setModel(_cuentasModifiedModel);
 		_transCBox.setSelectedIndex(-1);
 	}

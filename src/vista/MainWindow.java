@@ -25,7 +25,7 @@ public class MainWindow extends JFrame {
 	public void initGUI() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		setContentPane(mainPanel);
-		mainPanel.setPreferredSize(new Dimension(600, 350));
+		mainPanel.setPreferredSize(new Dimension(600, 600));
 		
 		CuentaClienteView cuentasClientes = new CuentaClienteView(_ctrl);
 		mainPanel.add(cuentasClientes);

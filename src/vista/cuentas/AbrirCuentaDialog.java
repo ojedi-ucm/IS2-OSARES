@@ -73,6 +73,7 @@ public class AbrirCuentaDialog extends JDialog {
 				setVisible(false);
 				_nombreTF.setText("");
 			} catch(Exception e) {
+				e.printStackTrace();
 				Utils.showErrorMsg(e.toString());
 			}
 		});

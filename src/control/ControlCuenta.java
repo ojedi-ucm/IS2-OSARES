@@ -20,6 +20,8 @@ public class ControlCuenta {
 	private float _dineroTotal;
 	private Cliente _titular;
 	
+	private List<Map<String, Object>> _transaccionesSel;
+	
 	private FCuentas _fCuentas;
 	
 	public ControlCuenta(Cliente titular) {
@@ -35,13 +37,13 @@ public class ControlCuenta {
 		_fCuentas = new FCuentasImpl();
 		_observers = new ArrayList<>();
 		_cuentas = new HashMap<>();
+		_transaccionesSel = new ArrayList<>();
 		
 		try {
 			for(Cuenta c: _fCuentas.read(_titular)) {
 				_cuentas.put(c.getIBAN(), c);
 				_dineroTotal += c.getDinero();
 			}
-				
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -49,6 +51,7 @@ public class ControlCuenta {
 	
 	private void updateObs() {
 		for(CuentasObserver o: _observers) {
+			o.updateTransacciones(_transaccionesSel);
 			o.updateCuentas(_cuentas);
 			o.updateDinero(_dineroTotal);
 		}
@@ -121,6 +124,16 @@ public class ControlCuenta {
 		updateObs();
 	}
 	
+	public void cerrarCuenta(String ibanCerrar) throws Exception {
+		Cuenta cerrar = _cuentas.get(ibanCerrar);
+		
+		_cuentas.remove(ibanCerrar);
+	
+		_fCuentas.delete(cerrar);
+		
+		updateObs();
+	}
+	
 	public List<Cuenta> getCuentas() {
 		List<Cuenta> list = new ArrayList<>();
 		
@@ -136,5 +149,24 @@ public class ControlCuenta {
 	
 	public String getTitularID() {
 		return _titular.getID();
+	}
+	
+	public void updateTransacciones(String iban) {
+		_transaccionesSel.clear();
+		
+		Cuenta c = _cuentas.get(iban);
+		
+		for(Map<String, Object> map: c.getTransacciones())
+			_transaccionesSel.add(map);
+		
+		for(CuentasObserver o: _observers) {
+			o.updateTransacciones(_transaccionesSel);
+		}
+	}
+	
+	public String getNombre(String iban) {
+		String nomCuenta = _cuentas.get(iban).getNombre();
+		
+		return nomCuenta != null ? nomCuenta : iban;
 	}
 }
