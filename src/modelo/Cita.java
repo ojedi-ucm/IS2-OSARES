@@ -18,6 +18,18 @@ public class Cita {
 		this.num_cita = Integer.toString(num_citas);
 		num_citas++;
 	}
+	
+	public Cita(JSONObject cita) {
+		try {
+			fecha = new Date(Date.parse(cita.getString("fecha")));
+			num_cita = cita.getString(num_cita);
+			//cliente = cita.get("cliente");
+				
+		} catch(Exception e) {
+				System.out.println(e.toString());
+			}
+	}
+			
 //Getters
 	
 	public Date getFecha() {
@@ -53,7 +65,7 @@ public class Cita {
 		JSONObject j = new JSONObject();
 		JSONObject o = new JSONObject();
 		
-		o.put("fecha", fecha);
+		o.put("fecha", fecha.toString());
 		o.put("cliente", cliente);
 		j.put(num_cita, o);
 		

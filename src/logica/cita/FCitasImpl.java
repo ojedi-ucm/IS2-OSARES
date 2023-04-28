@@ -15,8 +15,8 @@ public class FCitasImpl implements FCitas {
 	public FCitasImpl()throws Exception { sa = new SACitasImpl(); }
 //CRRUDDS
 	@Override
-	public boolean create(Date fecha, Cliente cliente) {
-		return sa.create(fecha, cliente);
+	public boolean create(Cita cita) {
+		return sa.create(cita);
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class FCitasImpl implements FCitas {
 	}
 
 	@Override
-	public boolean update(Cita actualizada, Cliente cliente, Date nuevaFecha) {
-		return sa.update(actualizada, cliente, nuevaFecha);
+	public boolean update(Cita actualizada, Date nuevaFecha) {
+		return sa.update(actualizada, nuevaFecha);
 	}
 
 	@Override
