@@ -152,6 +152,8 @@ public class TransferenciaDialog extends JDialog implements CuentasObserver {
 			try {
 				if(_selectedIndexSalida == -1 || _ibanTF.getText().isBlank() || _cantidadTF.getText().isBlank())
 					Utils.showErrorMsg("Existen campos vacíos.");
+				else if(Float.parseFloat(_cantidadTF.getText()) <= 0)
+					Utils.showErrorMsg("La cantidad deber ser mayor que 0.");
 				else {
 					_ctrl.transferirDinero(_ibansDesde.get(_selectedIndexSalida), _ibanTF.getText(), Float.parseFloat(_cantidadTF.getText()));
 					

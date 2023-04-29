@@ -2,6 +2,8 @@ package logica.cuenta;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 import modelo.Cuenta;
 
@@ -13,4 +15,5 @@ public interface SACuentas {
 	boolean update(Cuenta cuenta);
 	boolean update(Cuenta cuenta, float cantidad) throws Exception;
 	boolean	delete(Cuenta cuenta);
+	Cuenta search(String iban);
 }

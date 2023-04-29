@@ -57,7 +57,7 @@ public class TransaccionesTableView extends JPanel implements CuentasObserver {
 			_selectedIndex = _selectCuenta.getSelectedIndex();
 			
 			if(_selectedIndex != -1 && !_ibans.isEmpty())
-				_ctrl.updateTransacciones(_ibans.get(_selectedIndex));
+				_ctrl.updateSelTransacciones(_ibans.get(_selectedIndex));
 		});
 		add(_selectCuenta, BorderLayout.NORTH);
 		
@@ -80,7 +80,8 @@ public class TransaccionesTableView extends JPanel implements CuentasObserver {
 			_ibans.add(c.getIBAN());
 		}
 		
-		_selectCuenta.setSelectedIndex(-1);
+		if(_selectCuenta.getSelectedIndex() != -1)
+			_ctrl.updateSelTransacciones(_ibans.get(_selectedIndex));
 	}
 	
 	@Override

@@ -8,6 +8,8 @@ import java.util.Random;
 import java.math.BigInteger;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
@@ -15,20 +17,20 @@ public class Cuenta {
 	//Constantes
 	
 	//Atributos
-	private String _ss = "ES21";
+	private String _ss;
 	private BigInteger _numCuenta;
 	private String _iban;
 	private float _dinero;
 	private String _titularID;
 	private String _nombre;
-	private Map<String, Object> _transacciones;
+	private Map<String, JSONObject> _transacciones;
 	
 	//Constructores
-	public Cuenta(float dinero, String nombre, Cliente titular) {
-		Random rand = new Random();
-		_numCuenta = new BigInteger(20 * 5, rand);
+	public Cuenta(String nombre, String ss, BigInteger numCuenta, Cliente titular) {
+		_ss = ss;
+		_numCuenta = numCuenta;
 		_iban = _ss + _numCuenta;
-		_dinero = dinero;
+		_dinero = 0;
 		_titularID = titular.getID();
 		_nombre = nombre;
 		_transacciones = new HashMap<>();
@@ -48,11 +50,12 @@ public class Cuenta {
 			
 			if(transacciones != null) {
 				for(String id: transacciones.keySet()) {
-					Map<String, Object> datos = new HashMap<>();
+					JSONObject datos = new JSONObject();
 					
 					datos.put("desde", transacciones.getJSONObject("id").getString("desde"));
 					datos.put("hasta", transacciones.getJSONObject("id").getString("hasta"));
 					datos.put("cantidad", transacciones.getJSONObject("id").getFloat("cantidad"));
+					datos.put("fecha", transacciones.getJSONObject("id").getFloat("fecha"));
 					
 					_transacciones.put(id, datos);
 				}
@@ -100,13 +103,11 @@ public class Cuenta {
 		return o;
 	}
 	
-	public List<Map<String, Object>> getTransacciones() {
-		List<Map<String, Object>> res = new ArrayList<>();
+	public List<JSONObject> getTransacciones() {
+		List<JSONObject> res = new ArrayList<>();
 		
-		for(Object o: _transacciones.values()) {
-			Map<String, Object> map = (Map<String, Object>) o;
-			res.add(map);
-		}
+		for(JSONObject transaccion: _transacciones.values())
+			res.add(transaccion);
 		
 		return res;
 	}
@@ -120,11 +121,13 @@ public class Cuenta {
 	}
 	
 	public void nuevaTransaccion(String id, String desde, String hasta, float cantidad) {
-		Map<String, Object> transaccion = new HashMap<>();
+		JSONObject transaccion = new JSONObject();
+		LocalDateTime hoy = LocalDateTime.now();
 		
 		transaccion.put("desde", desde);
 		transaccion.put("hasta", hasta);
 		transaccion.put("cantidad", cantidad);
+		transaccion.put("fecha", hoy.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
 		
 		_transacciones.put(id, transaccion);
 	}

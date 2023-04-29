@@ -46,4 +46,9 @@ public class FCuentasImpl implements FCuentas {
 	public boolean delete(Cuenta cuenta) {
 		return sa.delete(cuenta);
 	}
+
+	@Override
+	public Cuenta search(String iban) {
+		return sa.search(iban);
+	}
 }

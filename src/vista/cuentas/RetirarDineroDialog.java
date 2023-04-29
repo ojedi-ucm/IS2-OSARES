@@ -100,6 +100,8 @@ public class RetirarDineroDialog extends JDialog implements CuentasObserver {
 			try {
 				if(_selectedCuentaIndex == -1 || _cantidadTF.getText().isBlank())
 					Utils.showErrorMsg("Existen campos vacíos.");
+				else if(Float.parseFloat(_cantidadTF.getText()) <= 0)
+					Utils.showErrorMsg("La cantidad deber mayor que 0.");
 				else {
 					_ctrl.retDinero(_ibansList.get(_selectedCuentaIndex), Float.parseFloat(_cantidadTF.getText()));
 					

@@ -39,7 +39,12 @@ public class SACuentasImpl implements SACuentas {
 	}
 	
 	@Override
-	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) throws Exception {
+	public boolean update(Cuenta cuenta) { // Update básico de una cuenta
+		return dao.update(cuenta.getIBAN(), cuenta.getJSON());
+	}
+	
+	@Override
+	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) throws Exception { // Update para transferencias cuenta->cuenta
 		long now = Instant.now().getEpochSecond();
 		String id = now + emisor.getIBAN();
 		
@@ -53,7 +58,7 @@ public class SACuentasImpl implements SACuentas {
 	}
 	
 	@Override
-	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) throws Exception {
+	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) throws Exception { // Update para transferencias cuenta->iban
 		Cuenta receptor = new Cuenta(dao.search(ibanReceptor));
 		
 		long now = Instant.now().getEpochSecond();
@@ -69,13 +74,18 @@ public class SACuentasImpl implements SACuentas {
 	}
 	
 	@Override
-	public boolean update(Cuenta cuenta) {
-		return dao.update(cuenta.getIBAN(), cuenta.getJSON());
-	}
-	
-	@Override
-	public boolean update(Cuenta cuenta, float cantidad) throws Exception {
+	public boolean update(Cuenta cuenta, float cantidad) throws Exception { // Update para depósitos y retiradas (desde el banco)
 		cuenta.modificarDinero(cantidad);
+		
+		long now = Instant.now().getEpochSecond();
+		
+		if(cantidad > 0) {
+			String id = now + "BancoDeposito";
+			cuenta.nuevaTransaccion(id, "Banco (Depósito)", cuenta.getIBAN(), cantidad);
+		} else {
+			String id = now + "BancoRetirada";
+			cuenta.nuevaTransaccion(id, cuenta.getIBAN(), "Banco (Retirada)", cantidad);
+		}
 		
 		return dao.update(cuenta.getIBAN(), cuenta.getJSON());
 	}
@@ -83,5 +93,16 @@ public class SACuentasImpl implements SACuentas {
 	@Override
 	public boolean delete(Cuenta cuenta) {
 		return dao.delete(cuenta.getIBAN());
+	}
+
+	@Override
+	public Cuenta search(String iban) {
+		Cuenta res = null;
+		
+		try {
+			res = new Cuenta(dao.search(iban));
+		} catch(Exception e) {}
+				
+		return res;
 	}
 }

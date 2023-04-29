@@ -7,14 +7,16 @@ import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.json.JSONObject;
+
 import control.ControlCuenta;
 import vista.observers.CuentasObserver;
 
 
 public class TransaccionesTableModel extends AbstractTableModel implements CuentasObserver {
 	
-	String[] _header = { "Desde", "Hasta", "Cantidad Transferida" };
-	List<Map<String, Object>> _transacciones;
+	String[] _header = { "Desde", "Hasta", "Cantidad Transferida", "Fecha" };
+	List<JSONObject> _transacciones;
 	
 	ControlCuenta _ctrl;
 	
@@ -49,17 +51,19 @@ public class TransaccionesTableModel extends AbstractTableModel implements Cuent
 			case 2:
 				DecimalFormat df = new DecimalFormat("#,###.##");
 				return df.format(_transacciones.get(rowIndex).get("cantidad")) + " €";
+			case 3:
+				return _transacciones.get(rowIndex).get("fecha");
 		}
 		
 		return 0;
 	}
 	
 	@Override
-	public void updateTransacciones(List<Map<String, Object>> transacciones) {
+	public void updateTransacciones(List<JSONObject> transacciones) {
 		_transacciones.clear();
 		
-		for(Map<String, Object> map: transacciones) {
-			_transacciones.add(map);
+		for(JSONObject transaccion: transacciones) {
+			_transacciones.add(transaccion);
 		}
 		
 		fireTableStructureChanged();

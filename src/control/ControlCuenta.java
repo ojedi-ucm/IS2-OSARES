@@ -2,6 +2,8 @@ package control;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,12 +17,14 @@ import vista.observers.CuentasObserver;
 
 public class ControlCuenta {
 	
+	private final String SS_CODE = "ES21";
+	
 	private Map<String, Cuenta> _cuentas;
 	private List<CuentasObserver> _observers;
 	private float _dineroTotal;
 	private Cliente _titular;
 	
-	private List<Map<String, Object>> _transaccionesSel;
+	private List<JSONObject> _transaccionesSel;
 	
 	private FCuentas _fCuentas;
 	
@@ -101,12 +105,22 @@ public class ControlCuenta {
 		if(nombre.isBlank())
 			throw new Exception("El nombre de la cuenta no puede ser vacío.");
 		
-		Cuenta nueva = new Cuenta(0, nombre, _titular);
+		Random rand;
+		BigInteger numCuenta;
+		
+		do { // Comprobamos si el numero de cuenta generado ya existe (si existe -> generamos otro)
+			rand = new Random();
+			numCuenta = new BigInteger(20 * 5, rand);
+		} while(_fCuentas.search(SS_CODE + numCuenta) != null);
+		
+		
+		Cuenta nueva = new Cuenta(nombre, SS_CODE, numCuenta, _titular);
+		
+		_fCuentas.create(nueva);
+		
 		_cuentas.put(nueva.getIBAN(), nueva);
 		
 		_titular.addCuenta(nueva.getIBAN());
-		
-		_fCuentas.create(nueva);
 		
 		updateObs();
 	}
@@ -151,13 +165,13 @@ public class ControlCuenta {
 		return _titular.getID();
 	}
 	
-	public void updateTransacciones(String iban) {
+	public void updateSelTransacciones(String iban) {
 		_transaccionesSel.clear();
 		
 		Cuenta c = _cuentas.get(iban);
 		
-		for(Map<String, Object> map: c.getTransacciones())
-			_transaccionesSel.add(map);
+		for(JSONObject transaccion: c.getTransacciones())
+			_transaccionesSel.add(transaccion);
 		
 		for(CuentasObserver o: _observers) {
 			o.updateTransacciones(_transaccionesSel);
@@ -165,7 +179,9 @@ public class ControlCuenta {
 	}
 	
 	public String getNombre(String iban) {
-		String nomCuenta = _cuentas.get(iban).getNombre();
+		String nomCuenta = null;
+		
+		try {nomCuenta = _cuentas.get(iban).getNombre();} catch(Exception e) {}
 		
 		return nomCuenta != null ? nomCuenta : iban;
 	}
