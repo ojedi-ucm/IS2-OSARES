@@ -12,5 +12,5 @@ public interface FCitas {
 	public boolean update(Cita actualizada, Date nuevaFecha);
 	public boolean		delete(Cita borrada);
 	public boolean		completada(Cita completada);
-	public Cita			consultar(Date fecha, Cliente cliente);
+	public Cita			consultar(String num_cita) throws Exception;
 }

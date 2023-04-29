@@ -14,7 +14,14 @@ public class FIntCitasImpl implements FIntCitas {
 //Atributos
 	private DAOCitas dao;
 //Constructor
-	public FIntCitasImpl() throws Exception{ dao = new DAOCitasImpl(); } //he tenido que añadir el throws
+	public FIntCitasImpl() {
+		try{
+			dao = new DAOCitasImpl();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	} 
+
 //CRUDS
 	@Override
 	public boolean create(String num_cita, JSONObject cita) {
@@ -33,7 +40,7 @@ public class FIntCitasImpl implements FIntCitas {
 		return dao.delete(num_cita);
 	}
 	@Override
-	public JSONObject search(String num_cita)throws Exception {
+	public Cita search(String num_cita)throws Exception {
 		return dao.search(num_cita);
 	}
 }

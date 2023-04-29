@@ -17,7 +17,7 @@ public class SACitasImpl implements SACitas {
 //Atributos
 	private FIntCitas dao;
 //Constructor
-	SACitasImpl() throws Exception{ dao = new FIntCitasImpl(); }
+	SACitasImpl() { dao = new FIntCitasImpl(); }
 //CRRUDDS
 	@Override
 	public boolean create(Cita cita) {
@@ -42,7 +42,7 @@ public class SACitasImpl implements SACitas {
 	@Override
 	public boolean update(Cita actualizada, Date nuevaFecha) {
 		return dao.update(actualizada.getnum_cita(), nuevaFecha, actualizada.getCliente());
-	}
+	}	
 	@Override
 	public boolean delete(Cita borrada) {
 		return dao.delete(borrada.getnum_cita());
@@ -53,8 +53,7 @@ public class SACitasImpl implements SACitas {
 		return false;
 	}
 	@Override
-	public Cita consultar(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cita consultar (String num_cita)throws Exception {
+		return dao.search(num_cita);
 	}
 }

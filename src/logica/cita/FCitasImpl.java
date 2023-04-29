@@ -12,7 +12,7 @@ public class FCitasImpl implements FCitas {
 //Atributos
 	private SACitas sa;
 //Constructor
-	public FCitasImpl()throws Exception { sa = new SACitasImpl(); }
+	public FCitasImpl() { sa = new SACitasImpl(); }
 //CRRUDDS
 	@Override
 	public boolean create(Cita cita) {
@@ -45,7 +45,7 @@ public class FCitasImpl implements FCitas {
 	}
 
 	@Override
-	public Cita consultar(Date fecha, Cliente cliente) {
-		return sa.consultar(fecha, cliente);
+	public Cita consultar(String num_cita) throws Exception{
+		return sa.consultar(num_cita);
 	}
 }

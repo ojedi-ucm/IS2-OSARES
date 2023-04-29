@@ -23,7 +23,7 @@ public class Cita {
 		try {
 			fecha = new Date(Date.parse(cita.getString("fecha")));
 			num_cita = cita.getString(num_cita);
-			//cliente = cita.get("cliente");
+			cliente = new Cliente	(cita.getJSONObject("cliente"));
 				
 		} catch(Exception e) {
 				System.out.println(e.toString());
@@ -66,7 +66,7 @@ public class Cita {
 		JSONObject o = new JSONObject();
 		
 		o.put("fecha", fecha.toString());
-		o.put("cliente", cliente);
+		o.put("cliente", cliente.toJSONObect());
 		j.put(num_cita, o);
 		
 		return j;

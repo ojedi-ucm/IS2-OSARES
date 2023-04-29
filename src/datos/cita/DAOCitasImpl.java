@@ -86,9 +86,9 @@ public class DAOCitasImpl implements DAOCitas {
 	}
 	
 	@Override
-	public JSONObject search(String num_cita) throws Exception{
+	public Cita search(String num_cita) throws Exception{
 		try {
-			return _bdCitas.getJSONObject(num_cita);
+			return new Cita(_bdCitas.getJSONObject(num_cita));
 		}
 		catch(Exception e) {
 			throw new Exception("La cita número " + num_cita + " no existe.");

@@ -13,5 +13,5 @@ public interface DAOCitas {
 	public List<JSONObject> read(List<String> clientes);
 	public boolean update(String num_cita, Date nuevaFecha, Cliente cliente);
 	public boolean		delete(String num_cita);
-	public JSONObject search(String num_cita) throws Exception;
+	public Cita search(String num_cita) throws Exception;
 }
