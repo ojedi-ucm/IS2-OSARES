@@ -24,6 +24,7 @@ public class Cita {
 			fecha = new Date(Date.parse(cita.getString("fecha")));
 			num_cita = cita.getString(num_cita);
 			cliente = new Cliente	(cita.getJSONObject("cliente"));
+			num_citas++;
 				
 		} catch(Exception e) {
 				System.out.println(e.toString());
@@ -59,7 +60,9 @@ public class Cita {
 
 //Utiles
 	//toString
-
+	public String toString() {
+		return toJSONObject().toString();
+	}
 	//toJSON
 	public JSONObject toJSONObject() {
 		JSONObject j = new JSONObject();
