@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 
 import control.ControlCuenta;
 import vista.cuentas.CuentaClienteView;
-import vista.controlPanel.ControlPanelView;
 
 public class MainWindow extends JFrame {
 	

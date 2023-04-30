@@ -2,8 +2,6 @@ package logica.cuenta;
 
 import java.util.List;
 
-import org.json.JSONObject;
-
 import modelo.Cliente;
 import modelo.Cuenta;
 

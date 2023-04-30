@@ -1,12 +1,8 @@
 package datos.cuenta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
-
-import modelo.Cliente;
-import modelo.Cuenta;
 
 public interface DAOCuentas {
 	public boolean create(String id, JSONObject cuenta);
