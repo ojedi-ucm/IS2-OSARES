@@ -25,7 +25,7 @@ public class FIntClientesImpl implements FIntClientes {
 		return dao.update(usuario);
 	}
 	@Override
-	public boolean delete(Cliente borrado) {
+	public boolean delete(String borrado) {
 		return dao.delete(borrado);
 	}
 	@Override

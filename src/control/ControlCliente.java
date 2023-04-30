@@ -1,21 +1,30 @@
 package control;
 
+import java.util.List;
+
+import logica.cliente.FClientesImpl;
 import logica.cliente.FClientes;
 import modelo.Cliente;
 
 public class ControlCliente {
 	
+	private Cliente _cliente;
+	
 	private FClientes _fachada;
 
-	public ControlCliente() {
-		
+	public ControlCliente() throws Exception {
+		_fachada = new FClientesImpl();
 	}
 	
-	public void crearCliente(Cliente cliente) {
-		_fachada.create(cliente);
+	public boolean crearCliente(Cliente cliente) {
+		if(_fachada.create(cliente)) {
+			_cliente = cliente;
+			return true;
+		}else
+			return false;
 	}
 	
-	public void eliminarCliente(Cliente cliente) {
+	public void eliminarCliente(String cliente) {
 		_fachada.delete(cliente);
 	}
 	
@@ -27,7 +36,12 @@ public class ControlCliente {
 		_fachada.update(cliente);
 	}
 	
-	public void iniSesion(String id, String contrasena) {
-		_fachada.online(id, contrasena);
+	public Cliente iniSesion(String id, String contrasena) {
+		_cliente = _fachada.online(id, contrasena);
+		return _cliente;
+	}
+	
+	public String getID() {
+		return _cliente.getId();
 	}
 }

@@ -30,7 +30,7 @@ public class SAClientesImpl implements SAClientes {
 	}
 
 	@Override
-	public boolean delete(Cliente borrado) {
+	public boolean delete(String borrado) {
 		return fdao.delete(borrado);
 	}
 

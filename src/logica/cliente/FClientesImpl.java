@@ -28,7 +28,7 @@ public class FClientesImpl implements FClientes {
 	}
 
 	@Override
-	public boolean delete(Cliente borrado) {
+	public boolean delete(String borrado) {
 		return sa.delete(borrado);
 	}
 

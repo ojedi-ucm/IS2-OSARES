@@ -54,7 +54,7 @@ public class DAOClientesImpl implements DAOClientes {
 			return false;
 			
 		else {
-			datosClientes.put(cliente.getId(), cliente);
+			datosClientes.put(cliente.getId(), cliente.toJSONObect());
 			saveChanges();
 			return true;
 		}
@@ -69,7 +69,7 @@ public class DAOClientesImpl implements DAOClientes {
 	@Override
 	public boolean update(Cliente usuario) {
 		if(datosClientes.has(usuario.getId())) {
-			datosClientes.put(usuario.getId(), usuario);
+			datosClientes.put(usuario.getId(), usuario.toJSONObect());
 			saveChanges();
 			return true;
 		}
@@ -78,11 +78,11 @@ public class DAOClientesImpl implements DAOClientes {
 	}
 	
 	@Override
-	public boolean delete(Cliente borrado) {
-		if(!datosClientes.has(borrado.getId()))
+	public boolean delete(String borrado) {
+		if(!datosClientes.has(borrado))
 			return false;
 		else {
-			datosClientes.remove(borrado.getId());
+			datosClientes.remove(borrado);
 			saveChanges();
 			return true;
 		}
@@ -90,7 +90,12 @@ public class DAOClientesImpl implements DAOClientes {
 	
 	@Override
 	public Cliente search(String id) {
-		return new Cliente(datosClientes.getJSONObject(id));
+
+		if(datosClientes.has(id)) {
+			return new Cliente(datosClientes.getJSONObject(id));
+		}
+		else
+			return null;
 			
 	}
 }

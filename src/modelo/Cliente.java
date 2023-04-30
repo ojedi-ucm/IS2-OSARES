@@ -20,10 +20,15 @@ public class Cliente {
 
 //Constructores
 	public Cliente(String ID, String contrasena, String nombre, int telefono) {
-		id = ID;
-		password = contrasena;
-		name = nombre;
-		tlf = telefono;
+		try {
+			id = ID;
+			password = contrasena;
+			name = nombre;
+			tlf = telefono;
+		}catch(Exception e) {
+			
+		}
+		
 	}
 	
 	public Cliente(JSONObject informacion) {
