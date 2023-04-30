@@ -1,0 +1,9 @@
+{
+    "citas": {},
+    "cuentas": { },
+    "clientes": {
+        "cliente1@gmail.com": {
+            "cuentas": []
+        }
+    }
+}

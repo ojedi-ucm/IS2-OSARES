@@ -21,7 +21,7 @@ public class SACitasImpl implements SACitas {
 //CRRUDDS
 	@Override
 	public boolean create(Cita cita) {
-		return dao.create(cita.getnum_cita(), cita.toJSONObject());
+		return dao.create(cita.getIdCita(), cita.toJSONObject());
 	}
 	@Override
 	public List<Cita> readAll() {
@@ -41,11 +41,11 @@ public class SACitasImpl implements SACitas {
 	}
 	@Override
 	public boolean update(Cita actualizada, Date nuevaFecha) {
-		return dao.update(actualizada.getnum_cita(), nuevaFecha, actualizada.getCliente());
+		return dao.update(actualizada.getIdCita(), nuevaFecha, actualizada.getTitularID());
 	}	
 	@Override
 	public boolean delete(Cita borrada) {
-		return dao.delete(borrada.getnum_cita());
+		return dao.delete(borrada.getIdCita());
 	}
 	@Override
 	public boolean completada(Cita completada) {
