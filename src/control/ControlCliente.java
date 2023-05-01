@@ -8,7 +8,7 @@ import modelo.Cliente;
 
 public class ControlCliente {
 	
-	private Cliente _cliente;
+	public Cliente _cliente;
 	
 	private FClientes _fachada;
 
@@ -39,9 +39,5 @@ public class ControlCliente {
 	public Cliente iniSesion(String id, String contrasena) {
 		_cliente = _fachada.online(id, contrasena);
 		return _cliente;
-	}
-	
-	public String getID() {
-		return _cliente.getId();
 	}
 }

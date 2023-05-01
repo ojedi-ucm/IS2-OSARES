@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,16 +20,14 @@ public class Cliente {
 	private List<String> listaCitas = new ArrayList<String>();
 
 //Constructores
-	public Cliente(String ID, String contrasena, String nombre, int telefono) {
-		try {
+	public Cliente(String ID, String contrasena, String nombre, int telefono) throws Exception {
+			if(ID.equals(null) || ID.equals("") || contrasena.equals(null) || contrasena.equals("") ||
+				nombre.equals("") || nombre.equals(null))
+				throw new Exception();
 			id = ID;
 			password = contrasena;
 			name = nombre;
 			tlf = telefono;
-		}catch(Exception e) {
-			
-		}
-		
 	}
 	
 	public Cliente(JSONObject informacion) {

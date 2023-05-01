@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.ControlCliente;
+import vista.auth.LoginDialog;
+import vista.auth.RegisterDialog;
 
 import javax.swing.JButton;
 

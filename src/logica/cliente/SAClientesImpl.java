@@ -2,6 +2,8 @@ package logica.cliente;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import datos.cliente.FIntClientes;
 import datos.cliente.FIntClientesImpl;
 import modelo.Cliente;
@@ -36,19 +38,29 @@ public class SAClientesImpl implements SAClientes {
 
 	@Override
 	public Cliente online(String id, String password) {
-		Cliente aux = fdao.search(id);
-		if(aux != null)
-			if(aux.getPassword().equals(password))
-				return aux;
+		JSONObject aux = fdao.search(id);
+		Cliente c;
+		if(aux != null) {
+			c = new Cliente(aux);
+			if(c.getPassword().equals(password))
+				return c;
 			else
 				return null;
+		}
 		else
 			return null;
 	}
 
 	@Override
 	public Cliente search(String id) {
-		return fdao.search(id);
+		JSONObject aux = fdao.search(id);
+		Cliente c;
+		if(aux != null) {
+			c = new Cliente(aux);
+			return c;
+		}
+		else
+			return null;
 	}
 
 }

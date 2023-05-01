@@ -1,4 +1,4 @@
-package vista;
+package vista.GUICliente;
 
 import java.awt.Dimension;
 
@@ -11,11 +11,11 @@ import javax.swing.JPanel;
 
 import control.ControlCliente;
 
-public class DeleteQuestion extends JDialog{
+public class DeleteClienteQuestion extends JDialog{
 
 	private ControlCliente _controler;
 	
-	public DeleteQuestion(ControlCliente ctrl) {
+	public DeleteClienteQuestion(ControlCliente ctrl) {
 		super(new JFrame(), true);
 		_controler = ctrl;
 		initGUI();
@@ -32,7 +32,7 @@ public class DeleteQuestion extends JDialog{
 		
 		JButton si = new JButton("SI");
 		si.addActionListener((a) -> {
-			_controler.eliminarCliente(_controler.getID());
+			_controler.eliminarCliente(_controler._cliente.getId());
 			setVisible(false);
 		});
 		JButton no = new JButton("NO");

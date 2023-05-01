@@ -52,7 +52,6 @@ public class DAOClientesImpl implements DAOClientes {
 	public boolean create(Cliente cliente) {
 		if(datosClientes.has(cliente.getId()))
 			return false;
-			
 		else {
 			datosClientes.put(cliente.getId(), cliente.toJSONObect());
 			saveChanges();
@@ -89,11 +88,10 @@ public class DAOClientesImpl implements DAOClientes {
 	}
 	
 	@Override
-	public Cliente search(String id) {
+	public JSONObject search(String id) {
 
-		if(datosClientes.has(id)) {
-			return new Cliente(datosClientes.getJSONObject(id));
-		}
+		if(datosClientes.has(id)) 
+			return datosClientes.getJSONObject(id);
 		else
 			return null;
 			

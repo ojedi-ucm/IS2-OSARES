@@ -2,6 +2,8 @@ package datos.cliente;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 
 public class FIntClientesImpl implements FIntClientes {
@@ -29,7 +31,7 @@ public class FIntClientesImpl implements FIntClientes {
 		return dao.delete(borrado);
 	}
 	@Override
-	public Cliente search(String id) {
+	public JSONObject search(String id) {
 		return dao.search(id);
 	}		
 }

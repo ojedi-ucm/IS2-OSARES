@@ -1,6 +1,7 @@
-package vista;
+package vista.auth;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +13,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import control.ControlCliente;
+import vista.Utils;
+import vista.GUICliente.UpdateClienteDialog;
 
 public class LoginDialog extends JDialog {
 	
@@ -29,24 +32,26 @@ public class LoginDialog extends JDialog {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		setContentPane(mainPanel);
 		
+		JPanel panelAux = new JPanel();
+		panelAux.setLayout(new GridLayout(2, 2));
+		
 		// Username
-		JPanel userPanel = new JPanel();
 		JLabel userLabel = new JLabel("DNI");
 		JTextField username = new JTextField();
 		username.setPreferredSize(new Dimension(200, 30));
-		userPanel.add(userLabel);
-		userPanel.add(username);
-		mainPanel.add(userPanel);
+		panelAux.add(userLabel);
+		panelAux.add(username);
+		//mainPanel.add(userPanel);
 		
 		// Password
-		JPanel passPanel = new JPanel();
 		JLabel passLabel = new JLabel("Password");
 		JPasswordField password = new JPasswordField();
 		password.setPreferredSize(new Dimension(200, 30));
-		passPanel.add(passLabel);
-		passPanel.add(password);
-		mainPanel.add(passPanel);
+		panelAux.add(passLabel);
+		panelAux.add(password);
+		//mainPanel.add(passPanel);
 		
+		mainPanel.add(panelAux);
 		
 		// Buttons
 		JPanel btnPanel = new JPanel();
@@ -56,6 +61,8 @@ public class LoginDialog extends JDialog {
 			if(_controler.iniSesion(username.getText(), password.getText()) == null)
 				Utils.showErrorMsg("DNI o Contraseña incorrecta");
 			else {
+				password.setText("");
+				username.setText("");
 				setVisible(false);
 			}
 		});
@@ -63,6 +70,8 @@ public class LoginDialog extends JDialog {
 		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.addActionListener((a) -> {
+			password.setText("");
+			username.setText("");
 			setVisible(false);
 		});
 		btnPanel.add(cancelBtn);

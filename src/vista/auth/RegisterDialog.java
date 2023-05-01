@@ -1,6 +1,8 @@
-package vista;
+package vista.auth;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.zip.DataFormatException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import javax.swing.JTextField;
 
 import control.ControlCliente;
 import modelo.Cliente;
+import vista.Utils;
 
 import javax.swing.JComboBox;
 
@@ -33,57 +36,72 @@ public class RegisterDialog extends JDialog {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		setContentPane(mainPanel);
 		
+		JPanel panelAux = new JPanel();
+		panelAux.setLayout(new GridLayout(4, 2));
+		
 		// Username
-		JPanel userPanel = new JPanel();
 		JLabel userLabel = new JLabel("Username");
 		JTextField username = new JTextField();
 		username.setPreferredSize(new Dimension(200, 30));
-		userPanel.add(userLabel);
-		userPanel.add(username);
-		mainPanel.add(userPanel);
+		panelAux.add(userLabel);
+		panelAux.add(username);
 		
 		// telefono
-		JPanel tlfPanel = new JPanel();
 		JLabel tlfLabel = new JLabel("telofono");
 		JTextField tlf = new JTextField();
 		tlf.setPreferredSize(new Dimension(200, 30));
-		tlfPanel.add(tlfLabel);
-		tlfPanel.add(tlf);
-		mainPanel.add(tlfPanel);
+		panelAux.add(tlfLabel);
+		panelAux.add(tlf);
 		
 		// DNI
-		JPanel DNIPanel = new JPanel();
 		JLabel DNILabel = new JLabel("DNI");
 		JTextField DNI = new JTextField();
 		DNI.setPreferredSize(new Dimension(200, 30));
-		DNIPanel.add(DNILabel);
-		DNIPanel.add(DNI);
-		mainPanel.add(DNIPanel);
+		panelAux.add(DNILabel);
+		panelAux.add(DNI);
 		
 		// Password
-		JPanel passPanel = new JPanel();
 		JLabel passLabel = new JLabel("Password");
 		JPasswordField password = new JPasswordField();
 		password.setPreferredSize(new Dimension(200, 30));
-		passPanel.add(passLabel);
-		passPanel.add(password);
-		mainPanel.add(passPanel);
+		panelAux.add(passLabel);
+		panelAux.add(password);
+		
+		mainPanel.add(panelAux);
 		
 		// Buttons
 		JPanel btnPanel = new JPanel();
 		
 		JButton registerBtn = new JButton("Register");
 		registerBtn.addActionListener((a) -> {
-			Cliente aux = new Cliente(DNI.getText(), password.getText(), username.getText(), Integer.parseInt(tlf.getText()));
-			if(!_controler.crearCliente(aux))
-				Utils.showErrorMsg("Ya hay un cliente creado con ese DNI");
-			else
-				setVisible(false);
+			int telefono;
+			try {
+				telefono = Integer.parseInt(tlf.getText());
+				if(telefono < 100000000 || telefono > 999999999)
+					throw new Exception();
+				Cliente aux = new Cliente(DNI.getText(), password.getText(), username.getText(), telefono);
+				if(!_controler.crearCliente(aux))
+					Utils.showErrorMsg("Ya hay un cliente creado con ese DNI");
+				else {
+					username.setText("");
+					tlf.setText("");
+					DNI.setText("");
+					password.setText("");
+					setVisible(false);
+				}
+				
+			} catch (Exception e) {
+					Utils.showErrorMsg("Existe algun error en los campos introducidos, Por favor revileso e intentelo de nuevo");
+			}
 		});
 		btnPanel.add(registerBtn);
 		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.addActionListener((a) -> {
+			username.setText("");
+			tlf.setText("");
+			DNI.setText("");
+			password.setText("");
 			setVisible(false);
 		});
 		btnPanel.add(cancelBtn);

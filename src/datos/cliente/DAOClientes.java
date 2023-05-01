@@ -2,6 +2,8 @@ package datos.cliente;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 
 public interface DAOClientes {
@@ -9,5 +11,5 @@ public interface DAOClientes {
 	public List<Cliente>	read();
 	public boolean			update(Cliente usuario);
 	public boolean			delete(String borrado);
-	public Cliente			search(String id);
+	public JSONObject			search(String id);
 }
