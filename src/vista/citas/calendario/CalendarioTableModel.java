@@ -1,36 +1,51 @@
 package vista.citas.calendario;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
-public class CalendarioTableModel extends AbstractTableModel {
+import control.ControlCita;
+import modelo.Cita;
+import vista.observers.CitasObserver;
+
+public class CalendarioTableModel extends AbstractTableModel implements CitasObserver {
 	
 	private int _year;
     private int _month;
-    //private int[][] _days;
+    private int[][] _days;
+    
+    private List<Cita> _citas;
     
     private Object[][][] _data;
     
     private Calendar _calendar;
     
-    String[] _headers = {"Lun", "Mar", "Mié", "Jue", "Vie", "Sab", "Dom"};
+    String[] _headers = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
-    public CalendarioTableModel() {
+    public CalendarioTableModel(ControlCita ctrl) {
+    	ctrl.addObserver(this);
+    	
         _calendar = Calendar.getInstance();
         _calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        
         _year = _calendar.get(Calendar.YEAR);
         _month = _calendar.get(Calendar.MONTH);
-        //_days = new int[6][7];
+        
         _data = new Object[_calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)][7][2];
+        _citas = new ArrayList<>();
         
         updateDays();
     }
@@ -63,9 +78,19 @@ public class CalendarioTableModel extends AbstractTableModel {
         int col = firstDayOfWeek;
         
         for (int i = 1; i <= lastDayOfMonth; i++) {
-            //_days[row][col] = i;
             _data[row][col][0] = i;
-            _data[row][col][1] = "Hola buenastardes";
+            
+            Calendar dia = Calendar.getInstance();
+            dia.set(Calendar.YEAR, _year);
+            dia.set(Calendar.MONTH, _month);
+            dia.set(Calendar.DAY_OF_MONTH, i);
+            
+            Cita cita = searchCita(dia.getTime());
+            
+            if(cita != null)
+            	_data[row][col][1] = cita;
+            else
+            	_data[row][col][1] = null;
             
             col++;
             if (col == 7) {
@@ -76,6 +101,38 @@ public class CalendarioTableModel extends AbstractTableModel {
         
         fireTableDataChanged();
 	}
+	
+	private Cita searchCita(Date fecha) {
+		LocalDate in = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		
+		for(Cita c: _citas) {
+			LocalDate fCita = c.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			if(fCita.equals(in))
+				return c;
+		}
+		
+		return null;
+	}
+
+	@Override
+	public void updateCitas(Map<String, Cita> citas) {
+		_citas.clear();
+		
+		for(Cita c: citas.values())
+			_citas.add(c);
+		
+		updateDays();
+		fireTableDataChanged();
+	}
+	
+	public int getYear() {
+		return _year;
+	}
+	
+	public int getMonth() {
+		return _month;
+	}
+	
 }
 
 // --------------------------------------------------------------------------
@@ -91,6 +148,9 @@ class CalendarTableCellRenderer extends JPanel implements TableCellRenderer {
         
         _labelDay = new JLabel();
         _labelEvent = new JLabel();
+        
+        _labelDay.setForeground(Color.BLUE);
+        _labelEvent.setForeground(Color.BLUE);
 
         add(_labelDay);
         add(_labelEvent);
@@ -99,41 +159,44 @@ class CalendarTableCellRenderer extends JPanel implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     	Object[] values = (Object[]) value;
+    	Calendar today = Calendar.getInstance();
+    	Cita cita;
     	
-    	if(values[0] != null && values[1] != null) {
+    	if(values[0] != null) {
 	        _labelDay.setText(values[0].toString());
-	        _labelEvent.setText(values[1].toString());
+	        if(values[1] != null) {
+	        	cita = (Cita) values[1];
+	        	_labelEvent.setText(cita.getMotivo());
+	        } else {
+	        	_labelEvent.setText("");
+	        }
+	       
     	} else {
     		_labelDay.setText("");
 	        _labelEvent.setText("");
     	}
         
-        if (isSelected) {
-            setBackground(table.getSelectionBackground());
-            _labelDay.setForeground(table.getSelectionForeground());
-            _labelEvent.setForeground(table.getSelectionForeground());
+        if (values[0] != null) {
+        	if(isSelected && column < 5) {
+	            setBackground(table.getSelectionBackground());
+	            _labelDay.setForeground(table.getSelectionForeground());
+	            _labelEvent.setForeground(table.getSelectionForeground());
+        	} else {
+        		if(values[0].equals(today.get(Calendar.DAY_OF_MONTH))) {
+        			_labelDay.setForeground(Color.RED);
+        		} else {
+	        		if(column >= 5)
+	        			_labelDay.setForeground(Color.GRAY);
+	            	else
+	            		_labelDay.setForeground(Color.BLACK);
+        		}
+        		
+        		setBackground(table.getBackground());
+                _labelEvent.setForeground(Color.BLUE);
+        	}
         } else {
-            setBackground(table.getBackground());
-            _labelDay.setForeground(table.getForeground());
-            _labelEvent.setForeground(table.getForeground());
+        	setBackground(table.getBackground());
         }
-
-    	
-    	/*int day = (int) value;
-        if (day == 0) {
-            button.setText("");
-            button.setEnabled(false);
-        } else {
-            button.setText(String.valueOf(day));
-            button.setEnabled(true);
-        }
-        /*if (isSelected) {
-            setBackground(table.getSelectionBackground());
-            button.setForeground(table.getSelectionForeground());
-        } else {
-            setBackground(table.getBackground());
-            button.setForeground(table.getForeground());
-        }*/
         
         return this;
     }

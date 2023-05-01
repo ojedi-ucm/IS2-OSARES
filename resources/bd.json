@@ -1,9 +1,1 @@
-{
-    "citas": {},
-    "cuentas": { },
-    "clientes": {
-        "cliente1@gmail.com": {
-            "cuentas": []
-        }
-    }
-}
+{"citas":{"1232132131684908527615":{"1232132131684908527615":{"fecha":1684908527615,"motivo":"Asistencia Financiera","titular":"123213213"}},"1232132131684912141724":{"1232132131684912141724":{"fecha":1684912141724,"motivo":"Asistencia Financiera","titular":"123213213"}},"1232132131685103250286":{"1232132131685103250286":{"fecha":1685103250286,"motivo":"Asistencia Financiera","titular":"123213213"}},"1232132131684307350286":{"1232132131684307350286":{"fecha":1684307350286,"motivo":"Créditos e Hipotecas","titular":"123213213"}}},"cuentas":{},"clientes":{"cliente1@gmail.com":{"cuentas":[]}}}

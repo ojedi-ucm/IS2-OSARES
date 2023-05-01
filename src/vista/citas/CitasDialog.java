@@ -15,7 +15,6 @@ public class CitasDialog extends JDialog {
 	
 	private ControlCita _ctrl;
 	
-	
 	public CitasDialog(JFrame parent, ControlCita ctrl) {
 		super(parent, true);
 		_ctrl = ctrl;
@@ -28,7 +27,7 @@ public class CitasDialog extends JDialog {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		setContentPane(mainPanel);
 		
-		CalendarioView calendario = new CalendarioView("Mis Citas");
+		CalendarioView calendario = new CalendarioView(_ctrl);
 		calendario.setPreferredSize(new Dimension(500,400));
 		add(calendario);
 		

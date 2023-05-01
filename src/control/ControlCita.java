@@ -41,6 +41,11 @@ public class ControlCita {
 		}*/
 	}
 	
+	private void updateObs() {
+		for(CitasObserver obs: _observers)
+			obs.updateCitas(_citas);
+	}
+	
 	// ------ Métodos Públicos ---------
 	
 	public void addObserver(CitasObserver obs) {
@@ -49,8 +54,14 @@ public class ControlCita {
 	
 	
 	// ----- CRUDS con FSACitas -------
-	public void createCita(Cita cita) {
-		_fCitas.create(cita);
+	public void createCita(Date fecha, String motivo) {
+		Cita nuevaCita = new Cita(fecha, _titular.getID(), motivo);
+		
+		_citas.put(nuevaCita.getIdCita(), nuevaCita);
+		
+		_fCitas.create(nuevaCita);
+		
+		updateObs();
 	}
 	
 	public void deleteCita(Cita cita) {

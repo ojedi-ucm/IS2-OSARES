@@ -5,15 +5,14 @@ import java.util.Date;
 import org.json.JSONObject;
 
 public class Cita {
-	//Constantes
 
-	//Atributos
 	private String _idCita;
 	private Date _fecha;
 	private String _titularID;
 	private String _motivo;
 	
 	//Constructores
+	
 	public Cita(Date fecha, String titularID, String motivo) {
 		_fecha = fecha;
 		_titularID = titularID;
@@ -42,6 +41,10 @@ public class Cita {
 	
 	public String getIdCita() {
 		return _idCita;
+	}
+	
+	public String getMotivo() {
+		return _motivo;
 	}
 	
 	//Setters

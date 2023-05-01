@@ -10,27 +10,24 @@ public class Cliente {
 //Constantes
 
 //Atributos
-	private List<String> listaCitas = new ArrayList<String>();
+	private List<String> _listaCitas;
+	private String _id;
 
 //Constructores
 	public Cliente() {
+		_id = "123213213";
+		_listaCitas = new ArrayList<String>();
 		
+		//_listaCitas.add("");
 	}
 	
-	public Cliente(JSONObject informacion) {
-		try {
-			JSONArray auxCitas = informacion.getJSONArray("listaCitas");
-			for (int i = 0; i < auxCitas.length(); i++) {
-				String num_cita = auxCitas.getString(i);
-				listaCitas.add(num_cita);
-			}
-		}catch(Exception e) {
-			System.out.println(e.toString());
-		}
-	}
 //Getters
 	public List<String> getCitas(){
-		return listaCitas;
+		return _listaCitas;
+	}
+	
+	public String getID() {
+		return _id;
 	}
 //Setters
 	
@@ -42,16 +39,4 @@ public class Cliente {
 	//toString
 
 	//toJSON
-public JSONObject toJSONObect() {
-		
-		JSONObject info = new JSONObject();
-		JSONArray Array_Citas = new JSONArray();
-		for(String bi : listaCitas) {
-			Array_Citas.put(bi);
-		}
-		info.put("listaCitas", Array_Citas);
-		//info.put("rol", rol);
-		
-		return info;
-	}
 }

@@ -41,7 +41,8 @@ public class SACitasImpl implements SACitas {
 	}
 	@Override
 	public boolean update(Cita actualizada, Date nuevaFecha) {
-		return dao.update(actualizada.getIdCita(), nuevaFecha, actualizada.getTitularID());
+		//return dao.update(actualizada.getIdCita(), nuevaFecha, actualizada.getTitularID());
+		return false;
 	}	
 	@Override
 	public boolean delete(Cita borrada) {
