@@ -27,7 +27,7 @@ public class DAOCitasImpl implements DAOCitas {
 		loadCitas(in);
 	}
 	
-//metodos privados añadidos
+//metodos privados aï¿½adidos
 	private void loadCitas(InputStream in) throws Exception {
 		try {
 			_bd = new JSONObject(new JSONTokener(in));
@@ -51,16 +51,16 @@ public class DAOCitasImpl implements DAOCitas {
 	
 //CRUDS	
 	@Override
-	public boolean create(String num_cita, JSONObject cita) {
-		_bdCitas.put(num_cita, cita);	
+	public boolean create(String IdCita, JSONObject cita) {
+		_bdCitas.put(IdCita, cita);	
 		return saveChanges();
 	}
 	
 	@Override
-	public List<JSONObject> read(List<String> clientes) {
+	public List<JSONObject> read(List<String> IdCitasCliente) {
 		List<JSONObject> res = new ArrayList<>();
 		
-		for(String c: clientes) {
+		for(String c: IdCitasCliente) {
 			JSONObject o = _bdCitas.getJSONObject(c);
 			res.add(o);
 		}
@@ -69,29 +69,26 @@ public class DAOCitasImpl implements DAOCitas {
 	}
 	
 	@Override
-	public boolean update(String num_cita, Date nuevaFecha, Cliente cliente) {
-		JSONObject j = new JSONObject();
-		j.put("cliente", cliente);
-		j.put("fecha", nuevaFecha);
-		_bdCitas.put(num_cita, j);
+	public boolean update(String IdCita,JSONObject cita) {
+		_bdCitas.put(IdCita, cita);
 
 		return saveChanges();
 	}
 	
 	@Override
-	public boolean delete(String num_cita) {
-		_bdCitas.remove(num_cita);
+	public boolean delete(String IdCita) {
+		_bdCitas.remove(IdCita);
 		
 		return saveChanges();
 	}
 	
 	@Override
-	public Cita search(String num_cita) throws Exception{
+	public Cita search(String IdCita) throws Exception{
 		try {
-			return new Cita(_bdCitas.getJSONObject(num_cita));
+			return new Cita(_bdCitas.getJSONObject(IdCita));
 		}
 		catch(Exception e) {
-			throw new Exception("La cita número " + num_cita + " no existe.");
+			throw new Exception("La cita nï¿½mero " + IdCita + " no existe.");
 		}
 	}
 }

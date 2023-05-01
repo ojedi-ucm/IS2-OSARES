@@ -9,9 +9,9 @@ import modelo.Cita;
 import modelo.Cliente;
 
 public interface DAOCitas {
-	public boolean		create(String num_cita, JSONObject cita);
-	public List<JSONObject> read(List<String> clientes);
-	public boolean update(String num_cita, Date nuevaFecha, Cliente cliente);
-	public boolean		delete(String num_cita);
-	public Cita search(String num_cita) throws Exception;
+	public boolean		create(String IdCita, JSONObject cita);
+	public List<JSONObject> read(List<String> IdCitasCliente);
+	public boolean update(String IdCita,JSONObject cita);
+	public boolean		delete(String IdCita);
+	public Cita search(String IdCita) throws Exception;
 }

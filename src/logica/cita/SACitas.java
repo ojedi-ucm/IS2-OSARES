@@ -15,5 +15,5 @@ public interface SACitas {
 	public boolean update(Cita actualizada, Date nuevaFecha);
 	public boolean delete(Cita borrada);
 	boolean		completada(Cita completada);
-	Cita		consultar (String num_cita)throws Exception;
+	Cita		consultar (String IdCita)throws Exception;
 }

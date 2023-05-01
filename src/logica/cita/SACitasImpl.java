@@ -41,8 +41,7 @@ public class SACitasImpl implements SACitas {
 	}
 	@Override
 	public boolean update(Cita actualizada, Date nuevaFecha) {
-		//return dao.update(actualizada.getIdCita(), nuevaFecha, actualizada.getTitularID());
-		return false;
+		return dao.update(actualizada.getIdCita(), actualizada.toJSONObject());
 	}	
 	@Override
 	public boolean delete(Cita borrada) {
@@ -54,7 +53,7 @@ public class SACitasImpl implements SACitas {
 		return false;
 	}
 	@Override
-	public Cita consultar (String num_cita)throws Exception {
-		return dao.search(num_cita);
+	public Cita consultar (String IdCita)throws Exception {
+		return dao.search(IdCita);
 	}
 }

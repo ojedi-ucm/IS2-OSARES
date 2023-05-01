@@ -24,23 +24,23 @@ public class FIntCitasImpl implements FIntCitas {
 
 //CRUDS
 	@Override
-	public boolean create(String num_cita, JSONObject cita) {
-		return dao.create(num_cita, cita);
+	public boolean create(String IdCita, JSONObject cita) {
+		return dao.create(IdCita, cita);
 	}
 	@Override
-	public List<JSONObject> read(List<String> clientes) {
-		return dao.read(clientes);
+	public List<JSONObject> read(List<String> IdCitasCliente) {
+		return dao.read(IdCitasCliente);
 	}
 	@Override
-	public boolean update(String num_cita, Date nuevaFecha, Cliente cliente) {
-		return dao.update(num_cita, nuevaFecha, cliente);
+	public boolean update(String IdCita, JSONObject cita) {
+		return dao.update(IdCita, cita);
 	}
 	@Override
-	public boolean delete(String num_cita) {
-		return dao.delete(num_cita);
+	public boolean delete(String IdCita) {
+		return dao.delete(IdCita);
 	}
 	@Override
-	public Cita search(String num_cita)throws Exception {
-		return dao.search(num_cita);
+	public Cita search(String IdCita)throws Exception {
+		return dao.search(IdCita);
 	}
 }
