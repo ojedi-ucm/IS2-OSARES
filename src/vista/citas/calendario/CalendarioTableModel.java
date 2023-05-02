@@ -2,7 +2,10 @@ package vista.citas.calendario;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -25,7 +28,6 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
 	
 	private int _year;
     private int _month;
-    private int[][] _days;
     
     private List<Cita> _citas;
     
@@ -39,12 +41,10 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
     	ctrl.addObserver(this);
     	
         _calendar = Calendar.getInstance();
-        _calendar.setFirstDayOfWeek(Calendar.MONDAY);
         
         _year = _calendar.get(Calendar.YEAR);
         _month = _calendar.get(Calendar.MONTH);
         
-        _data = new Object[_calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)][7][2];
         _citas = new ArrayList<>();
         
         updateDays();
@@ -72,13 +72,25 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
 	
 	
 	public void updateDays() {
-        int firstDayOfWeek = _calendar.get(Calendar.DAY_OF_WEEK) - 2;
+		_data = new Object[_calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)][7][4];
+		
+		Calendar selMes = Calendar.getInstance();
+		selMes.set(_year, _month, 1);
+		
+		int firstDayOfWeek = selMes.get(Calendar.DAY_OF_WEEK) - 2;
+		
+		if(firstDayOfWeek < 0) {
+			firstDayOfWeek = 6;
+			_data = new Object[_calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)+1][7][4];
+		}
+			
+        
         int lastDayOfMonth = _calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         int row = 0;
         int col = firstDayOfWeek;
         
-        for (int i = 1; i <= lastDayOfMonth; i++) {
-            _data[row][col][0] = i;
+        for (int i = 1; i <= lastDayOfMonth && row < _calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)+1; i++) {
+            
             
             Calendar dia = Calendar.getInstance();
             dia.set(Calendar.YEAR, _year);
@@ -88,9 +100,13 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
             Cita cita = searchCita(dia.getTime());
             
             if(cita != null)
-            	_data[row][col][1] = cita;
+            	_data[row][col][0] = cita;
             else
-            	_data[row][col][1] = null;
+            	_data[row][col][0] = null;
+            
+            _data[row][col][1] = i;
+            _data[row][col][2] = _month;
+            _data[row][col][3] = _year;
             
             col++;
             if (col == 7) {
@@ -100,6 +116,13 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
         }
         
         fireTableDataChanged();
+	}
+	
+	public void updateDays(Calendar fecha) {
+		_calendar.set(fecha.get(Calendar.YEAR), fecha.get(Calendar.MONTH), fecha.get(Calendar.DAY_OF_MONTH));
+		_month = fecha.get(Calendar.MONTH);
+		_year = fecha.get(Calendar.YEAR);
+		updateDays();
 	}
 	
 	private Cita searchCita(Date fecha) {
@@ -162,27 +185,26 @@ class CalendarTableCellRenderer extends JPanel implements TableCellRenderer {
     	Calendar today = Calendar.getInstance();
     	Cita cita;
     	
-    	if(values[0] != null) {
-	        _labelDay.setText(values[0].toString());
-	        if(values[1] != null) {
-	        	cita = (Cita) values[1];
+    	if(values[1] != null) {
+	        _labelDay.setText(values[1].toString());
+	        if(values[0] != null) {
+	        	cita = (Cita) values[0];
 	        	_labelEvent.setText(cita.getMotivo());
 	        } else {
 	        	_labelEvent.setText("");
 	        }
-	       
     	} else {
     		_labelDay.setText("");
 	        _labelEvent.setText("");
     	}
         
-        if (values[0] != null) {
+        if (values[1] != null) {
         	if(isSelected && column < 5) {
 	            setBackground(table.getSelectionBackground());
 	            _labelDay.setForeground(table.getSelectionForeground());
 	            _labelEvent.setForeground(table.getSelectionForeground());
         	} else {
-        		if(values[0].equals(today.get(Calendar.DAY_OF_MONTH))) {
+        		if(values[1].equals(today.get(Calendar.DAY_OF_MONTH)) && values[2].equals(today.get(Calendar.MONTH)) && values[3].equals(today.get(Calendar.YEAR))) {
         			_labelDay.setForeground(Color.RED);
         		} else {
 	        		if(column >= 5)

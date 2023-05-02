@@ -177,7 +177,7 @@ public class CrearCitaDialog extends JDialog {
 		String[] partes = time.split(":");
 		
 		int hora = Integer.parseInt(partes[0]);
-		int min = Integer.parseInt(partes[0]);
+		int min = Integer.parseInt(partes[1]);
 		
 		_fecha.set(Calendar.HOUR_OF_DAY, hora);
 		_fecha.set(Calendar.MINUTE, min);

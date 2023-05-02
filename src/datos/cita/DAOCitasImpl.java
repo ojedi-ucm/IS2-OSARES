@@ -5,14 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import modelo.Cita;
-import modelo.Cliente;
 
 public class DAOCitasImpl implements DAOCitas {
 //Constantes
@@ -88,7 +86,7 @@ public class DAOCitasImpl implements DAOCitas {
 			return new Cita(_bdCitas.getJSONObject(IdCita));
 		}
 		catch(Exception e) {
-			throw new Exception("La cita n�mero " + IdCita + " no existe.");
+			throw new Exception("La cita con ID " + IdCita + " no existe.");
 		}
 	}
 }

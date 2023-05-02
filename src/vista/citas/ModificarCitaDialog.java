@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -14,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import control.ControlCita;
@@ -26,9 +26,16 @@ public class ModificarCitaDialog extends JDialog {
 	private Cita _cita;
 	private Calendar _fecha;
 	
-	
-	private String _formattedDate;
 	private JLabel _fechaLabel;
+	
+	private JComboBox<Integer> _diaCB;
+	private DefaultComboBoxModel<Integer> _diasModel;
+	
+	private JComboBox<String> _mesCB;
+	private DefaultComboBoxModel<String> _mesesModel;
+	
+	private JComboBox<Integer> _yearCB;
+	private DefaultComboBoxModel<Integer> _yearsModel;
 	
 	private JComboBox<String> _horaCB;
 	private DefaultComboBoxModel<String> _horasModel;
@@ -45,7 +52,6 @@ public class ModificarCitaDialog extends JDialog {
 			_fecha = Calendar.getInstance();
 			_fecha.setTime(_cita.getFecha());
 			initGUI();
-			formatFecha();
 		}
 	}
 	
@@ -57,10 +63,10 @@ public class ModificarCitaDialog extends JDialog {
 		
 		// ---- INIT -----
 		_motivosModel = new DefaultComboBoxModel<>();
+		_diasModel = new DefaultComboBoxModel<>();
+		_mesesModel = new DefaultComboBoxModel<>();
+		_yearsModel = new DefaultComboBoxModel<>();
 		_horasModel = new DefaultComboBoxModel<>();
-		
-		loadHoras();
-		loadMotivos();
 		
 		// -------- Form -----------
 		JPanel formPanel = new JPanel();
@@ -68,37 +74,90 @@ public class ModificarCitaDialog extends JDialog {
 		formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		// Label de Fecha
-		_fechaLabel = new JLabel();
-		_fechaLabel.setForeground(Color.BLUE);
-        formPanel.add(_fechaLabel);
-        
-        formPanel.add(Box.createVerticalStrut(10));
+		_fechaLabel = new JLabel("Fecha");
+		_fechaLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
-		// Selecctionar Hora
+		
+		JPanel fechaPanel = new JPanel();
+		fechaPanel.setAlignmentX(LEFT_ALIGNMENT);
+		
+		// Dia
+		_diaCB = new JComboBox<Integer>();
+		_diaCB.setModel(_diasModel);
+		_diaCB.setEnabled(false);
+		_diaCB.setAlignmentX(LEFT_ALIGNMENT);
+		
+		// Mes
+		_mesCB = new JComboBox<String>();
+		_mesCB.setModel(_mesesModel);
+		_mesCB.setEnabled(false);
+		_mesCB.setAlignmentX(LEFT_ALIGNMENT);
+		
+		// Año
+		_yearCB = new JComboBox<Integer>();
+		_yearCB.setModel(_yearsModel);
+		_yearCB.setEnabled(false);
+		_yearCB.setAlignmentX(LEFT_ALIGNMENT);
+		
+		// Cambiar BTN
+		JButton modFecha = new JButton("Cambiar");
+		modFecha.addActionListener((a)-> {
+			_diaCB.setEnabled(true);
+			_mesCB.setEnabled(true);
+			_yearCB.setEnabled(true);
+		});
+		
+		fechaPanel.add(_diaCB);
+		fechaPanel.add(_mesCB);
+		fechaPanel.add(_yearCB);
+		fechaPanel.add(modFecha);
+		
+        formPanel.add(_fechaLabel);
+        formPanel.add(fechaPanel);
+		
+		// Seleccionar Hora
         JLabel horaLabel = new JLabel("Hora");
         horaLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
+        JPanel horaPanel = new JPanel();
+        horaPanel.setAlignmentX(LEFT_ALIGNMENT);
         _horaCB = new JComboBox<String>();
         _horaCB.setModel(_horasModel);
-        _horaCB.setSelectedIndex(-1);
+        _horaCB.setEnabled(false);
         _horaCB.setAlignmentX(LEFT_ALIGNMENT);
         _horaCB.setPreferredSize(new Dimension(300, 30));
+        
+        JButton modHora = new JButton("Cambiar");
+        modHora.addActionListener((a) -> {
+        	_horaCB.setEnabled(true);
+        });
 		
+        horaPanel.add(_horaCB);
+        horaPanel.add(modHora);
 		formPanel.add(horaLabel);
-		formPanel.add(_horaCB);
+		formPanel.add(horaPanel);
 
 		// Seleccionar Motivo
 		JLabel motivoLabel = new JLabel("Motivo de la Cita");
 		motivoLabel.setAlignmentX(LEFT_ALIGNMENT);
 		
+		JPanel motivoPanel = new JPanel();
+		motivoPanel.setAlignmentX(LEFT_ALIGNMENT);
 		_motivoCB = new JComboBox<String>();
 		_motivoCB.setModel(_motivosModel);
-		_motivoCB.setSelectedIndex(-1);
+		_motivoCB.setEnabled(false);
 		_motivoCB.setAlignmentX(LEFT_ALIGNMENT);
 		_motivoCB.setPreferredSize(new Dimension(300, 30));
 		
+		JButton modMotivo = new JButton("Cambiar");
+		modMotivo.addActionListener((a) -> {
+			_motivoCB.setEnabled(true);
+		});
+		
+		motivoPanel.add(_motivoCB);
+		motivoPanel.add(modMotivo);
 		formPanel.add(motivoLabel);
-		formPanel.add(_motivoCB);
+		formPanel.add(motivoPanel);
 		
 		formPanel.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(formPanel);
@@ -107,18 +166,21 @@ public class ModificarCitaDialog extends JDialog {
 		// -------- Botones ---------
 		JPanel btnPanel = new JPanel();
 		JButton confirmBtn = new JButton("Guardar");
+		confirmBtn.setForeground(Color.GREEN);
 		confirmBtn.addActionListener((a) -> {
 			try {
 				if(_horaCB.getSelectedIndex() == -1 || _motivoCB.getSelectedIndex() == -1)
 					Utils.showErrorMsg("Existen campos vacíos.");
 				else {
 					Calendar hoy = Calendar.getInstance();
-					parseFecha((String) _horaCB.getSelectedItem());
+					parseFecha();
 					
 					if(_fecha.before(hoy))
 						Utils.showErrorMsg("No puedes pedir una cita en el pasado.");
+					else if(_fecha.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || _fecha.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+						Utils.showErrorMsg("No puedes pedir una cita el fin de semana. La oficina está cerrada.");
 					else {
-						_ctrl.createCita(_fecha.getTime(), (String) _motivoCB.getSelectedItem());
+						_ctrl.updateCita(_cita, _fecha.getTime(), (String) _motivoCB.getSelectedItem());
 					
 						this.setVisible(false);
 						_horaCB.setSelectedIndex(-1);
@@ -133,16 +195,19 @@ public class ModificarCitaDialog extends JDialog {
 		JButton cerrarBtn = new JButton("Cerrar");
 		cerrarBtn.addActionListener((a) -> {
 			this.setVisible(false);
-			_horaCB.setSelectedIndex(-1);
-			_motivoCB.setSelectedIndex(-1);
 		});
 		
 		JButton cancelCitaBtn = new JButton("Cancelar Cita");
 		cancelCitaBtn.setForeground(Color.RED);
 		cancelCitaBtn.addActionListener((a) -> {
-			this.setVisible(false);
-			_horaCB.setSelectedIndex(-1);
-			_motivoCB.setSelectedIndex(-1);
+			
+			int n = JOptionPane.showOptionDialog(this, "¿Seguro que quieres cancelar la cita?", "Cancelar Cita",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+			if (n == 0) {
+				_ctrl.deleteCita(_cita);
+				this.setVisible(false);
+			}
 		});
 		
 		btnPanel.add(confirmBtn);
@@ -152,8 +217,15 @@ public class ModificarCitaDialog extends JDialog {
 		mainPanel.add(btnPanel);
         
 		//-----------------------------
+		
+		loadHoras();
+		loadMotivos();
+		loadDias();
+		loadMeses();
+		loadYears();
         
 		pack();
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 	}
@@ -168,6 +240,44 @@ public class ModificarCitaDialog extends JDialog {
 		
 		for(String mot: motivos)
 			_motivosModel.addElement(mot);
+		
+		_motivoCB.setSelectedItem(_cita.getMotivo());
+	}
+	
+	private void loadDias() {
+		for(int i = 1; i <= 31; i++)
+			_diasModel.addElement(i);
+		
+		_diaCB.setSelectedItem(_fecha.get(Calendar.DAY_OF_MONTH));
+	}
+	
+	private void loadMeses() {
+		String[] meses = {
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Agosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Diciembre"
+		};
+		
+		for(String mes: meses)
+			_mesesModel.addElement(mes);
+		
+		_mesCB.setSelectedIndex(_fecha.get(Calendar.MONTH));
+	}
+	
+	private void loadYears() {
+		for(int i = _fecha.get(Calendar.YEAR); i <= _fecha.get(Calendar.YEAR) + 5; i++)
+			_yearsModel.addElement(i);
+		
+		_yearCB.setSelectedItem(_fecha.get(Calendar.YEAR));
 	}
 	
 	private void loadHoras() {
@@ -189,22 +299,28 @@ public class ModificarCitaDialog extends JDialog {
 		
 		for(String hora: horas)
 			_horasModel.addElement(hora);
+		
+		_horaCB.setSelectedItem(formattedTime());
 	}
 	
-	private void parseFecha(String time) throws Exception {
-		String[] partes = time.split(":");
+	private void parseFecha() throws Exception {
+		String selectedHora = (String) _horaCB.getSelectedItem();
+		String[] partes = selectedHora.split(":");
 		
 		int hora = Integer.parseInt(partes[0]);
-		int min = Integer.parseInt(partes[0]);
+		int min = Integer.parseInt(partes[1]);
+		
+		_fecha.set(Calendar.DAY_OF_MONTH, (int) _diaCB.getSelectedItem());
+		_fecha.set(Calendar.MONTH, _mesCB.getSelectedIndex());
+		_fecha.set(Calendar.YEAR, (int) _yearCB.getSelectedItem());
 		
 		_fecha.set(Calendar.HOUR_OF_DAY, hora);
 		_fecha.set(Calendar.MINUTE, min);
 	}
 	
-	private void formatFecha() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	private String formattedTime() {
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		
-		_formattedDate = formatter.format(_fecha.getTime());
-		_fechaLabel.setText("Nueva cita para el " + _formattedDate);
+		return formatter.format(_fecha.getTime());
 	}
 }

@@ -48,10 +48,14 @@ public class Cita {
 	}
 	
 	//Setters
+	public void setFecha(Date fecha) {
+		_fecha = fecha;
+	}
 	
-	//Verificadores
-	
-	//Actualizadores
+	public void setMotivo(String motivo) {
+		_motivo = motivo;
+	}
+
 
 	//Utiles
 

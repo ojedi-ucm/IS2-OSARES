@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -43,9 +45,11 @@ public class CalendarioView extends JPanel {
 		// ------- INIT --------
 		_model = new CalendarioTableModel(_ctrl);
 		_selFecha = Calendar.getInstance();
+		_selFecha.set(Calendar.DAY_OF_MONTH, 1);
+		_selFecha.set(Calendar.HOUR_OF_DAY, 0);
+		Calendar hoy = Calendar.getInstance();
 		
 		CrearCitaDialog nuevaCitaDialog = new CrearCitaDialog(new JFrame(), _ctrl, _selFecha);
-		ModificarCitaDialog modificarCitaDialog = new ModificarCitaDialog(new JFrame(), _ctrl, null);
 		
 		Border border = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 		setBorder(border);
@@ -53,10 +57,31 @@ public class CalendarioView extends JPanel {
 		// ------- Sel mes y año en calendario ---------
 		
 		JPanel infoPanel = new JPanel();
-		_mesLabel = new JLabel(_mesYearFormat);
+		_mesLabel = new JLabel(parseFecha());
 		_sigMesBtn = new JButton(">>");
+		_sigMesBtn.addActionListener((a) -> {
+			_selFecha.add(Calendar.MONTH, 1);	
+			_antMesBtn.setEnabled(true);
+			_mesLabel.setText(parseFecha());
+			_model.updateDays(_selFecha);
+		});
+		
 		_antMesBtn = new JButton("<<");
 		_antMesBtn.setEnabled(false);
+		_antMesBtn.addActionListener((a) -> {
+			_selFecha.add(Calendar.MONTH, -1);
+			
+			Calendar prev = Calendar.getInstance();
+			prev.set(Calendar.MONTH, _selFecha.get(Calendar.MONTH)-1);
+			
+			_mesLabel.setText(parseFecha());
+			_model.updateDays(_selFecha);
+			
+			if(!prev.after(hoy)) {
+				_antMesBtn.setEnabled(false);
+			}
+		});
+		
 		infoPanel.add(_antMesBtn);
 		infoPanel.add(_mesLabel);
 		infoPanel.add(_sigMesBtn);
@@ -75,16 +100,17 @@ public class CalendarioView extends JPanel {
 		        
 		        if (row >= 0 && col >= 0 && col < 5) { // Si se hizo clic en una celda válida
 		        	Object[] valor = (Object[]) _model.getValueAt(row, col);
+		        	Calendar fecha = Calendar.getInstance();
 		        	
-		        	_selFecha.set(Calendar.YEAR, _model.getYear());
-		        	_selFecha.set(Calendar.MONTH, _model.getMonth());
-		        	_selFecha.set(Calendar.DAY_OF_MONTH, (int) valor[0]);
+		        	fecha.set(Calendar.YEAR, _model.getYear());
+		        	fecha.set(Calendar.MONTH, _model.getMonth());
+		        	fecha.set(Calendar.DAY_OF_MONTH, (int) valor[1]);
 		        	
-		        	if(valor[1] == null) {
-		        		nuevaCitaDialog.setFecha(_selFecha);
+		        	if(valor[0] == null) {
+		        		nuevaCitaDialog.setFecha(fecha);
 		        		nuevaCitaDialog.open();
 		        	} else {
-		        		Cita cita = (Cita) valor[1];
+		        		Cita cita = (Cita) valor[0];
 		        		new ModificarCitaDialog(new JFrame(), _ctrl, cita);
 		        	}
 		        }
@@ -109,5 +135,10 @@ public class CalendarioView extends JPanel {
         table.setDefaultRenderer(table.getColumnClass(0), new CalendarTableCellRenderer());
 
 		add(scrollPane, BorderLayout.CENTER);
+	}
+	
+	private String parseFecha() {
+		SimpleDateFormat formato = new SimpleDateFormat("MMMM 'de' yyyy", new Locale("es", "ES"));
+        return formato.format(_selFecha.getTime());
 	}
 }

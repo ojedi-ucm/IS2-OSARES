@@ -33,12 +33,10 @@ public class ControlCita {
 		_observers = new ArrayList<>();
 		_citas = new HashMap<>();
 		
-		/*try {
+		try {
 			for(Cita c: _fCitas.readCitasCliente(_titular))
 				_citas.put(c.getIdCita(), c);
-		} catch(Exception e) {
-			System.out.println(e.toString());
-		}*/
+		} catch(Exception e) { e.printStackTrace(); }
 	}
 	
 	private void updateObs() {
@@ -64,16 +62,26 @@ public class ControlCita {
 		updateObs();
 	}
 	
+	public void searchCita(String idCita) throws Exception {
+		_fCitas.search(idCita);
+	}
+	
+	public void updateCita(Cita cita, Date fecha, String motivo) {
+		cita.setFecha(fecha);
+		cita.setMotivo(motivo);
+		
+		_citas.put(cita.getIdCita(), cita);
+		
+		_fCitas.update(cita);
+		
+		updateObs();
+	}
+	
 	public void deleteCita(Cita cita) {
+		_citas.remove(cita.getIdCita());
+		
 		_fCitas.delete(cita);
+		
+		updateObs();
 	}
-	
-	public void searchCita(String num_cita)throws Exception {
-		_fCitas.consultar(num_cita);
-	}
-	
-	public void updateCita(Cita cita, Date nuevaFecha) {
-		_fCitas.update(cita, nuevaFecha);
-	}
-	
 }

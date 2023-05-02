@@ -1,6 +1,5 @@
 package logica.cita;
 
-import java.util.Date;
 import java.util.List;
 
 import modelo.Cita;
@@ -30,8 +29,8 @@ public class FCitasImpl implements FCitas {
 	}
 
 	@Override
-	public boolean update(Cita actualizada, Date nuevaFecha) {
-		return sa.update(actualizada, nuevaFecha);
+	public boolean update(Cita actualizada) {
+		return sa.update(actualizada);
 	}
 
 	@Override
@@ -40,12 +39,7 @@ public class FCitasImpl implements FCitas {
 	}
 
 	@Override
-	public boolean completada(Cita completada) {
-		return sa.completada(completada);
-	}
-
-	@Override
-	public Cita consultar(String num_cita) throws Exception{
-		return sa.consultar(num_cita);
+	public Cita search(String idCita) throws Exception{
+		return sa.consultar(idCita);
 	}
 }

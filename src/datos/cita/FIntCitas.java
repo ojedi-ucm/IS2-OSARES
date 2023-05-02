@@ -1,12 +1,10 @@
 package datos.cita;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
 
 import modelo.Cita;
-import modelo.Cliente;
 
 public interface FIntCitas {
 	public boolean create(String IdCita, JSONObject cita);

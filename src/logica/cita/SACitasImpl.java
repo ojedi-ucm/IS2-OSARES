@@ -1,7 +1,6 @@
 package logica.cita;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -40,18 +39,15 @@ public class SACitasImpl implements SACitas {
 		return res;
 	}
 	@Override
-	public boolean update(Cita actualizada, Date nuevaFecha) {
+	public boolean update(Cita actualizada) {
 		return dao.update(actualizada.getIdCita(), actualizada.toJSONObject());
 	}	
+	
 	@Override
 	public boolean delete(Cita borrada) {
 		return dao.delete(borrada.getIdCita());
 	}
-	@Override
-	public boolean completada(Cita completada) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	@Override
 	public Cita consultar (String IdCita)throws Exception {
 		return dao.search(IdCita);
