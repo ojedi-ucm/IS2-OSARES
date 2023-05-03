@@ -10,6 +10,8 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import control.ControlCliente;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -57,6 +59,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void windowOpened(WindowEvent e) {
+      
 				try {
             File audioFile = new File("resources/audio.wav");
             clip = AudioSystem.getClip();
