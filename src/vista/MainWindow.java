@@ -1,6 +1,8 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -8,35 +10,61 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import control.ControlCita;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 
-import vista.citas.CitasDialog;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
+
+import vista.auth.InitView;
+
 
 public class MainWindow extends JFrame {
+	private Clip clip;
 	
-	private ControlCita _ctrl;
-	
-	public MainWindow(ControlCita ctrl) {
+	public MainWindow() {
 		super("OSARES");
-		_ctrl = ctrl;
 		initGUI();
 	}
 	
-	public void initGUI() {
+	private void initGUI() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		setContentPane(mainPanel);
-		mainPanel.setPreferredSize(new Dimension(600, 600));
+		mainPanel.setPreferredSize(new Dimension(600, 350));
 		
-		CitasDialog citasDialog = new CitasDialog(new JFrame(), _ctrl);
+		InitView initView = new InitView();
+		mainPanel.add(initView, BorderLayout.CENTER);
 		
-		citasDialog.open();
+		JPanel btnPanel = new JPanel();
+		JButton playBtn = new JButton("Play");
+		playBtn.addActionListener((a) -> {
+			if(!clip.isActive())
+				clip.start();
+		});
+		btnPanel.add(playBtn);
+		
+		JButton stopBtn = new JButton("Stop");
+		stopBtn.addActionListener((a) -> {
+			clip.stop();
+		});
+		btnPanel.add(stopBtn);
+		
+		mainPanel.add(btnPanel, BorderLayout.NORTH);
 		
 		addWindowListener(new WindowListener() {
 
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+				try {
+            File audioFile = new File("resources/audio.wav");
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(audioFile));
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error al reproducir el audio: " + ex.getMessage());
+        }
 			}
 
 			@Override
@@ -81,4 +109,4 @@ public class MainWindow extends JFrame {
 	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 	    setVisible(true);
 	}
-}
+}	
