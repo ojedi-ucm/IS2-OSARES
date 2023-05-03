@@ -16,11 +16,11 @@ import control.ControlCliente;
 import modelo.Cliente;
 import vista.Utils;
 
-public class UpdateClienteDialog extends JDialog {
+public class ClienteDialog extends JDialog {
 
 private ControlCliente _controler;
 	
-	public UpdateClienteDialog(ControlCliente ctrl) {
+	public ClienteDialog(ControlCliente ctrl) {
 		super(new JFrame(), true);
 		_controler = ctrl;
 		initGUI();
@@ -89,7 +89,7 @@ private ControlCliente _controler;
 				_controler._cliente.setPassword(contra);
 				_controler._cliente.setName(nombre);
 				
-				_controler.actualizarCliete(_controler._cliente);
+				_controler.actualizarCliente(_controler._cliente);
 				
 				setVisible(false);
 				

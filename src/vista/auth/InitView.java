@@ -11,15 +11,19 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import control.ControlCliente;
+import vista.MainWindow;
+import vista.observers.AuthObserver;
 
 import javax.swing.JButton;
 
 public class InitView extends JPanel {
 	
 	private ControlCliente _ctrlCliente;
+	private AuthObserver _authObs;
 	
-	public InitView(ControlCliente ctrlCliente) {
+	public InitView(AuthObserver authObs, ControlCliente ctrlCliente) {
 		_ctrlCliente = ctrlCliente;
+		_authObs = authObs;
 		initGUI();
 	}
 	
@@ -40,10 +44,10 @@ public class InitView extends JPanel {
         add(imgPanel);
         
         // Login Dialog
-        LoginDialog loginDialog = new LoginDialog(_ctrlCliente);
+        LoginDialog loginDialog = new LoginDialog(_authObs, _ctrlCliente);
         
         // Register Dialog
-        RegisterDialog registerDialog = new RegisterDialog(_ctrlCliente);
+        RegisterDialog registerDialog = new RegisterDialog(_authObs, _ctrlCliente);
      
         // Buttons
         JPanel btnPanel = new JPanel();

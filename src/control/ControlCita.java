@@ -21,8 +21,11 @@ public class ControlCita {
 	
 	private FCitas _fCitas;
 	
-	public ControlCita(Cliente titular){
+	private ControlCliente _ctrlCliente;
+	
+	public ControlCita(Cliente titular, ControlCliente ctrlCliente){
 		_titular = titular;
+		_ctrlCliente = ctrlCliente;
 		reset();
 	}
 	
@@ -48,6 +51,7 @@ public class ControlCita {
 	
 	public void addObserver(CitasObserver obs) {
 		_observers.add(obs);
+		obs.updateCitas(_citas);
 	}
 	
 	
@@ -58,6 +62,10 @@ public class ControlCita {
 		_citas.put(nuevaCita.getIdCita(), nuevaCita);
 		
 		_fCitas.create(nuevaCita);
+		
+		_titular.addCita(nuevaCita.getIdCita());
+		
+		_ctrlCliente.actualizarCliente(_titular);
 		
 		updateObs();
 	}
@@ -81,6 +89,10 @@ public class ControlCita {
 		_citas.remove(cita.getIdCita());
 		
 		_fCitas.delete(cita);
+		
+		_titular.addCita(cita.getIdCita());
+		
+		_ctrlCliente.actualizarCliente(_titular);
 		
 		updateObs();
 	}

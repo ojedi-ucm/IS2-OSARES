@@ -14,9 +14,15 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
+import control.ControlCita;
+import control.ControlCliente;
 import control.ControlCuenta;
+import modelo.Cliente;
 import vista.cuentas.*;
+import vista.observers.AuthObserver;
 import vista.observers.CuentasObserver;
+import vista.citas.*;
+import vista.clientes.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -30,6 +36,8 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 	
 	// Atributos
 	private ControlCuenta _ctrlCuenta;
+	private ControlCliente _ctrlCliente;
+	private ControlCita _ctrlCita;
 	
 	private float _dineroTotal;
 	
@@ -48,10 +56,17 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 	
 	private boolean _isDineroHidden = false;
 	
+	private Cliente _cliente;
 	
+	private AuthObserver _authObs;
 	
-	public ControlPanelView(ControlCuenta ctrlCuenta) {
+	public ControlPanelView(ControlCuenta ctrlCuenta, ControlCliente ctrlCliente, ControlCita ctrlCita, AuthObserver authObs) {
 		_ctrlCuenta = ctrlCuenta;
+		_ctrlCliente = ctrlCliente;
+		_ctrlCita = ctrlCita;
+		
+		_authObs = authObs;
+		
 		initGUI();
 		_ctrlCuenta.addObserver(this);
 	}
@@ -69,6 +84,9 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		TransferenciaDialog transDialog = new TransferenciaDialog(new JFrame(), _ctrlCuenta);
 		AbrirCuentaDialog abrirCuentaDialog = new AbrirCuentaDialog(new JFrame(), _ctrlCuenta);
 		CerrarCuentaDialog cerrarCuentaDialog = new CerrarCuentaDialog(new JFrame(), _ctrlCuenta);
+		
+		CitasDialog citasDialog = new CitasDialog(new JFrame(), _ctrlCita);
+		ClienteDialog clienteDialog = new ClienteDialog(_ctrlCliente);
 		// FALTAN Dialogos de citas y config de usuario
 		
 		// ------ Añadir Dinero ------ 
@@ -156,7 +174,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_citasBtn.setToolTipText("Gestionar Citas");
 		_citasBtn.setIcon(resizedIcon("calendar.png"));
 		_citasBtn.addActionListener((a) -> {
-			
+			citasDialog.open();
 		});
 		_toolBar.add(_citasBtn);
 		
@@ -166,7 +184,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_configUsuarioBtn.setToolTipText("Configuración de Usuario");
 		_configUsuarioBtn.setIcon(resizedIcon("config.png"));
 		_configUsuarioBtn.addActionListener((a) -> {
-			
+			clienteDialog.open();
 		});
 		_toolBar.add(_configUsuarioBtn);
 		_toolBar.addSeparator();
@@ -177,7 +195,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_cerrarSesBtn.setToolTipText("Cerrar Sesión");
 		_cerrarSesBtn.setIcon(resizedIcon("close.png"));
 		_cerrarSesBtn.addActionListener((a) -> {
-			
+			_authObs.closeSession(_ctrlCuenta.getTitular());
 		});
 		_toolBar.add(_cerrarSesBtn);
 	}

@@ -15,17 +15,21 @@ import javax.swing.JTextField;
 
 import control.ControlCliente;
 import modelo.Cliente;
+import vista.MainWindow;
 import vista.Utils;
+import vista.observers.AuthObserver;
 
 import javax.swing.JComboBox;
 
 public class RegisterDialog extends JDialog {
 	
 	private ControlCliente _controler;
+	private AuthObserver _authObs;
 	
-	public RegisterDialog(ControlCliente ctrl) {
+	public RegisterDialog(AuthObserver authObs, ControlCliente ctrl) {
 		super(new JFrame(), true);
 		_controler = ctrl;
+		_authObs = authObs;
 		initGUI();
 	}
 	
@@ -76,21 +80,25 @@ public class RegisterDialog extends JDialog {
 			int telefono;
 			try {
 				telefono = Integer.parseInt(tlf.getText());
+				
 				if(telefono < 100000000 || telefono > 999999999)
-					throw new Exception();
-				Cliente aux = new Cliente(DNI.getText(), password.getText(), username.getText(), telefono);
-				if(!_controler.crearCliente(aux))
-					Utils.showErrorMsg("Ya hay un cliente creado con ese DNI");
+					Utils.showErrorMsg("El número de teléfono " + telefono + " no es correcto.");
+				
+				Cliente nuevoCliente = new Cliente(DNI.getText(), password.getText(), username.getText(), telefono);
+				
+				if(!_controler.crearCliente(nuevoCliente))
+					Utils.showErrorMsg("Ya existe un cliente creado con el DNI " + DNI.getText());
 				else {
 					username.setText("");
 					tlf.setText("");
 					DNI.setText("");
 					password.setText("");
 					setVisible(false);
+					_authObs.authSuccess(nuevoCliente);
 				}
 				
 			} catch (Exception e) {
-					Utils.showErrorMsg("Existe algun error en los campos introducidos, Por favor revileso e intentelo de nuevo");
+					Utils.showErrorMsg("Los campos introducidos no son correctos.");
 			}
 		});
 		btnPanel.add(registerBtn);

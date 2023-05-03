@@ -28,8 +28,11 @@ public class ControlCuenta {
 	
 	private FCuentas _fCuentas;
 	
-	public ControlCuenta(Cliente titular) {
+	private ControlCliente _ctrlCliente;
+	
+	public ControlCuenta(Cliente titular, ControlCliente ctrlCliente) {
 		_titular = titular;
+		_ctrlCliente = ctrlCliente;
 		reset();
 	}
 	
@@ -122,6 +125,8 @@ public class ControlCuenta {
 		
 		_titular.addCuenta(nueva.getIBAN());
 		
+		_ctrlCliente.actualizarCliente(_titular);
+		
 		updateObs();
 	}
 	
@@ -135,6 +140,10 @@ public class ControlCuenta {
 	
 		_fCuentas.delete(cerrar);
 		
+		_titular.removeCuenta(ibanCerrar);
+		
+		_ctrlCliente.actualizarCliente(_titular);
+		
 		updateObs();
 	}
 	
@@ -144,6 +153,10 @@ public class ControlCuenta {
 		_cuentas.remove(ibanCerrar);
 	
 		_fCuentas.delete(cerrar);
+		
+		_titular.removeCuenta(ibanCerrar);
+		
+		_ctrlCliente.actualizarCliente(_titular);
 		
 		updateObs();
 	}
@@ -163,6 +176,10 @@ public class ControlCuenta {
 	
 	public String getTitularID() {
 		return _titular.getId();
+	}
+	
+	public Cliente getTitular() {
+		return _titular;
 	}
 	
 	public void updateSelTransacciones(String iban) {

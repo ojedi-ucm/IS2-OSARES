@@ -38,7 +38,6 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
     String[] _headers = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
     public CalendarioTableModel(ControlCita ctrl) {
-    	ctrl.addObserver(this);
     	
         _calendar = Calendar.getInstance();
         
@@ -46,6 +45,8 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
         _month = _calendar.get(Calendar.MONTH);
         
         _citas = new ArrayList<>();
+        
+        ctrl.addObserver(this);
         
         updateDays();
     }
@@ -84,7 +85,6 @@ public class CalendarioTableModel extends AbstractTableModel implements CitasObs
 			_data = new Object[_calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)+1][7][4];
 		}
 			
-        
         int lastDayOfMonth = _calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         int row = 0;
         int col = firstDayOfWeek;

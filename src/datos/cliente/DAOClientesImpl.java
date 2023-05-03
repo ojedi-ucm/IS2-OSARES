@@ -20,18 +20,18 @@ public class DAOClientesImpl implements DAOClientes {
 	JSONObject datosClientes;
 //Constructor
 	public DAOClientesImpl() throws Exception {
-		InputStream in = new FileInputStream(PATH);
-		loadClientes(in);
+		loadClientes();
 	}
 
 //Metodos privados
 
-	private void loadClientes(InputStream in) throws Exception {
+	private void loadClientes() {
 		try {
+			InputStream in = new FileInputStream(PATH);
 			bd = new JSONObject(new JSONTokener(in));
 			datosClientes = bd.getJSONObject(ID_DAO);
 		} catch(Exception e ) {
-			throw new Exception(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -50,6 +50,8 @@ public class DAOClientesImpl implements DAOClientes {
 //CRUDS
 	@Override
 	public boolean create(Cliente cliente) {
+		loadClientes();
+		
 		if(datosClientes.has(cliente.getId()))
 			return false;
 		else {
@@ -67,6 +69,8 @@ public class DAOClientesImpl implements DAOClientes {
 	
 	@Override
 	public boolean update(Cliente usuario) {
+		loadClientes();
+		
 		if(datosClientes.has(usuario.getId())) {
 			datosClientes.put(usuario.getId(), usuario.toJSONObect());
 			saveChanges();
@@ -78,6 +82,8 @@ public class DAOClientesImpl implements DAOClientes {
 	
 	@Override
 	public boolean delete(String borrado) {
+		loadClientes();
+		
 		if(!datosClientes.has(borrado))
 			return false;
 		else {
@@ -89,6 +95,7 @@ public class DAOClientesImpl implements DAOClientes {
 	
 	@Override
 	public JSONObject search(String id) {
+		loadClientes();
 
 		if(datosClientes.has(id)) 
 			return datosClientes.getJSONObject(id);

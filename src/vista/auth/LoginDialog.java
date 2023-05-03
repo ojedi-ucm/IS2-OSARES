@@ -13,16 +13,21 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import control.ControlCliente;
+import modelo.Cliente;
+import vista.MainWindow;
 import vista.Utils;
-import vista.clientes.UpdateClienteDialog;
+import vista.clientes.ClienteDialog;
+import vista.observers.AuthObserver;
 
 public class LoginDialog extends JDialog {
 	
 	private ControlCliente _controler;
+	private AuthObserver _authObs;
 	
-	public LoginDialog(ControlCliente ctrl) {
+	public LoginDialog(AuthObserver authObs, ControlCliente ctrl) {
 		super(new JFrame(), true);
 		_controler = ctrl;
+		_authObs = authObs;
 		initGUI();
 	}
 	
@@ -58,12 +63,16 @@ public class LoginDialog extends JDialog {
 		
 		JButton loginBtn = new JButton("Login");
 		loginBtn.addActionListener((a) -> {
-			if(_controler.iniSesion(username.getText(), password.getText()) == null)
-				Utils.showErrorMsg("DNI o Contrase�a incorrecta");
+			Cliente authCliente = _controler.iniSesion(username.getText(), password.getText());
+			System.out.println(password.getPassword().toString());
+			
+			if(authCliente == null)
+				Utils.showErrorMsg("DNI o Contraseña incorrecta");
 			else {
 				password.setText("");
 				username.setText("");
 				setVisible(false);
+				_authObs.authSuccess(authCliente);
 			}
 		});
 		btnPanel.add(loginBtn);

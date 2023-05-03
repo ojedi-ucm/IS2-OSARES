@@ -29,10 +29,10 @@ public class SACitasImpl implements SACitas {
 	}
 	@Override
 	public List<Cita> readCitasCliente(Cliente cliente) {
-		List<JSONObject> cuentas = dao.read(cliente.getCitas());
+		List<JSONObject> citas = dao.read(cliente.getCitas());
 		List<Cita> res = new ArrayList<>();
 		
-		for(JSONObject j: cuentas) {
+		for(JSONObject j: citas) {
 			res.add(new Cita(j));
 		}
 		

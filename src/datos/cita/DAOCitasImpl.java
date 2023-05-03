@@ -21,17 +21,17 @@ public class DAOCitasImpl implements DAOCitas {
 	private JSONObject _bdCitas;
 //Constructor
 	public DAOCitasImpl() throws Exception{
-		InputStream in = new FileInputStream(PATH);
-		loadCitas(in);
+		loadCitas();
 	}
 	
 //metodos privados a�adidos
-	private void loadCitas(InputStream in) throws Exception {
+	private void loadCitas() {
 		try {
+			InputStream in = new FileInputStream(PATH);
 			_bd = new JSONObject(new JSONTokener(in));
 			_bdCitas = _bd.getJSONObject(ID_DAO);
 		} catch(Exception e ) {
-			throw new Exception(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -50,12 +50,16 @@ public class DAOCitasImpl implements DAOCitas {
 //CRUDS	
 	@Override
 	public boolean create(String IdCita, JSONObject cita) {
+		loadCitas();
+		
 		_bdCitas.put(IdCita, cita);	
 		return saveChanges();
 	}
 	
 	@Override
 	public List<JSONObject> read(List<String> IdCitasCliente) {
+		loadCitas();
+		
 		List<JSONObject> res = new ArrayList<>();
 		
 		for(String c: IdCitasCliente) {
@@ -68,6 +72,8 @@ public class DAOCitasImpl implements DAOCitas {
 	
 	@Override
 	public boolean update(String IdCita,JSONObject cita) {
+		loadCitas();
+		
 		_bdCitas.put(IdCita, cita);
 
 		return saveChanges();
@@ -75,6 +81,8 @@ public class DAOCitasImpl implements DAOCitas {
 	
 	@Override
 	public boolean delete(String IdCita) {
+		loadCitas();
+		
 		_bdCitas.remove(IdCita);
 		
 		return saveChanges();
@@ -82,6 +90,8 @@ public class DAOCitasImpl implements DAOCitas {
 	
 	@Override
 	public Cita search(String IdCita) throws Exception{
+		loadCitas();
+		
 		try {
 			return new Cita(_bdCitas.getJSONObject(IdCita));
 		}

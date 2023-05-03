@@ -30,7 +30,7 @@ public class ControlCliente {
 		_fachada.search(id);
 	}
 	
-	public void actualizarCliete(Cliente cliente) {
+	public void actualizarCliente(Cliente cliente) {
 		_fachada.update(cliente);
 	}
 	

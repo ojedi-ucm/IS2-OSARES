@@ -21,17 +21,17 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 
 	DAOCuentasImpl() throws Exception {
-		InputStream in = new FileInputStream(PATH);
-		loadCuentas(in);
+		loadCuentas();
 	}
 	
 	// ------- Métodos Privados --------
-	private void loadCuentas(InputStream in) throws Exception {
+	private void loadCuentas(){
 		try {
+			InputStream in = new FileInputStream(PATH);
 			_bd = new JSONObject(new JSONTokener(in));
 			_bdCuentas = _bd.getJSONObject(ID_DAO);
 		} catch(Exception e ) {
-			throw new Exception(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -50,6 +50,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 	//CRUDS	
 	@Override
 	public boolean create(String id, JSONObject cuenta) {
+		loadCuentas();
+		
 		_bdCuentas.put(id, cuenta);
 		
 		return saveChanges();
@@ -57,6 +59,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 	@Override
 	public List<JSONObject> read(List<String> titularIDs) {
+		loadCuentas();
+		
 		List<JSONObject> res = new ArrayList<>();
 		
 		for(String iban: titularIDs) {
@@ -69,6 +73,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 	@Override
 	public boolean update(String idEmisor, JSONObject emisor, String idReceptor, JSONObject receptor) {
+		loadCuentas();
+		
 		_bdCuentas.put(idEmisor, emisor);
 		_bdCuentas.put(idReceptor, receptor);
 
@@ -77,6 +83,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 	@Override
 	public boolean update(String id, JSONObject cuenta) {
+		loadCuentas();
+		
 		_bdCuentas.put(id, cuenta);
 		
 		return saveChanges();
@@ -84,6 +92,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 	
 	@Override 
 	public boolean delete(String id) {
+		loadCuentas();
+		
 		_bdCuentas.remove(id);
 		
 		return saveChanges();
@@ -91,6 +101,8 @@ public class DAOCuentasImpl implements DAOCuentas {
 
 	@Override
 	public JSONObject search(String iban) throws Exception {
+		loadCuentas();
+		
 		try {
 			return _bdCuentas.getJSONObject(iban);
 		}

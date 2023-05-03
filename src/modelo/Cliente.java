@@ -46,7 +46,7 @@ public class Cliente {
 				listaCitas.add(num_cita);
 			}
 		}catch(Exception e) {
-			System.out.println(e.toString());
+			System.out.println(e.toString() + "in model Cita");
 		}
 		
 		//_listaCitas.add("");

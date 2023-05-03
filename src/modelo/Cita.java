@@ -26,7 +26,7 @@ public class Cita {
 			_titularID = cita.getString("titular");
 			_idCita = _titularID + _fecha.getTime();
 			_motivo = cita.getString("motivo");
-		} catch(Exception e) { e.printStackTrace(); }
+		} catch(Exception e) { System.out.println(e.toString() + "in model Cita"); }
 	}
 			
 	//Getters
@@ -65,12 +65,10 @@ public class Cita {
 	
 	public JSONObject toJSONObject() {
 		JSONObject res = new JSONObject();
-		JSONObject o = new JSONObject();
 		
-		o.put("fecha", _fecha.getTime());
-		o.put("titular", _titularID);
-		o.put("motivo", _motivo);
-		res.put(_idCita, o);
+		res.put("fecha", _fecha.getTime());
+		res.put("titular", _titularID);
+		res.put("motivo", _motivo);
 		
 		return res;
 	}
