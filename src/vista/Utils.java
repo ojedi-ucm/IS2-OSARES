@@ -2,7 +2,11 @@ package vista;
 
 import java.awt.Component;
 import java.awt.Frame;
+import java.awt.Image;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -38,6 +42,19 @@ public class Utils {
 		if (n == 0) {
 			System.exit(0);
 		}
+	}
+	
+	public static ImageIcon resizedIcon(String fileName, int width, int height) {
+		File sourceimage = new File("resources/icons/" + fileName);
+		Image img = null;
+		
+		try {
+			img = ImageIO.read(sourceimage);
+		} catch (Exception e){
+			System.out.println(e.toString());
+		}
+		
+		return new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
 	}
 
 }

@@ -21,6 +21,7 @@ import modelo.Cliente;
 import vista.cuentas.*;
 import vista.observers.AuthObserver;
 import vista.observers.CuentasObserver;
+import vista.Utils;
 import vista.citas.*;
 import vista.clientes.*;
 
@@ -31,8 +32,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class ControlPanelView extends JPanel implements CuentasObserver {
-	// Constantes
-	private final String ICON_PATH = "resources/icons/";
 	
 	// Atributos
 	private ControlCuenta _ctrlCuenta;
@@ -55,8 +54,6 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 	private JLabel _dinTotalLbl;
 	
 	private boolean _isDineroHidden = false;
-	
-	private Cliente _cliente;
 	
 	private AuthObserver _authObs;
 	
@@ -86,14 +83,13 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		CerrarCuentaDialog cerrarCuentaDialog = new CerrarCuentaDialog(new JFrame(), _ctrlCuenta);
 		
 		CitasDialog citasDialog = new CitasDialog(new JFrame(), _ctrlCita);
-		ClienteDialog clienteDialog = new ClienteDialog(_ctrlCliente);
-		// FALTAN Dialogos de citas y config de usuario
+		ClienteDialog clienteDialog = new ClienteDialog(_ctrlCliente, _authObs);
 		
 		// ------ Añadir Dinero ------ 
 		_addDineroBtn = new JButton();
 		btnConfig(_addDineroBtn);
 		_addDineroBtn.setToolTipText("Añadir dinero");
-		_addDineroBtn.setIcon(resizedIcon("plus.png"));
+		_addDineroBtn.setIcon(Utils.resizedIcon("plus.png", 24, 24));
 		_addDineroBtn.addActionListener((a) -> {
 			addDialog.open();
 		});
@@ -103,7 +99,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_retirarDineroBtn = new JButton();
 		btnConfig(_retirarDineroBtn);
 		_retirarDineroBtn.setToolTipText("Retirar dinero");
-		_retirarDineroBtn.setIcon(resizedIcon("minus.png"));
+		_retirarDineroBtn.setIcon(Utils.resizedIcon("minus.png", 24, 24));
 		_retirarDineroBtn.addActionListener((a) -> {
 			retirarDialog.open();
 		});
@@ -114,7 +110,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_transBtn = new JButton();
 		btnConfig(_transBtn);
 		_transBtn.setToolTipText("Transferir dinero");
-		_transBtn.setIcon(resizedIcon("trans.png"));
+		_transBtn.setIcon(Utils.resizedIcon("trans.png", 24, 24));
 		_transBtn.addActionListener((a) -> {
 			transDialog.open();
 		});
@@ -172,7 +168,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_citasBtn = new JButton();
 		btnConfig(_citasBtn);
 		_citasBtn.setToolTipText("Gestionar Citas");
-		_citasBtn.setIcon(resizedIcon("calendar.png"));
+		_citasBtn.setIcon(Utils.resizedIcon("calendar.png", 24, 24));
 		_citasBtn.addActionListener((a) -> {
 			citasDialog.open();
 		});
@@ -182,7 +178,7 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_configUsuarioBtn = new JButton();
 		btnConfig(_configUsuarioBtn);
 		_configUsuarioBtn.setToolTipText("Configuración de Usuario");
-		_configUsuarioBtn.setIcon(resizedIcon("config.png"));
+		_configUsuarioBtn.setIcon(Utils.resizedIcon("config.png", 24, 24));
 		_configUsuarioBtn.addActionListener((a) -> {
 			clienteDialog.open();
 		});
@@ -193,28 +189,15 @@ public class ControlPanelView extends JPanel implements CuentasObserver {
 		_cerrarSesBtn = new JButton();
 		btnConfig(_cerrarSesBtn);
 		_cerrarSesBtn.setToolTipText("Cerrar Sesión");
-		_cerrarSesBtn.setIcon(resizedIcon("close.png"));
+		_cerrarSesBtn.setIcon(Utils.resizedIcon("close.png", 24, 24));
 		_cerrarSesBtn.addActionListener((a) -> {
-			_authObs.closeSession(_ctrlCuenta.getTitular());
+			_authObs.closeSession();
 		});
 		_toolBar.add(_cerrarSesBtn);
 	}
 	
 	
 	// ------ Métodos secundarios -------
-	
-	private ImageIcon resizedIcon(String fileName) {
-		File sourceimage = new File(ICON_PATH + fileName);
-		Image img = null;
-		
-		try {
-			img = ImageIO.read(sourceimage);
-		} catch (Exception e){
-			System.out.println(e.toString());
-		}
-		
-		return new ImageIcon(img.getScaledInstance(24, 24, Image.SCALE_SMOOTH));
-	}
 	
 	private void btnConfig(JButton btn) {
 		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));

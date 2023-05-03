@@ -22,8 +22,8 @@ public class ControlCliente {
 			return false;
 	}
 	
-	public void eliminarCliente(String cliente) {
-		_fachada.delete(cliente);
+	public void eliminarCliente() {
+		_fachada.delete(_cliente.getId());
 	}
 	
 	public void buscarCliente(String id) {

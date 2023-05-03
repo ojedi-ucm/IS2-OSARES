@@ -49,22 +49,6 @@ public class MainWindow extends JFrame implements AuthObserver {
 		InitView initView = new InitView(this, _ctrlCliente);
 		_mainPanel.add(initView, BorderLayout.CENTER);
 		
-		JPanel btnPanel = new JPanel();
-		JButton playBtn = new JButton("Play");
-		playBtn.addActionListener((a) -> {
-			if(!clip.isActive())
-				clip.start();
-		});
-		btnPanel.add(playBtn);
-		
-		JButton stopBtn = new JButton("Stop");
-		stopBtn.addActionListener((a) -> {
-			clip.stop();
-		});
-		btnPanel.add(stopBtn);
-		
-		_mainPanel.add(btnPanel, BorderLayout.NORTH);
-		
 		addWindowListener(new WindowListener() {
 
 			@Override
@@ -188,7 +172,7 @@ public class MainWindow extends JFrame implements AuthObserver {
 	}
 
 	@Override
-	public void closeSession(Cliente cliente) {
+	public void closeSession() {
 		initGUI();
 	}
 }
