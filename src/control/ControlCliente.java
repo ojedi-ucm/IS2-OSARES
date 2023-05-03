@@ -1,7 +1,5 @@
 package control;
 
-import java.util.List;
-
 import logica.cliente.FClientesImpl;
 import logica.cliente.FClientes;
 import modelo.Cliente;

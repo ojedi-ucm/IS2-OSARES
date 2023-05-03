@@ -1,4 +1,4 @@
-package vista.tables;
+package vista.cuentas.tables;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

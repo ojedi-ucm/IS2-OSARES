@@ -1,4 +1,4 @@
-package vista.GUICliente;
+package vista.clientes;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

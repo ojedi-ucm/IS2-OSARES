@@ -29,7 +29,7 @@ public class Cuenta {
 		_numCuenta = numCuenta;
 		_iban = _ss + _numCuenta;
 		_dinero = 0;
-		_titularID = titular.getID();
+		_titularID = titular.getId();
 		_nombre = nombre;
 		_transacciones = new HashMap<>();
 	}

@@ -1,4 +1,4 @@
-package vista.GUICliente;
+package vista.clientes;
 
 public class OpcionesButtons {
 

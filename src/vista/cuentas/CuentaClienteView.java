@@ -8,7 +8,10 @@ import javax.swing.JPanel;
 
 import control.ControlCuenta;
 import vista.controlPanel.ControlPanelView;
-import vista.tables.*;
+import vista.cuentas.tables.CuentasTableModel;
+import vista.cuentas.tables.InfoTableView;
+import vista.cuentas.tables.TransaccionesTableModel;
+import vista.cuentas.tables.TransaccionesTableView;
 
 public class CuentaClienteView extends JPanel {
 	

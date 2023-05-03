@@ -53,7 +53,7 @@ public class ControlCita {
 	
 	// ----- CRUDS con FSACitas -------
 	public void createCita(Date fecha, String motivo) {
-		Cita nuevaCita = new Cita(fecha, _titular.getID(), motivo);
+		Cita nuevaCita = new Cita(fecha, _titular.getId(), motivo);
 		
 		_citas.put(nuevaCita.getIdCita(), nuevaCita);
 		

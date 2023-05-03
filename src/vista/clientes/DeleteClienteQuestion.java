@@ -1,4 +1,4 @@
-package vista.GUICliente;
+package vista.clientes;
 
 import java.awt.Dimension;
 
@@ -26,7 +26,7 @@ public class DeleteClienteQuestion extends JDialog{
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		setContentPane(mainPanel);
 		
-		JLabel pregunta = new JLabel("¿Estas seguro de que quieres eliminar la cuentas?");
+		JLabel pregunta = new JLabel("ï¿½Estas seguro de que quieres eliminar la cuentas?");
 		pregunta.setAlignmentX(LEFT_ALIGNMENT);
 		mainPanel.add(pregunta);
 		

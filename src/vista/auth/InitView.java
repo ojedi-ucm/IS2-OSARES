@@ -9,10 +9,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import control.ControlCliente;
+
 import javax.swing.JButton;
 
 public class InitView extends JPanel {
-	public InitView() {
+	
+	private ControlCliente _ctrlCliente;
+	
+	public InitView(ControlCliente ctrlCliente) {
+		_ctrlCliente = ctrlCliente;
 		initGUI();
 	}
 	
@@ -33,10 +40,10 @@ public class InitView extends JPanel {
         add(imgPanel);
         
         // Login Dialog
-        LoginDialog loginDialog = new LoginDialog();
+        LoginDialog loginDialog = new LoginDialog(_ctrlCliente);
         
         // Register Dialog
-        RegisterDialog registerDialog = new RegisterDialog();
+        RegisterDialog registerDialog = new RegisterDialog(_ctrlCliente);
      
         // Buttons
         JPanel btnPanel = new JPanel();

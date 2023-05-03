@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import control.ControlCliente;
 import vista.Utils;
-import vista.GUICliente.UpdateClienteDialog;
+import vista.clientes.UpdateClienteDialog;
 
 public class LoginDialog extends JDialog {
 	

@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -80,10 +79,6 @@ public class Cliente {
 	
 	public String getPassword() {
 		return password;
-	}
-	
-	public String getID() {
-		return _id;
 	}
 //Setters
 	/*public void setIdCont(int num) {

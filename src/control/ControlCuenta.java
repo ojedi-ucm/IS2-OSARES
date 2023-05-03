@@ -162,7 +162,7 @@ public class ControlCuenta {
 	}
 	
 	public String getTitularID() {
-		return _titular.getID();
+		return _titular.getId();
 	}
 	
 	public void updateSelTransacciones(String iban) {
