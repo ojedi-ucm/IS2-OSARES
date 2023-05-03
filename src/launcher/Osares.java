@@ -7,7 +7,7 @@ import control.ControlCuenta;
 
 import modelo.Cliente;
 
-public class Main {
+public class Osares {
 //Atributos
 	
 //Metodos auxiliares
