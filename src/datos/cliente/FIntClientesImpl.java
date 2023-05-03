@@ -2,6 +2,8 @@ package datos.cliente;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cliente;
 
 public class FIntClientesImpl implements FIntClientes {
@@ -10,31 +12,26 @@ public class FIntClientesImpl implements FIntClientes {
 //Atributos
 	private DAOClientes dao;
 //Constructor
-	public FIntClientesImpl() { dao = new DAOClientesImpl(); }
+	public FIntClientesImpl() throws Exception { dao = new DAOClientesImpl(); }
 //CRUDS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.create(cliente);
 	}
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.read();
 	}
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.update(usuario);
 	}
 	@Override
-	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String borrado) {
+		return dao.delete(borrado);
 	}
 	@Override
-	public Cliente search(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public JSONObject search(String id) {
+		return dao.search(id);
 	}		
 }

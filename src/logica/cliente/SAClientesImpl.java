@@ -2,6 +2,8 @@ package logica.cliente;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import datos.cliente.FIntClientes;
 import datos.cliente.FIntClientesImpl;
 import modelo.Cliente;
@@ -12,42 +14,53 @@ public class SAClientesImpl implements SAClientes {
 //Atributos
 	private FIntClientes fdao;
 //Constructor
-	SAClientesImpl() { fdao = new FIntClientesImpl(); }
+	SAClientesImpl() throws Exception { fdao = new FIntClientesImpl(); }
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return fdao.create(cliente);
 	}
 
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return fdao.read();
 	}
 
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		return fdao.update(usuario);
 	}
 
 	@Override
-	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String borrado) {
+		return fdao.delete(borrado);
 	}
 
 	@Override
-	public Cliente online(String dni, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente online(String id, String password) {
+		JSONObject aux = fdao.search(id);
+		Cliente c;
+		if(aux != null) {
+			c = new Cliente(aux);
+			if(c.getPassword().equals(password))
+				return c;
+			else
+				return null;
+		}
+		else
+			return null;
 	}
 
 	@Override
-	public Cliente consulta(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente search(String id) {
+		JSONObject aux = fdao.search(id);
+		Cliente c;
+		if(aux != null) {
+			c = new Cliente(aux);
+			return c;
+		}
+		else
+			return null;
 	}
 
 }

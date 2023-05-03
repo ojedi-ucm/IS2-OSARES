@@ -10,42 +10,36 @@ public class FClientesImpl implements FClientes {
 //Atributos
 	private SAClientes sa;
 //Constructor
-	public FClientesImpl() { sa = new SAClientesImpl(); }
+	public FClientesImpl() throws Exception { sa = new SAClientesImpl(); }
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.create(cliente);
 	}
 
 	@Override
 	public List<Cliente> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.read();
 	}
 
 	@Override
 	public boolean update(Cliente usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.update(usuario);
 	}
 
 	@Override
-	public boolean delete(Cliente borrado) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String borrado) {
+		return sa.delete(borrado);
 	}
 
 	@Override
-	public Cliente online(String dni, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente online(String id, String password) {
+		return sa.online(id, password);
 	}
 
 	@Override
-	public Cliente consulta(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cliente search(String id) {
+		return sa.search(id);
 	}
 
 }

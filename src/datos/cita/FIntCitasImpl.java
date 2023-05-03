@@ -1,10 +1,10 @@
 package datos.cita;
 
-import java.util.Date;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import modelo.Cita;
-import modelo.Cliente;
 
 public class FIntCitasImpl implements FIntCitas {
 //Constantes
@@ -12,31 +12,33 @@ public class FIntCitasImpl implements FIntCitas {
 //Atributos
 	private DAOCitas dao;
 //Constructor
-	public FIntCitasImpl() { dao = new DAOCitasImpl(); }
+	public FIntCitasImpl() {
+		try{
+			dao = new DAOCitasImpl();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	} 
+
 //CRUDS
 	@Override
-	public boolean create(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(String IdCita, JSONObject cita) {
+		return dao.create(IdCita, cita);
 	}
 	@Override
-	public List<Cita> read(List<Cliente> clientes) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<JSONObject> read(List<String> IdCitasCliente) {
+		return dao.read(IdCitasCliente);
 	}
 	@Override
-	public boolean update(Cliente cliente, Date nuevaFecha, boolean isCompletada) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(String IdCita, JSONObject cita) {
+		return dao.update(IdCita, cita);
 	}
 	@Override
-	public boolean delete(Cita borrada) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String IdCita) {
+		return dao.delete(IdCita);
 	}
 	@Override
-	public Cita search(Date dia) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cita search(String IdCita)throws Exception {
+		return dao.search(IdCita);
 	}
 }
