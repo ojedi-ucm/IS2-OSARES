@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 import control.ControlCliente;
 import vista.MainWindow;
 
-public class Main {
+public class Osares {
 //Atributos
 	
 //Metodos auxiliares
