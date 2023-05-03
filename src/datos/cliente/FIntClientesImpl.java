@@ -15,16 +15,16 @@ public class FIntClientesImpl implements FIntClientes {
 	public FIntClientesImpl() throws Exception { dao = new DAOClientesImpl(); }
 //CRUDS
 	@Override
-	public boolean create(Cliente cliente) {
-		return dao.create(cliente);
+	public boolean create(String IdClientes, JSONObject cliente) {
+		return dao.create(IdClientes ,cliente);
 	}
 	@Override
 	public List<Cliente> read() {
 		return dao.read();
 	}
 	@Override
-	public boolean update(Cliente usuario) {
-		return dao.update(usuario);
+	public boolean update(String IdCliente, JSONObject usuario) {
+		return dao.update(IdCliente ,usuario);
 	}
 	@Override
 	public boolean delete(String borrado) {

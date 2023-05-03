@@ -18,7 +18,7 @@ public class SAClientesImpl implements SAClientes {
 //CRUDOS
 	@Override
 	public boolean create(Cliente cliente) {
-		return fdao.create(cliente);
+		return fdao.create(cliente.getId() ,cliente.toJSONObect());
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class SAClientesImpl implements SAClientes {
 
 	@Override
 	public boolean update(Cliente usuario) {
-		return fdao.update(usuario);
+		return fdao.update(usuario.getId(),  usuario.toJSONObect());
 	}
 
 	@Override

@@ -49,13 +49,13 @@ public class DAOClientesImpl implements DAOClientes {
 	
 //CRUDS
 	@Override
-	public boolean create(Cliente cliente) {
+	public boolean create(String IdCliente, JSONObject cliente) {
 		loadClientes();
 		
-		if(datosClientes.has(cliente.getId()))
+		if(datosClientes.has(IdCliente))
 			return false;
 		else {
-			datosClientes.put(cliente.getId(), cliente.toJSONObect());
+			datosClientes.put(IdCliente, cliente);
 			saveChanges();
 			return true;
 		}
@@ -68,11 +68,11 @@ public class DAOClientesImpl implements DAOClientes {
 	}
 	
 	@Override
-	public boolean update(Cliente usuario) {
+	public boolean update(String IdCliente, JSONObject usuario) {
 		loadClientes();
 		
-		if(datosClientes.has(usuario.getId())) {
-			datosClientes.put(usuario.getId(), usuario.toJSONObect());
+		if(datosClientes.has(IdCliente)) {
+			datosClientes.put(IdCliente, usuario);
 			saveChanges();
 			return true;
 		}
