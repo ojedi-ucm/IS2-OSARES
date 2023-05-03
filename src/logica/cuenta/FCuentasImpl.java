@@ -1,47 +1,53 @@
 package logica.cuenta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Cliente;
 import modelo.Cuenta;
 
 public class FCuentasImpl implements FCuentas {
-//Constantes
-	
-//Atributos
+
 	private SACuentas sa;
-//Constructor
-	public FCuentasImpl() { sa = new SACuentasImpl(); }
-//CRRUDS
+	
+	public FCuentasImpl() { 
+		sa = new SACuentasImpl(); 
+	}
+
 	@Override
-	public boolean create(ArrayList<Cuenta> titulares) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(Cuenta cuenta) {
+		return sa.create(cuenta);
 	}
 	@Override
-	public List<Cuenta> read() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cuenta> read(Cliente titular) throws Exception {
+		return sa.read(titular);
 	}
 	@Override
-	public List<Cuenta> readCuentasCliente(Cliente titular) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) throws Exception{
+		return sa.update(emisor, receptor, cantidad);
 	}
+	
 	@Override
-	public boolean update(Cuenta emisor, Cuenta receptor, float cantidad) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Cuenta emisor, String ibanReceptor, float cantidad) throws Exception{
+		return sa.update(emisor, ibanReceptor, cantidad);
 	}
+	
 	@Override
-	public boolean delete(long IBAN, Cuenta receptor) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Cuenta cuenta) {
+		return sa.update(cuenta);
 	}
+	
 	@Override
-	public Cuenta consultar(long IBAN) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean update(Cuenta cuenta, float cantidad) throws Exception{
+		return sa.update(cuenta, cantidad);
+	}
+	
+	@Override
+	public boolean delete(Cuenta cuenta) {
+		return sa.delete(cuenta);
+	}
+
+	@Override
+	public Cuenta search(String iban) {
+		return sa.search(iban);
 	}
 }

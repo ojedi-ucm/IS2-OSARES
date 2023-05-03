@@ -1,37 +1,51 @@
 package datos.cuenta;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import modelo.Cliente;
-import modelo.Cuenta;
+import org.json.JSONObject;
 
 public class FIntCuentasImpl implements FIntCuentas {
-//Constantes
-	
-//Atributos
+	//Atributos
 	private DAOCuentas dao;
-//Constructor
-	public FIntCuentasImpl() { dao = new DAOCuentasImpl(); }
-//CRUDS
-	@Override
-	public boolean create(ArrayList<Cliente> titulares) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	//Constructor
+	public FIntCuentasImpl() { 
+		try {
+			dao = new DAOCuentasImpl();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
+	
+	//CRUDS
+	
 	@Override
-	public List<Cuenta> read(ArrayList<Cliente> titulares) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean create(String id, JSONObject cuenta) {
+		return dao.create(id, cuenta);
 	}
+
 	@Override
-	public boolean update(Cliente emisor, Cliente receptor, float cantidad) {
-		// TODO Auto-generated method stub
-		return false;
+	public List<JSONObject> read(List<String> titularIDs) {
+		return dao.read(titularIDs);
 	}
+
 	@Override
-	public Cuenta search(long IBAN) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean update(String idEmisor, JSONObject emisor, String idReceptor, JSONObject receptor) {
+		return dao.update(idEmisor, emisor, idReceptor, receptor);
+	}
+	
+	@Override
+	public boolean update(String id, JSONObject cuenta) {
+		return dao.update(id, cuenta);
+	}
+
+	@Override
+	public boolean delete(String id) {
+		return dao.delete(id);
+	}
+
+	@Override
+	public JSONObject search(String iban) throws Exception {
+		return dao.search(iban);
 	}
 }

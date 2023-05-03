@@ -112,4 +112,4 @@ public class MainWindow extends JFrame {
 	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 	    setVisible(true);
 	}
-}	
+}

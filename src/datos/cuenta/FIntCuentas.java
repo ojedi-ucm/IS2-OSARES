@@ -1,16 +1,14 @@
 package datos.cuenta;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import modelo.Cliente;
-import modelo.Cuenta;
+import org.json.JSONObject;
 
 public interface FIntCuentas {
-	public boolean		create(ArrayList<Cliente> titulares);
-	public List<Cuenta>	read(ArrayList<Cliente> titulares);
-	public boolean		update(Cliente emisor,
-							   Cliente receptor,
-							   float cantidad);
-	public Cuenta		search(long IBAN);
+	public boolean create(String id, JSONObject cuenta);
+	public List<JSONObject>	read(List<String> titularIDs);
+	public boolean update(String idEmisor, JSONObject emisor, String idReceptor, JSONObject receptor);
+	public boolean update(String id, JSONObject cuenta);
+	public boolean delete(String id);
+	public JSONObject search(String iban) throws Exception;
 }

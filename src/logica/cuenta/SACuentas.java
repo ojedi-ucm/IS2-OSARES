@@ -1,18 +1,17 @@
 package logica.cuenta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Cliente;
 import modelo.Cuenta;
 
 public interface SACuentas {
-	boolean		create(ArrayList<Cuenta> titulares);
-	List<Cuenta> read();
-	List<Cuenta> readCuentasCliente(Cliente titular);
-	boolean		update(Cuenta emisor,
-					   Cuenta receptor,
-					   float cantidad);
-	boolean		delete(long IBAN, Cuenta receptor);
-	Cuenta		consultar(long IBAN);
+	boolean	create(Cuenta cuenta);
+	List<Cuenta> read(Cliente titular) throws Exception;
+	boolean	update(Cuenta emisor, Cuenta receptor, float cantidad) throws Exception;
+	boolean update(Cuenta emisor, String ibanReceptor, float cantidad) throws Exception;
+	boolean update(Cuenta cuenta);
+	boolean update(Cuenta cuenta, float cantidad) throws Exception;
+	boolean	delete(Cuenta cuenta);
+	Cuenta search(String iban);
 }
