@@ -1,7 +1,9 @@
 package logica.cita;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import datos.cita.FIntCitas;
 import datos.cita.FIntCitasImpl;
@@ -17,9 +19,8 @@ public class SACitasImpl implements SACitas {
 	SACitasImpl() { dao = new FIntCitasImpl(); }
 //CRRUDDS
 	@Override
-	public boolean create(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(Cita cita) {
+		return dao.create(cita.getIdCita(), cita.toJSONObject());
 	}
 	@Override
 	public List<Cita> readAll() {
@@ -28,27 +29,27 @@ public class SACitasImpl implements SACitas {
 	}
 	@Override
 	public List<Cita> readCitasCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		List<JSONObject> cuentas = dao.read(cliente.getCitas());
+		List<Cita> res = new ArrayList<>();
+		
+		for(JSONObject j: cuentas) {
+			res.add(new Cita(j));
+		}
+		
+		return res;
 	}
 	@Override
-	public boolean update(Cita actualizada, Cliente cliente, Date nuevaFecha) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean update(Cita actualizada) {
+		return dao.update(actualizada.getIdCita(), actualizada.toJSONObject());
+	}	
+	
 	@Override
 	public boolean delete(Cita borrada) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.delete(borrada.getIdCita());
 	}
+
 	@Override
-	public boolean completada(Cita completada) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public Cita consultar(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cita consultar (String IdCita)throws Exception {
+		return dao.search(IdCita);
 	}
 }

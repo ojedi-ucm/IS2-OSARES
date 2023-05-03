@@ -9,6 +9,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -57,13 +58,13 @@ public class MainWindow extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				try {
-	                File audioFile = new File("resources/audio.wav");
-	                clip = AudioSystem.getClip();
-	                clip.open(AudioSystem.getAudioInputStream(audioFile));
-	                clip.start();
-	            } catch (Exception ex) {
-	                System.out.println("Error al reproducir el audio: " + ex.getMessage());
-	            }
+            File audioFile = new File("resources/audio.wav");
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(audioFile));
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error al reproducir el audio: " + ex.getMessage());
+        }
 			}
 
 			@Override
