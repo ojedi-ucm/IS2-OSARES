@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import control.ControlCita;
 
-public class Main {
+public class Osares {
 //Atributos
 	
 //Metodos auxiliares
