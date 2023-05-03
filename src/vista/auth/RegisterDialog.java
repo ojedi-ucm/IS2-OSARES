@@ -27,7 +27,6 @@ public class RegisterDialog extends JDialog {
 		super(new JFrame(), true);
 		_controler = ctrl;
 		initGUI();
-		
 	}
 	
 	private void initGUI() {
@@ -47,7 +46,7 @@ public class RegisterDialog extends JDialog {
 		panelAux.add(username);
 		
 		// telefono
-		JLabel tlfLabel = new JLabel("telofono");
+		JLabel tlfLabel = new JLabel("Teléfono");
 		JTextField tlf = new JTextField();
 		tlf.setPreferredSize(new Dimension(200, 30));
 		panelAux.add(tlfLabel);

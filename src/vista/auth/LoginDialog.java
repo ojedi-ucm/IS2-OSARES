@@ -59,7 +59,7 @@ public class LoginDialog extends JDialog {
 		JButton loginBtn = new JButton("Login");
 		loginBtn.addActionListener((a) -> {
 			if(_controler.iniSesion(username.getText(), password.getText()) == null)
-				Utils.showErrorMsg("DNI o Contraseña incorrecta");
+				Utils.showErrorMsg("DNI o Contraseï¿½a incorrecta");
 			else {
 				password.setText("");
 				username.setText("");

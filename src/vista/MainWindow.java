@@ -20,18 +20,15 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-import vista.InitView;
+import vista.auth.InitView;
 
 
 public class MainWindow extends JFrame {
+	private Clip clip;
 	
-	private ControlCliente _controler;
-	
-	public MainWindow(ControlCliente ctrl) {
+	public MainWindow() {
 		super("OSARES");
-		_controler = ctrl;
 		initGUI();
-		
 	}
 	
 	private void initGUI() {
@@ -39,18 +36,38 @@ public class MainWindow extends JFrame {
 		setContentPane(mainPanel);
 		mainPanel.setPreferredSize(new Dimension(600, 350));
 		
-		InitView initView = new InitView(_controler);
+		InitView initView = new InitView();
 		mainPanel.add(initView, BorderLayout.CENTER);
 		
 		JPanel btnPanel = new JPanel();
-				
+		JButton playBtn = new JButton("Play");
+		playBtn.addActionListener((a) -> {
+			if(!clip.isActive())
+				clip.start();
+		});
+		btnPanel.add(playBtn);
+		
+		JButton stopBtn = new JButton("Stop");
+		stopBtn.addActionListener((a) -> {
+			clip.stop();
+		});
+		btnPanel.add(stopBtn);
+		
 		mainPanel.add(btnPanel, BorderLayout.NORTH);
 		
 		addWindowListener(new WindowListener() {
 
 			@Override
 			public void windowOpened(WindowEvent e) {
-				
+      
+				try {
+            File audioFile = new File("resources/audio.wav");
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(audioFile));
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error al reproducir el audio: " + ex.getMessage());
+        }
 			}
 
 			@Override
@@ -95,4 +112,4 @@ public class MainWindow extends JFrame {
 	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 	    setVisible(true);
 	}
-}
+}	

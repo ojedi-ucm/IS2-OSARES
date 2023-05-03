@@ -50,7 +50,9 @@ public class Cliente {
 			System.out.println(e.toString());
 		}
 		
+		//_listaCitas.add("");
 	}
+	
 //Getters
 	/*public int getIdCont() {
 		return idCont;
@@ -80,6 +82,9 @@ public class Cliente {
 		return password;
 	}
 	
+	public String getID() {
+		return _id;
+	}
 //Setters
 	/*public void setIdCont(int num) {
 		idCont = num;

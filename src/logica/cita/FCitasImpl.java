@@ -1,6 +1,5 @@
 package logica.cita;
 
-import java.util.Date;
 import java.util.List;
 
 import modelo.Cita;
@@ -15,44 +14,32 @@ public class FCitasImpl implements FCitas {
 	public FCitasImpl() { sa = new SACitasImpl(); }
 //CRRUDDS
 	@Override
-	public boolean create(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(Cita cita) {
+		return sa.create(cita);
 	}
 
 	@Override
 	public List<Cita> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.readAll();
 	}
 
 	@Override
 	public List<Cita> readCitasCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		return sa.readCitasCliente(cliente);
 	}
 
 	@Override
-	public boolean update(Cita actualizada, Cliente cliente, Date nuevaFecha) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Cita actualizada) {
+		return sa.update(actualizada);
 	}
 
 	@Override
 	public boolean delete(Cita borrada) {
-		// TODO Auto-generated method stub
-		return false;
+		return sa.delete(borrada);
 	}
 
 	@Override
-	public boolean completada(Cita completada) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Cita consultar(Date fecha, Cliente cliente) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cita search(String idCita) throws Exception{
+		return sa.consultar(idCita);
 	}
 }
