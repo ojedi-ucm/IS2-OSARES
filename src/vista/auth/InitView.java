@@ -1,17 +1,13 @@
 package vista.auth;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import control.ControlCliente;
-import vista.MainWindow;
 import vista.observers.AuthObserver;
 
 import javax.swing.JButton;
@@ -33,9 +29,9 @@ public class InitView extends JPanel {
 		// Header image
 		JPanel imgPanel = new JPanel();
         JLabel imgLabel = new JLabel();
-        imgLabel.setSize(350, 250);
+        imgLabel.setSize(350, 200);
         
-        Image img = new ImageIcon("resources/images/espana.png").getImage().getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
+        Image img = new ImageIcon("resources/images/logoOsares.png").getImage().getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(img);
         
         imgLabel.setIcon(imageIcon);

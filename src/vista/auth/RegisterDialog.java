@@ -1,8 +1,6 @@
 package vista.auth;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.zip.DataFormatException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,11 +14,8 @@ import javax.swing.JTextField;
 
 import control.ControlCliente;
 import modelo.Cliente;
-import vista.MainWindow;
 import vista.Utils;
 import vista.observers.AuthObserver;
-
-import javax.swing.JComboBox;
 
 public class RegisterDialog extends JDialog {
 	

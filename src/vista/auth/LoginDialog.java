@@ -1,7 +1,6 @@
 package vista.auth;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,9 +14,7 @@ import javax.swing.JTextField;
 
 import control.ControlCliente;
 import modelo.Cliente;
-import vista.MainWindow;
 import vista.Utils;
-import vista.clientes.ClienteDialog;
 import vista.observers.AuthObserver;
 
 public class LoginDialog extends JDialog {
@@ -69,7 +66,6 @@ public class LoginDialog extends JDialog {
 		JButton loginBtn = new JButton("Login");
 		loginBtn.addActionListener((a) -> {
 			Cliente authCliente = _controler.iniSesion(username.getText(), new String(password.getPassword()));
-			System.out.println(password.getPassword().toString());
 			
 			if(authCliente == null)
 				Utils.showErrorMsg("DNI o Contraseña incorrecta");

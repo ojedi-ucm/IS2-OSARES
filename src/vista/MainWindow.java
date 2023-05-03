@@ -13,19 +13,11 @@ import control.ControlCliente;
 import control.ControlCuenta;
 import modelo.Cliente;
 
-import javax.swing.JButton;
-
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.io.File;
-
 import vista.auth.InitView;
 import vista.observers.AuthObserver;
 import vista.cuentas.*;
 
-
 public class MainWindow extends JFrame implements AuthObserver {
-	private Clip clip;
 	
 	private ControlCliente _ctrlCliente;
 	private ControlCuenta _ctrlCuenta;
@@ -34,7 +26,7 @@ public class MainWindow extends JFrame implements AuthObserver {
 	private JPanel _mainPanel;
 	
 	public MainWindow(ControlCliente ctrlCliente) {
-		super("OSARES");
+		super("Osares");
 		
 		_ctrlCliente = ctrlCliente;
 		
@@ -52,16 +44,7 @@ public class MainWindow extends JFrame implements AuthObserver {
 		addWindowListener(new WindowListener() {
 
 			@Override
-			public void windowOpened(WindowEvent e) {
-				try {
-		            File audioFile = new File("resources/audio.wav");
-		            clip = AudioSystem.getClip();
-		            clip.open(AudioSystem.getAudioInputStream(audioFile));
-		            clip.start();
-		        } catch (Exception ex) {
-		            System.out.println("Error al reproducir el audio: " + ex.getMessage());
-		        }
-			}
+			public void windowOpened(WindowEvent e) {}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -69,34 +52,19 @@ public class MainWindow extends JFrame implements AuthObserver {
 			}
 
 			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowClosed(WindowEvent e) {}
 
 			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowIconified(WindowEvent e) {}
 
 			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeiconified(WindowEvent e) {}
 
 			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowActivated(WindowEvent e) {}
 
 			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeactivated(WindowEvent e) {}
 			
 		});
 		
@@ -115,7 +83,7 @@ public class MainWindow extends JFrame implements AuthObserver {
 		
 		_mainPanel = new JPanel(new BorderLayout());
 		setContentPane(_mainPanel);
-		_mainPanel.setPreferredSize(new Dimension(600, 600));
+		_mainPanel.setPreferredSize(new Dimension(1000, 600));
 		
 		CuentaClienteView cuentasClientes = new CuentaClienteView(_ctrlCuenta, _ctrlCliente, _ctrlCita, this);
 		_mainPanel.add(cuentasClientes);
@@ -123,10 +91,7 @@ public class MainWindow extends JFrame implements AuthObserver {
 		addWindowListener(new WindowListener() {
 
 			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowOpened(WindowEvent e) {}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -134,34 +99,19 @@ public class MainWindow extends JFrame implements AuthObserver {
 			}
 
 			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowClosed(WindowEvent e) {}
 
 			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowIconified(WindowEvent e) {}
 
 			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeiconified(WindowEvent e) {}
 
 			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowActivated(WindowEvent e) {}
 
 			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeactivated(WindowEvent e) {}
 			
 		});
 		
