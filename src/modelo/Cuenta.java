@@ -46,14 +46,16 @@ public class Cuenta {
 			
 			JSONObject transacciones = cuenta.getJSONObject("transacciones");
 			
+			//System.out.println(transacciones);
+			
 			if(transacciones != null) {
 				for(String id: transacciones.keySet()) {
 					JSONObject datos = new JSONObject();
 					
-					datos.put("desde", transacciones.getJSONObject("id").getString("desde"));
-					datos.put("hasta", transacciones.getJSONObject("id").getString("hasta"));
-					datos.put("cantidad", transacciones.getJSONObject("id").getFloat("cantidad"));
-					datos.put("fecha", transacciones.getJSONObject("id").getFloat("fecha"));
+					datos.put("desde", transacciones.getJSONObject(id).getString("desde"));
+					datos.put("hasta", transacciones.getJSONObject(id).getString("hasta"));
+					datos.put("cantidad", transacciones.getJSONObject(id).getFloat("cantidad"));
+					datos.put("fecha", transacciones.getJSONObject(id).getString("fecha"));
 					
 					_transacciones.put(id, datos);
 				}

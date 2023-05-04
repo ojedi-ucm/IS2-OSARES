@@ -90,7 +90,7 @@ public class ControlCita {
 		
 		_fCitas.delete(cita);
 		
-		_titular.addCita(cita.getIdCita());
+		_titular.removeCita(cita.getIdCita());
 		
 		_ctrlCliente.actualizarCliente(_titular);
 		
