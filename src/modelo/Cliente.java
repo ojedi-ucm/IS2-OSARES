@@ -10,7 +10,6 @@ public class Cliente {
 //Constantes
 
 //Atributos
-	//private static int idCont = 0;
 	private String id;
 	private String password;
 	private String name;
@@ -46,16 +45,12 @@ public class Cliente {
 				listaCitas.add(num_cita);
 			}
 		}catch(Exception e) {
-			System.out.println(e.toString() + "in model Cita");
+			System.out.println(e.toString() + "in model Cliente");
 		}
 		
-		//_listaCitas.add("");
 	}
 	
 //Getters
-	/*public int getIdCont() {
-		return idCont;
-	}*/
 	
 	public String getName() {
 		return name;
@@ -81,17 +76,10 @@ public class Cliente {
 		return password;
 	}
 //Setters
-	/*public void setIdCont(int num) {
-		idCont = num;
-	}*/
 	
 	public void setName(String nombre) {
 		name = nombre;
 	}
-	
-	/*public void setDni(String dni) {
-		this.dni = dni;
-	}*/
 	
 	public void setPassword(String contrasena) {
 		password = contrasena;
@@ -103,13 +91,6 @@ public class Cliente {
 //Verificadores
 	
 //Actualizadores
-	/*public void inc() {
-		//TODO
-	}
-	
-	public void dcr() {
-		//TODO
-	}*/
 	
 	public void addCita(String cita) {
 		if(!listaCitas.contains(cita))
@@ -141,7 +122,6 @@ public class Cliente {
 		
 		JSONObject info = new JSONObject();
 		info.put("id", id);
-		//info.put("dni", dni);
 		info.put("password", password);
 		info.put("name", name);
 		info.put("tlf", tlf);
@@ -155,7 +135,6 @@ public class Cliente {
 			Array_Citas.put(bi);
 		}
 		info.put("listaCitas", Array_Citas);
-		//info.put("rol", rol);
 		
 		return info;
 	}
